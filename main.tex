@@ -1,0 +1,3158 @@
+\documentclass{article}
+
+\usepackage{setspace} 
+\doublespacing
+\usepackage[margin = 1.5in]{geometry}
+\usepackage{float} 
+\usepackage{graphicx}
+\usepackage{color} 
+\usepackage{amsmath} 
+\usepackage{amsfonts} 
+\usepackage{amsthm}
+\usepackage{bm} 
+\usepackage{framed}
+\usepackage{verbatim}
+% \usepackage{natbib}
+% \usepackage[symbol*]{footmisc}
+\usepackage[stable]{footmisc}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{etoolbox} % solve the spacing problem. 
+
+\allowdisplaybreaks
+
+\newcommand{\eps}{\varepsilon}
+\newcommand{\rational}{\mathbb{Q}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\integer}{\mathbb{Z}}
+\newcommand{\nn}{\mathbb{N}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\Ell}{\mathcal{L}}
+\newcommand{\mean}{\mathbb{E}}
+\newcommand{\prob}{\mathbb{P}}
+\newcommand{\dd}{\mathop{}\!\mathrm{d}}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\newcommand{\gaussian}{\mathcal{N}}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\diam}{diam\,}
+\DeclareMathOperator*{\Var}{Var}
+\DeclareMathOperator*{\Cov}{Cov}
+\DeclareMathOperator*{\med}{med}
+
+\newcommand{\Riemann}{\mathscr{R}}
+\newcommand{\sigmafield}{\mathscr{F}}
+\newcommand{\lborel}{\mathscr{R}^1}
+\newcommand{\subsigmafield}{\mathscr{G}}
+
+\theoremstyle{definition}
+\newtheorem*{defn}{Definition}
+\newtheorem{defns}{Definitions}[section]
+\newtheorem{exmp}{Example}[section]
+
+\theoremstyle{plain}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{cor}{Corollary}
+
+\theoremstyle{remark}
+\newtheorem*{rem}{Remark}
+
+% Solve the spacing problem in the cases environment. 
+\makeatletter
+\patchcmd{\env@cases}{1.2}{0.72}{}{}
+\makeatother
+
+\title{Stat 553 Homework Solutions}
+\author{Zhanxiong Xu}
+\date{Spring 2017}
+
+\begin{document}
+
+\maketitle
+
+\section*{Homework 1}
+\begin{description}
+\item[Problem 1]
+\begin{proof} 
+If $\omega \in \liminf\limits_n A_n$, then there exists $n_0 \geq 1$, such that
+$\omega \in A_k$ for all $n \geq n_0$, that is, $\omega$ belongs to all but finitely many $A_n$'s.
+
+Conversely, assume $\omega \in A_k$ for all $k \geq n_0$, for some $n_0 \geq 1$, then 
+$\omega \in \bigcap_{k = n_0}^{\infty}A_k \subset \bigcup_{n = 1}^\infty 
+\bigcap_{k = n}^\infty A_k$.
+
+The other statement can be proved similarly.
+\end{proof}
+
+\item[1.17]
+\begin{proof}
+(a) This statement is false. The counterexample is $a_n = b_n = (-1)^n$, for which the 
+limit of $a_n$ ($b_n$) does not exist.
+
+(b) The statement is true, as by the algebra of limit operation (Theorem 3.3,
+\cite{rudin1964}), we have:
+\begin{align*}
+    \lim_{n \to \infty} \frac{a_n}{b_n} = \frac{\lim\limits_{n \to \infty}a_n}
+    {\lim\limits_{n \to \infty}b_n} = 1.
+\end{align*}
+
+(c) The statement is false. We can use the same counterexample in part (a).
+\end{proof}
+
+\item[1.18]
+\begin{proof}
+(a)
+Since $\dfrac{a_n c_n}{b_n d_n} = \dfrac{a_n}{b_n} \cdot \dfrac{c_n}{d_n} \to 1 \times 1 
+= 1$ as $n \to \infty$, $a_n c_n \sim b_n d_n$. 
+
+(b) Take $a_n = n + 1, b_n = n + 2, c_n = d_n = -n$, then $\lim_{n \to \infty} \dfrac{a_n + c_n}{b_n + d_n} = 1/2 \neq 1$, hence $a_n + c_n \not\sim b_n + d_n$, although $a_n \sim b_n$, $c_n \sim d_n$.
+
+(c) For simplicity, denote $|a_n|, |b_n|, |c_n|, |d_n|$ by $A_n, B_n, C_n, D_n$ 
+respectively. Consider the difference $\left|\dfrac{A_n + C_n}{B_n + D_n} - 1\right|$:
+\begin{align*}
+    & \left|\frac{A_n + C_n}{B_n + D_n} - 1\right| 
+  = \left|\frac{A_n - B_n}{B_n + D_n} - \frac{C_n - D_n}{B_n + D_n}\right| 
+  \leq \frac{|A_n - B_n|}{B_n + D_n} + \frac{|C_n - D_n|}{B_n + D_n} \\
+  \leq & \frac{|A_n - B_n|}{B_n} + \frac{|C_n - D_n|}{D_n} 
+  = \left|\frac{A_n}{B_n} - 1\right| + \left|\frac{C_n}{D_n} - 1\right| \to 0
+\end{align*}
+as $n \to \infty$. Therefore $A_n + C_n \sim B_n + D_n$. 
+
+(d) Take $f(x) = e^x, x \in \real$, $a_n = n, b_n = n + 1$. Obviously, $a_n \sim b_n$, while
+$f(b_n)/f(a_n) = e^{n + 1}/e^n = e \not\to 1$ as $n \to \infty$. Therefore $f(b_n)$ is not
+equivalent to $f(a_n)$.
+\end{proof}
+
+\item[1.25]
+\begin{proof}
+Fix $c$ that is in the domain of $f$. By condition, for all sufficiently large $n$, we have
+$b_n > a_n > c$, as well as $f(a_n) > 0, f(b_n) > 0$.
+
+Write $a_n$ as the convex combination of $b_n$ and $c$ as follows:
+\begin{align*}
+    a_n = \frac{a_n - c}{b_n - c}b_n + \frac{b_n - a_n}{b_n - c}c.
+\end{align*}
+By convexity of $f$ and the expression above, it follows that
+\begin{align*}
+    0 < f(a_n) \leq \frac{a_n - c}{b_n - c}f(b_n) + \frac{b_n - a_n}{b_n - c}f(c).
+\end{align*}
+Or equivalently,
+\begin{align*}
+    0 < \frac{f(a_n)}{f(b_n)} \leq \frac{a_n - c}{b_n - c} + 
+    \frac{b_n - a_n}{b_n - c}\frac{f(c)}{f(b_n)}
+\end{align*}
+A passage to limit and squeeze principle then shows that $f(a_n)/f(b_n) \to 0$ as $n \to 
+\infty$, i.e., $f(a_n) = o(f(b_n))$.
+\end{proof}
+
+\item[1.26]
+\begin{proof}
+(a) $a_n \equiv 0, b_n \equiv 1, f(x) = 1 + x^2, x \in \real$.
+
+(b) $a_n = n, b_n = n^2, f(x) \equiv 1, x \in \real$ ($f$ is a constant function).
+
+(c) $a_n = n, b_n = n^2, f(x) = \log x, x \in (0, \infty)$.
+\end{proof}
+
+\item[1.27]
+\begin{proof}
+(a) The correct order is:
+\begin{align*}
+    (\log n)^{\log\log n} \ll \sqrt{\log(n!)} \ll 2^{\log n} \ll n \ll 
+    \sum_{i = 1}^n i^{1/3}.
+\end{align*}
+Here the operator ``$\ll$'' bears the meaning: $a_n \ll b_n \iff a_n = o(b_n)$. In the
+remaining of this part we show all these relations from left to right.
+
+Clever application of Theorem 1.31 (which has been proved in Exercise 1.25) could substantially simplify some proofs, as will be
+shown below.
+
+\begin{itemize}
+\item
+Since the function $f(x) = e^x, x \in \real$ is convex, to show the first relation, it 
+suffices to show $(\log\log n)^2 = o(\log\log(n!)/2)$ by Theorem 1.31.
+
+By the Stirling's formula (Theorem 8.22, \cite{rudin1964}), we have 
+\begin{align}\label{stirling}
+    \log(n!) = n\log n - n + \theta_n,
+\end{align}
+where $\theta_n = O(\log n)$. Therefore $\log\log(n!) = \log(n\log n - n + \theta_n) 
+= \log n + \log(\log n - 1 + \theta_n/n) > \log n$ for all sufficiently large $n$. \footnote{For a shorter proof without bothering
+Stirling, note that for sufficiently large $n$, $$\log(n!) = \sum_{i = 1}^n \log i > (n - 2)\log 3 > n.$$} Hence
+\begin{align}\label{eq1}
+    0 < \frac{(\log\log n)^2}{\frac{1}{2}\log\log(n!)} <
+    \frac{2(\log\log n)^2}{\log n} \to 0
+\end{align}
+as $n \to \infty$. The last assertion may be shown by letting $x_n = \log\log n$.
+Clearly $x_n \to \infty$, thereby the inequality $e^x > 1 + x + \frac{1}{2}x^2 + \frac{1}{6}x^3$ implies that
+\begin{align*}
+    \frac{2(\log\log n)^2}{\log n} = \frac{2x_n^2}{e^{x_n}} < \frac{2x_n^2}{1 + x_n + \frac{1}{2}x_n^2 + \frac{1}{6}x_n^3} = \frac{2}{x_n^{-2} + x_n^{-1} + \frac{1}{2} + 
+    \frac{1}{6}x_n} \to 0 
+\end{align*}
+as $n \to \infty$. 
+
+\item It would be helpful to recognize that $2^{\log n} = n^{\log 2}$. By Stirling's formula
+\eqref{stirling}, it follows that
+\begin{align*}
+    \frac{\log(n!)}{n^{2\log 2}} = \frac{n\log n - n + \theta_n}{n^{2\log 2}} = 
+    \frac{\log n}{n^{2\log 2 - 1}} - \frac{1}{n^{2\log 2 - 1}} + \frac{\theta_n}{n^{2\log 2}} \to 0
+\end{align*}
+as $n \to \infty$, where we used the well-known limit:
+\begin{align*}
+    \lim_{n \to \infty} \frac{\log n}{n^\eps} = 0
+\end{align*}
+for any $\eps > 0$ (which can be proved by the similar argument I used to prove 
+\eqref{eq1} or L'Hospital's rule.). Therefore,
+\begin{align*}
+    \frac{\sqrt{\log(n!)}}{n^{\log 2}} = \sqrt{\frac{\log(n!)}{n^{2\log 2}}} \to 0
+\end{align*}
+as $n \to \infty$, by the continuity of the function $x \mapsto \sqrt{x}$. (Note such 
+argument is essentially different from applying Theorem 1.31.).
+
+\item The relation $2^{\log n} = n^{\log 2} \ll n$ is trivial.
+
+\item Use the result of Exercise 1.19, we have $\sum\limits_{i = 1}^n i^{1/3} \sim 
+\frac{3}{4}n^{4/3}$, hence $n \ll \sum\limits_{i = 1}^n i^{1/3}$.
+\end{itemize}
+This completes the proof.
+\end{proof}
+
+(b) The correct order is given as follows:
+\begin{align*}
+    & \log\log n \ll \log n \ll n \ll \log(n!) \ll n^2 \ll 2^{3\log n} \\
+    \ll & n^{\log n} \ll 3^n \ll (\log n)^n \ll n^{n/2} \ll n! \ll n^n \ll 2^{2^n}.
+\end{align*}
+The verification for every relation seems too tedious, and actually very similar to what 
+we did for part (a). Let me just mention that some tips:
+\begin{enumerate}
+\item Use Stirling's formula \eqref{stirling} to handle expressions containing $n!$.
+\item Use Theorem 1.31 or the continuity argument when necessary.
+\item $2^{2^n} \neq 4^n$.
+\end{enumerate}
+
+\item[1.32] 
+It's straightforward to obtain the following answer by evaluating partial derivatives:
+\begin{align*}
+    U(\mu, \sigma^2) = \begin{bmatrix}
+    \dfrac{1}{\sigma^2}\sum\limits_{i = 1}^n (X_i - \mu) \\
+    \dfrac{1}{2\sigma^4}\left[\sum\limits_{i = 1}^n (X_i - \mu)^2 - n\sigma^2\right]
+    \end{bmatrix}.
+\end{align*}
+\end{description}
+
+\newpage
+
+\section*{Homework 2}
+\begin{description}
+\item[Problem 1]
+\begin{proof} 
+If either $E[X^2] = 0$ or $E[Y^2] = 0$ then $X = 0$ almost surely or $Y = 0$ almost 
+surely, which implies $E[XY] = 0$, hence the inequality holds.
+
+Now assume $E[X^2] \neq 0$ and $E[Y^2] \neq 0$, then for each $t \in \real^1$, 
+\begin{align*}
+   0 \leq E[(tX + Y)^2] = t^2E[X^2] + 2tE[XY] + E[Y^2]
+\end{align*}
+implies that $\Delta = \{2E[XY]\}^2 - 4E[X^2]E[Y^2] \leq 0$. Rearrangement gives the
+desired inequality.
+\end{proof}
+
+\item[Problem 2]
+\begin{proof}
+If $t = 0$, there is nothing to prove. So let's assume $t > 0$, and denote $X/t$ by 
+$Y$, then $E[Y] = E[X]/t = 0$. It is therefore easy to see that the inequality to be
+proved is equivalent to 
+\begin{align*}
+    P[Y \geq 1] \leq \frac{E[Y^2]}{1 + E[Y^2]}.
+\end{align*}
+For simplicity, denote $E[Y^2]$ by $\mu_2$. By Markov's inequality, it follows that
+\begin{align*}
+    & P[Y \geq 1] = P[Y + \mu_2 \geq 1 + \mu_2] \leq \frac{E[(Y + \mu_2)^2]}{(1 + \mu_2)^2} \\
+    = & \frac{E[Y^2] + 2\mu_2E[Y] + \mu_2^2}{(1 + \mu_2)^2}
+    = \frac{\mu_2 + \mu_2^2}{(1 + \mu_2)^2} = \frac{\mu_2}{1 + \mu_2}.
+\end{align*}
+In the penultimate equality above, we used the condition $E[Y] = 0$. This completes
+the proof.
+\end{proof}
+
+\item[Problem 3]
+Before starting the proof, keep in mind that the notations $O_P(1)$ and $o_P(1)$ 
+need to be understood as shorthands for sequences of random variables. For example,
+``$o_P(1)$'' stands for a sequence $\{X_n\}$ such that $X_n$ converges to $0$ 
+in probability.
+
+\begin{itemize}
+\item 
+\begin{proof}
+
+Suppose $X_n = O_P(1)$ and $Y_n = o_P(1)$. Given $\eps > 0$, since $X_n = O_P(1)$, 
+there exists $K > 0$ such that $P[|X_n| \geq K] < \frac{\eps}{2}$ for all $n \in \nn$. 
+In addition, $Y_n = o_P(1)$ implies that there exists $N \in \nn$ such that
+$P[|Y_n| \geq \eps/K] < \frac{\eps}{2}$ for all $n > N$. It then follows that for each 
+$n > N$,
+\begin{align*}
+& P[|X_nY_n| \geq \eps] = P[|X_nY_n| \geq \eps, |X_n| \geq K] + P[|X_nY_n| \geq \eps, 
+|X_n| < K] \\
+\leq & P[|X_n| \geq K] + P[|Y_n| \geq \eps/K] < \frac{\eps}{2} + \frac{\eps}{2} = \eps.
+\end{align*}
+Therefore $X_nY_n \to_P 0$, i.e., $X_nY_n = o_P(1)$. 
+\end{proof}
+
+\item 
+\begin{proof}
+Suppose $X_n = O_P(1)$ and $Y_n = o_P(1)$. It is clear that if $Y_n = o_P(1)$, then $Y_n = O_P(1)$. Therefore, this statement can be treated as a corollary of the next statement so we can take a rest here.\end{proof}
+
+\item \begin{proof}
+Suppose $X_n = O_P(1)$ and $Y_n = O_P(1)$. Given $\eps > 0$, by condition, there exist $K_1 > 0$ and $K_2 > 0$ such that $P[|X_n| \geq K_1] < \frac{\eps}{2}$ and $P[|Y_n| \geq K_2] < \frac{\eps}{2}$ for all $n \in \nn$. Noticing that the event $\{\omega: |X_n(\omega)| + |Y_n(\omega)| \geq K_1 + K_2\}$ is a subevent of $\{\omega: |X_n(\omega)| \geq K_1\} \cup \{\omega: |Y_n(\omega)| \geq K_2\}$, we have for each $n \in \nn$,
+\begin{align*}
+& P[|X_n + Y_n| \geq K_1 + K_2] \\
+\leq & P[|X_n| + |Y_n| \geq K_1 + K_2] \\
+\leq & P[\{|X_n| \geq K_1\} \cup \{|Y_n| \geq K_2\}] \\
+\leq & P[|X_n| \geq K_1] + P[|Y_n| \geq K_2] \\
+< & \frac{\eps}{2} + \frac{\eps}{2} = \eps.
+\end{align*}
+This shows that $X_n + Y_n = O_P(1)$. 
+\end{proof}
+
+\item 
+\begin{proof}
+Suppose $X_n = o_P(1)$. Given $\eps > 0$, by condition, there exists $N \in \nn$ such that $P[|X_n| \geq 1/2] < \eps$ for all $n > N$. It then follows that for each $n > N$, 
+\begin{align*}
+& P\left[\left|\frac{1}{1 + X_n}\right| \geq 2\right] \\
+= & P[|X_n + 1| \leq 1/2] \\
+= & P[|X_n + 1| \leq 1/2, |X_n| \geq 1/2] + P[|X_n + 1| \leq 1/2, |X_n| < 1/2] \\
+\leq & P[|X_n| \geq 1/2] + P[\varnothing] \\
+= & P[|X_n| \geq 1/2]  < \eps. 
+\end{align*}
+In addition, since $(1 + X_1)^{-1}, \ldots, (1 + X_N)^{-1}$ are finitely many random variables, there exists $K > 0$ such that $P[|(1 + X_n)^{-1}| \geq K] < \eps$ for $n = 1, \ldots, N$. Take $K' = \max\{2, K\}$, it then holds that $P[|(1 + X_n)^{-1}| \geq K'] < \eps$ for all $n \in \nn$, i.e., $\dfrac{1}{1 + X_n} = O_P(1)$.
+\end{proof}
+\end{itemize}
+
+\item[1.33]
+\begin{proof}
+Using the notations adopted in Chapter 9 of \cite{rudin1964}, straightforward 
+calculation shows that
+\begin{align*}
+    & (D_1 f)(x, y) = \begin{cases}
+    \dfrac{x^4 y + 4x^2y^3 - y^5}{(x^2 + y^2)^2} & (x, y) \neq (0, 0), \\
+    0 & (x, y) = (0, 0).
+    \end{cases} \\
+    & (D_2 f)(x, y) = \begin{cases}
+    \dfrac{-xy^4 - 4x^2y^3 + x^5}{(x^2 + y^2)^2} & (x, y) \neq (0, 0), \\
+    0 & (x, y) = (0, 0).
+    \end{cases} \\
+\end{align*}
+Therefore,
+\begin{align*}
+   & (D_{21} f)(0, 0) = \lim_{t \to 0} \frac{(D_1 f)(0, t) - (D_1 f)(0, 0)}{t} = -1,
+    \\
+   & (D_{12} f)(0, 0) = \lim_{t \to 0} \frac{(D_2 f)(t, 0) - (D_2 f)(0, 0)}{t} = 1.
+\end{align*}
+That shows $\nabla^2 f (0, 0)$ is not symmetric, hence $f$ is not 
+twice differentiable.
+\end{proof}
+
+\item[1.39]
+\begin{proof}
+I shall prove the following more standard, yet trivially equivalent version to (1.39):
+\begin{align}\label{holder}
+E[|XY|] \leq \{E[|X|^p]\}^{1/p}\{E[|Y|^q]\}^{1/q}, \text{ if } \frac{1}{p} + \frac{1}{q} = 1.
+\end{align}
+The reason I prefer \eqref{holder} to (1.39) is that the term $\{E[|X|^p]\}^{1/p}$ can be 
+interpreted as the $L^p$ norm of $X$ provided $X \in L^p(\Omega, \sigmafield, P)$, the space of
+all $p$-integrable random variables. In this way, the H\"{o}lder's inequality can be more 
+succinctly expressed as $\|XY\|_1 \leq \|X\|_p\|Y\|_q$, which may help you memorize it more 
+easily.
+
+To show \eqref{holder}, let's prove the following \emph{Young's inequality} first: For any
+two positive reals $a > 0$ and $b > 0$,
+\begin{align}\label{young}
+ab \leq \frac{1}{p}a^p + \frac{1}{q}b^q, \text{ if } p > 0, q > 0, \frac{1}{p} + \frac{1}{q} 
+= 1.
+\end{align}
+
+To prove \eqref{young}, reparametrize $a$ and $b$ as $a = e^{x/p}$ and $b = e^{y/q}$ for some
+$x \in \real$ and $y \in \real$. By the convexity of the function $x \mapsto e^x$ and 
+Jensen's inequality, it follows that
+\begin{align*}
+    ab = e^{x/p + y/q} \leq \frac{1}{p}e^x + \frac{1}{q}e^y = \frac{1}{p}a^p + 
+    \frac{1}{q}b^q,
+\end{align*}
+which shows \eqref{young}. To show the H\"{o}lder's inequality, take $a = 
+|X|/E^{1/p}[|X|^p]$, $b = |Y|/E^{1/q}[|Y|^q]$ in the Young's inequality to obtain 
+(To be complete, again you need to justify why $E[|X|^p]$ and $E[|Y|^q]$ can be placed 
+as denominators.):
+\begin{align*}
+    \frac{|XY|}{E^{1/p}[|X|^p]E^{1/q}[|Y|^q]} 
+    \leq \frac{1}{p} \frac{|X|^p}{E[|X|^p]} + \frac{1}{q}\frac{|Y|^q}{E[|Y|^q]}.
+\end{align*}
+Then take expectations on both sides in the above inequality, it follows that 
+\begin{align*}
+    \frac{E[|XY|]}{E^{1/p}[|X|^p]E^{1/q}[|Y|^q]} 
+    \leq \frac{1}{p} + \frac{1}{q} = 1.
+\end{align*}
+Hence $E[|XY|] \leq E^{1/p}[|X|^p]E^{1/q}[|Y|^q]$. This completes the proof.
+\end{proof}
+
+\item[1.41]
+\begin{proof}
+First note that without loss of generality, we can assume $E[X_1] = \cdots
+= E[X_n]$, for which case $S_n = \sum_{i = 1}^n X_i, \Var(S_n) = E[S_n^2]$. 
+
+Following the hint, let $A_k$ be the set such that $|S_k| \geq a$ and $|S_j| < a$
+for $j < k$, $k = 1, \ldots, n$ (define $S_0 = 0$.). Since $A_1, \ldots, A_n$ are 
+disjoint, it follows that
+\begin{align*}
+    E[S_n^2] & \geq \sum_{k = 1}^n E[S_n^2 I_{A_k}] 
+    = \sum_{k = 1}^n E\{[S_k^2 + 2S_k(S_n - S_k) + (S_n - S_k)^2]I_{A_k}\} \\
+    & \geq \sum_{k = 1}^n E\{[S_k^2 + 2S_k(S_n - S_k)]I_{A_k}\}.
+\end{align*}
+Note that $S_kI_{A_k} = (X_1 + \cdots + X_k)I_{A_k}$ and $S_n - S_k = X_{k + 1} + 
+\cdots + X_n$ are independent, therefore $E[S_k(S_n - S_k)I_{A_k}] = 
+E[S_n - S_k]E[S_kI_{A_k}] = 0$. Hence,
+\begin{align*}
+    & \sum_{k = 1}^n E\{[S_k^2 + 2(S_n - S_k)S_k]I_{A_k}\} = 
+    \sum_{k = 1}^n E[S_k^2I_{A_k}] \geq a^2 \sum_{k = 1}^n E[I_{A_k}] \\
+    = & a^2 \sum_{k = 1}^n P(A_k) = a^2 P\left(\bigcup_{k = 1}^n A_k\right) 
+    = a^2 P\left(\max_{1 \leq k \leq n} |S_k| \geq a \right).
+\end{align*}
+This completes the proof.
+\end{proof}
+
+\item[1.45]
+\begin{proof}
+See \cite{chung2001probability}, Theorem 3.2.1 for a more general statement:
+\begin{align*}
+    \sum_{n = 1}^\infty P[|X| \geq n] \leq E[|X|] \leq 
+    1 + \sum_{n = 1}^\infty P[|X| \geq n].
+\end{align*}
+
+See also \cite{billingsley95}, pp.79, 275 for establishing the general equality
+$E[X] = \int_0^\infty P[X \geq t] \dd t$ when $X$ is nonnegative.
+\end{proof}
+\end{description}
+
+\newpage
+
+\section*{Quiz 2}
+In this problem, $x$ is tacitly assumed to be positive.
+\begin{itemize}
+    \item By independence assumption, it follows that
+    \begin{equation*}
+        P[S_n \geq nx] \leq \min_{t > 0} \frac{\prod\limits_{i = 1}^n E[e^{tX_i}]}{e^{ntx}}.
+    \end{equation*}
+    
+    \item By condition and the generic inequality derived in the first part, we have
+    \begin{equation*}
+        P[S_n \geq nx] \leq \min_{t > 0} \exp\left(\frac{1}{2}n\sigma^2 t^2 - ntx\right).
+    \end{equation*}
+    The expression on the right hand side has a unique minimizer $t_0 = x/\sigma^2$,
+    hence the Chernoff bound is $\boxed{\exp(-nx^2/2\sigma^2)}$.
+    
+    \item By hint and the generic inequality derived in the first part, we have
+    \begin{equation*}
+        P[S_n \geq nx] \leq \min_{t > 0} \exp\left(npe^t - ntx - np\right) 
+        \coloneqq \min_{t > 0} g(t).
+    \end{equation*}
+    
+    It can be shown that $g(t)$ is a strictly convex function (of $t$) on $\real$,
+    therefore it has a unique minimizer. If $x > p$, the minimum is attained 
+    at $t_0 = \log(x/p) > 0$. If $0 < x \leq p$, then $g(t)$ is nondecreasing on
+    $[0, +\infty)$, hence the minimum is attained at $t_0 = 0$. In summary,
+    \begin{equation*}
+        P[S_n \geq nx] \leq 
+        \begin{cases}
+        \exp[nx - np - nx\log(x/p)] & x > p, \\[1em]
+        1 & 0 < x \leq p.
+        \end{cases}
+    \end{equation*}
+    The bound corresponds to $0 < x \leq p$ is trivial and useless.
+\end{itemize}
+
+\newpage
+\section*{Homework 3}
+\begin{description}
+\item[Problem 1]
+\begin{proof}
+Problem $1$ can be proved in a similar way to Problem $3$, Homework 2, i.e., 
+decomposing the probability of interest into two parts by introducing some event
+with small probability, then controlling the upper bound.
+
+As an alternative way, let's try to apply the following handy theorem to prove 
+the two statements in this problem. 
+\begin{thm}[\cite{ferguson1996}, Section 2, Theorem 2 (d)]
+A necessary and sufficient condition for $X_n \to_P X$ is that for any subsequence $\{X_{n_k}\}$ of $\{X_n\}$, there exists a further subsequence $\{X_{n_{k_i}}\}$ of $\{X_{n_k}\}$ such that $\{X_{n_{k_i}}\}$ converge to $X$ almost surely as $i \to \infty$.
+\end{thm} 
+
+Why this theorem can make things easier? Because in general convergence almost surely is easier to handle than convergence in probability (measure), as the former one is essentially a pointwise convergence mode. With the help of this
+theorem, we can give a neat proof for the first statement as follows:
+
+Given any subsequence $\{X_{n_k} + Y_{n_k}\}$ of $\{X_n + Y_n\}$. Since $X_n \to_P X$, by the necessity part of the above theorem, there exists a set $\mathscr{K}_1$ of natural numbers, which is a subset of $\{n_k\}$ (this is a succinct way to express a further subsequence of some subsequence), such that $X_\ell \to X$ almost surely as $\ell \in \mathscr{K}_1$ and $\ell \to \infty$. Now consider the $Y$-subsequence $\{Y_\ell\}_{\ell \in \mathscr{K}_1}$, again by necessity, there exists $\mathscr{K}_2 \subset \mathscr{K}_1$ such that $Y_m \to Y$ almost surely as $m \in \mathscr{K}_2$ and $m \to \infty$. By construction, it follows that 
+$$X_m + Y_m \to X + Y \text{ almost surely}$$
+as $m \in \mathscr{K}_2$ and $m \to \infty$. Also notice that $\{X_m + Y_m\}_{m \in \mathscr{K}_2}$ is obviously a subsequence of $\{X_{n_k} + Y_{n_k}\}$, therefore, by the sufficiency part of the theorem, we conclude that $X_n + Y_n \to_P X + Y$. 
+
+The second statement can be verified by replacing ``$+$" with ``$\cdot$" without changing any other parts. Ultimately, such Cantor diagonal-flavor argument can prove the general \emph{continuous mapping theorem}: \emph{with the same condition stated in this problem, and suppose that $f$ is a continuous mapping of $\mathbb{R}^2$ into $\mathbb{R}^1$, then $f(X_n, Y_n) \to_P f(X, Y)$}, which has extensive applications in asymptotic theories. 
+\end{proof}
+
+For the first counterexample, fix $X, Y \,\text{i.i.d.}\sim \mathcal{N}(0, 1)$.  Take $X_n \equiv X$ and $Y_n \equiv -X$. Clearly, we have $X_n \Rightarrow X$ and $Y_n \Rightarrow Y$ (where $\Rightarrow$ is an equivalent notation for $\to_d$). But $X_n + Y_n = 0$ doesn't converge in distribution to $X + Y$, which is distributed as $\mathcal{N}(0, 2)$. For the second counter example, fix $U, V\, \text{i.i.d.}\sim \mathcal{U}[-1, 1]$. Take $X_n \equiv U$ and $Y_n \equiv -U$, then $X_nY_n = -U^2$. Clearly, $X_n \Rightarrow U$ and $Y_n \Rightarrow V$. But $X_nY_n$ doesn't converge to $UV$. For if it were true, then it would hold $P[X_nY_n \leq 0] \to P[UV \leq 0]$ as $n \to \infty$, since $0$ is a continuity point of $UV$. However, $P[X_nY_n \leq 0] = P[-U^2 \leq 0] = P[U^2 \geq 0] = 1$, while $P[UV \leq 0] = \int_{-1}^1 P[V \leq 0]\frac{1}{2}du = \frac{1}{2} \times \frac{1}{2} \times 2 = \frac{1}{2}$, contradiction.
+
+% for if it were true, then since $\{X_nY_n\}$ is bounded (hence uniformly integrable), it would be necessarily true that $E[X_nY_n] \to E[UV]$ as $n \to \infty$, however, $E[UV] = E[U]E[V] = 0$ while $E[X_nY_n] = -E[U^2] = -\frac{1}{3}$, contradiction.
+
+\item[Problem 3]
+\begin{proof}
+Let $F_n$ and $F$ denote the distribution functions of $X_n$ and $X$, respectively.
+
+Given $\eps > 0$, choose $k \in \nn$ sufficiently large such that $\frac{1}{k} < \frac{\eps}{2}$. Since $F$ is continuous on $\real$, by intermediate value theorem, there exist $-\infty = x_0 < x_1 < \cdots < x_{k - 1} < x_k = +\infty$ such that $F(x_i) = \frac{i}{k}, i = 0, 1, \ldots, k$. For each $x \in \real$, there exists $i \in \{0, 1, \ldots, k - 1\}$ such that $x \in (x_i, x_{i + 1}]$ (of course, $x \neq x_k$). By monotonicity of $F$ and $F_n$, we have
+\begin{align*}
+F_n(x) - F(x) \leq & F_n(x_{i + 1}) - F(x_i) = F_n(x_{i + 1}) - F(x_{i + 1}) + F(x_{i + 1}) - F(x_i) \\
+\leq & \sup_{0 \leq j \leq k - 1}|F_n(x_j) - F(x_j)| + \frac{1}{k}; \\
+F_n(x) - F(x) \geq & F_n(x_{i}) - F(x_{i + 1}) = F_n(x_i) - F(x_i) + F(x_i) -  F(x_{i + 1}) \\
+\geq & -\!\sup_{0 \leq j \leq k - 1}|F_n(x_j) - F(x_j)| - \frac{1}{k},
+\end{align*}
+which is equivalent to $|F_n(x) - F(x)| \leq \sup_{0 \leq j \leq k - 1}|F_n(x_j) - F(x_j)| + \frac{1}{k}$. Since this inequality holds for each $x \in \real$, and the upper bound is independent of $x$, it follows that
+$$\sup_{x \in \real}|F_n(x) - F(x)| \leq \sup_{0 \leq j \leq k - 1}|F_n(x_j) - F(x_j)| + \frac{1}{k}.$$
+
+Since $F_n \Rightarrow F$, and $F$ is continuous everywhere, there exists $N \in \nn$ such that $\sup_{0 \leq j \leq k - 1}|F_n(x_j) - F(x_j)| < \frac{\eps}{2}$ for all $n > N$. Hence for each $n > N$, 
+$$\sup_{x \in \real}|F_n(x) - F(x)| \leq \sup_{0 \leq j \leq k - 1}|F_n(x_j) - F(x_j)| + \frac{1}{k} < \frac{\eps}{2} + \frac{\eps}{2} = \eps.$$
+The proof is complete.
+\end{proof}
+
+\item[2.1] 
+\begin{description}
+\item[(a)] 
+\begin{proof}
+Given $\eps > 0$, $P[|X_n - 1| \geq \eps] = P[|nY_n| \geq \eps] = P[Y_n \geq \eps/n] = P[Y_n = 1] = \frac{1}{n} \to 0$ as $n \to \infty$, thus $Y_n \to_P 1$. 
+\end{proof}
+
+\item[(b)] 
+\begin{proof}
+Let $Z_n = Y_n - \sum_{i = 1}^n \frac{1}{i}$ so that $E[Z_n] = 0$ and $\Var(Z_n) = \Var(Y_n) = \sum_{i = 1}^n \frac{1}{i}$. We shall use the following celebrated asymptotic representation for $\sum_{i = 1}^n \frac{1}{i}$:
+\begin{equation*}
+\sum_{i = 1}^n \frac{1}{i} = \log n + \gamma + \eps_n,
+\end{equation*}
+where $\gamma$ is a constant, called \emph{Euler constant}, and $\eps_n = o(1)$. Given $\eps > 0$, we have
+\begin{align*}
+& P[|X_n - 1| \geq \eps] = P\left[\left|\frac{Y_n}{\log n} - 1\right| \geq \eps\right] = P[|Y_n - \log n| \geq \eps\log n] \\
+= & P\left[\left|Z_n + \sum_{i = 1}^n \frac{1}{i} - \left(\sum_{i = 1}^n \frac{1}{i} - \gamma - \eps_n\right)\right| \geq \eps \log n\right] \\
+= & P[|Z_n + (\gamma + \eps_n)| \geq \eps\log n] \\
+\leq & P[|Z_n| + |\gamma + \eps_n| \geq \eps\log n] \\
+\leq & P\left[|Z_n| \geq \frac{1}{2}\eps\log n\right] + P\left[|\gamma + \eps_n| \geq \frac{1}{2}\eps\log n\right].
+\end{align*}
+For sufficiently large $n$, the second term in the right hand side of the above expressions is zero since $|\gamma + \eps_n| = o(\log n)$. On the other hand, by Chebyshev's inequality,
+\begin{align*}
+& P\left[|Z_n| \geq \frac{1}{2}\eps\log n\right] = P\left[|Z_n - E[Z_n]| \geq \frac{1}{2}\eps\log n\right] \\
+\leq & \frac{4\Var(Z_n)}{\eps^2 \log^2n} = \frac{4\sum_{i = 1}^n \frac{1}{i}}{\eps^2 \log^2 n} = \frac{4(\log n + \gamma + \eps_n)}{\eps^2\log^2 n} \to 0
+\end{align*}
+as $n \to \infty$. Therefore, $X_n \to_P 1$. 
+\end{proof}
+
+\item[(c)] 
+\begin{proof}
+Since $Y_1^2, \ldots, Y_n^2$ are i.i.d.\ with $E(Y_1^2) = \Var(Y_1) = 1$, by weak law of large numbers, we have $X_n = \overbar{Y}_n \to_P 1$.
+\end{proof}
+\end{description}
+
+\item[2.5]
+\begin{description}
+\item[(a)]
+\begin{proof}
+Since $E[(X_n - 1)^2] = E[(nY_n)^2] = n^2E[Y_n^2] = n^2 \times \frac{1}{n} = n \to \infty$ as $n \to \infty$, $X_n$ doesn't converge to $1$ in quadratic mean. 
+\end{proof}
+
+\item[(b)] 
+\begin{proof}
+By Theorem $2.17$(a), it suffices to show that $E[X_n] \to 1$ and $\Var(X_n) \to 0$ as $n \to \infty$, which have been shown during the course of proving Exercise $2.1$(b). Therefore, $X_n \overset{\text{\tiny qm}}{\to} 1$.
+\end{proof}
+
+\item[(c)]
+\begin{proof}
+Since $\sum_{i = 1}^n X_i^2 \sim \chi_n^2$, we have $E[Y_n] = 1$ and $\Var(Y_n) = \frac{2}{n} \to 0$ as $n \to \infty$, by Theorem $2.17$(a), $X_n \overset{\text{\tiny qm}}{\to} 1$.
+\end{proof}
+\end{description}
+
+\item[2.8] The statement is true and the proof goes as follows:
+\begin{proof}
+By condition, there exists $M$ such that $P[|X_n| \geq M/2] = 0$ for all $n$ and $|c| < \frac{1}{2}M$. Thus for each $n \in \nn$,
+$$P[|X_n - c| \geq M] \leq P[|X_n| + |c| \geq M] \leq P[|X_n| \geq M/2] + P[|c| \geq M/2] = 0.$$
+Since for each nonnegative random variable $Y$, we have $E[Y] = \int_0^\infty P[Y \geq t] dt$ (why?), hence
+\begin{align*}
+& E[(X_n - c)^2] = \int_0^\infty P[(X_n - c)^2 \geq t] dt = \int_0^\infty P[|X_n - c| \geq \sqrt{t}] dt \\
+= & \int_0^{M^2} P[|X_n - c| \geq \sqrt{t}] dt
+\end{align*}
+in light of $P[|X_n - c| \geq x] \leq P[|X_n - c| \geq M] = 0$ for each $x \geq M$. Now since $X_n \to_P c$, for each fixed $t \in [0, M^2]$, $P[|X_n - c| \geq \sqrt{t}] \to 0$ as $n \to \infty$. The result therefore follows by Lebesgue's dominated convergence theorem, since for every $n$, $P[|X_n - c| \geq \sqrt{t}]$ is bounded by $1$ and $\int_0^{M^2} 1 dt = M^2 < \infty$.
+\end{proof}
+
+\item[2.10] 
+\begin{description}
+\item[(a)] By independence assumption,
+\begin{align*}
+& E[X_i] = c_iE[Y_i]E[2Z_i - 1] = c_ip_i(1 - 1) = 0; \\
+& E[X_i^2] = c_i^2E[Y_i^2]E[4Z_i^2 - 4Z_i + 1] = c_i^2p_i.
+\end{align*}
+Hence $\Var(\overbar{X}_n) = \frac{1}{n^2}\sum_{i = 1}^n E[X_i^2] = \frac{1}{n^2}\sum_{i = 1}^n c_i^2p_i$.
+
+\item[(b)]
+\begin{proof}
+Since $E[|X_i|] = c_iE[|Y_i|]E[|2Z_i - 1|] = c_i E[Y_i] = c_ip_i$, by triangle inequality, 
+$$E[|\overbar{X}_n - 0|] = \frac{1}{n}E\left[\left|\sum_{i = 1}^n X_i\right|\right] \leq \frac{1}{n}\sum_{i = 1}^n E[|X_i|] = \frac{1}{n}\sum_{i = 1}^n c_ip_i \to 0$$
+as $n \to \infty$ by condition. Since convergence in mean implies convergence in probability, the result follows.
+\end{proof}
+
+\item[(c)]
+Take $c_i = i^2$ and $p_i = \frac{1}{i^3}$, $i = 1, 2, \ldots$, then
+\begin{align*}
+& \frac{1}{n}\sum_{i = 1}^n c_i p_i = \frac{1}{n} \sum_{i = 1}^n \frac{1}{i} \sim \frac{\log n}{n} \to 0; \\
+& \frac{1}{n^2}\sum_{i = 1}^n c_i^2 p_i = \frac{1}{n^2} \sum_{i = 1}^n i = \frac{n(n + 1)}{2n^2} \to \frac{1}{2}.
+\end{align*}
+Therefore Condition $(2.21)$ holds but $\Var(\overbar{X}_n)$ does not converge to 
+zero.
+\end{description}
+
+\item[2.14]
+\begin{description}
+\item[(a)]
+\begin{proof}
+It is clear that $\hat{\beta}_{0n} = \overbar{Y} - \overbar{z}_n\hat{\beta}_{1n}$.
+Direct calculation gives that (notice that $\sum_{i = 1}^n w_i^{(n)} = 0$)
+\begin{align*}
+& E[\hat{\beta}_{1n}] = \sum_{i = 1}^n w_i^{(n)} (\beta_0 + \beta_1z_i + 0) = \beta_1 \sum_{i = 1}^n \frac{z_i(z_i - \bar{z}_n)}{\sum_{j = 1}^n(z_j - \bar{z}_n)^2} \\
+= & \beta_1 \sum_{i = 1}^n \frac{(z_i - \bar{z}_n)(z_i - \bar{z}_n)}{\sum_{j = 1}^n(z_j - \bar{z}_n)^2}  = \beta_1.
+\end{align*}
+Thus $\hat{\beta}_{1n}$ is unbiased. Consequently, $E[\hat{\beta}_{0n}] = E[\overbar{Y}] - \bar{z}_nE[\hat{\beta}_{1n}] = \beta_0 + \beta_1 \bar{z}_n  - \beta_1\bar{z}_n = \beta_0$, i.e., $\hat{\beta}_{0n}$ is unbiased.
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+Using $\sum_{i = 1}^n w_i^{(n)} = 0$ and $\sum_{i = 1}^n w_i^{(n)}z_i = 1$, we can rewrite $\beta_1$ as $\beta_1 = \sum_{i = 1}^n w_i^{(n)}(\beta_0 + \beta_1z_i)$. Thus $\hat{\beta}_{1n} - \beta_1 = \sum_{i = 1}^nw_i^{(n)} (\beta_0 + \beta_1z_i + \eps_i) - \sum_{i = 1}^n w_i^{(n)}(\beta_0 + \beta_1z_i) = \sum_{i = 1}^n w_i^{(n)}\eps_i$. It then follows that
+$$\Var(\hat{\beta}_{1n} - \beta_1) = \sum_{i = 1}^n w_i^{(n)2} \sigma^2 = \sigma^2 \frac{1}{\sum_{j = 1}^n(z_j - \bar{z}_n)^2}.$$
+Provided condition $2.18$, $\Var(\hat{\beta}_{1n} - \beta_1) \to 0$ as $n \to \infty$, a fortiori, $\hat{\beta}_{1n} - \beta_1 \to_P 0$, i.e., $\hat{\beta}_{1n}$ is consistent. 
+
+Since $\hat{\beta}_{0n} - \beta_0 = \overbar{Y} - \bar{z}_n\hat{\beta}_{1n} - \beta_0 = -\bar{z}_n(\hat{\beta}_{1n} - \beta_1) + \bar{\eps}_n$ and $\overbar{\eps}_n = o_P(1)$ by WLLN, it suffices to show that $\Var(\bar{z}_n(\hat{\beta}_{1n} - \beta_1)) \to 0$ as $n \to \infty$, which is exactly the condition $2.17$. The proof is complete.
+\end{proof}
+\end{description}
+\end{description}
+
+\newpage
+
+\section*{Homework 4}
+\begin{description}
+\item[Problem 1]
+\begin{proof}
+The main tool we shall use for this proof are two well-known inequalities: for any two random variables $X$ and $Y$ which have $r$th order finite moments, we have
+\begin{description}
+\item[\emph{$c_r$ inequality}]
+$$E[|X + Y|^r] \leq c_r(E[|X|^r] + E[|Y|^r]),$$
+where 
+$$c_r = 
+\begin{cases}
+1 & 0 < r \leq 1, \\[1ex]
+2^{r - 1} & r > 1.
+\end{cases}
+$$
+
+\item[\emph{Minkowski's inequality}]
+$$E^{\frac{1}{r}}[|X + Y|^r] \leq E^{\frac{1}{r}}[|X|^r] + E^{\frac{1}{r}}[|Y|^r], \quad r \geq 1.$$
+\end{description}
+
+Since $X_n \to_{L^r} X$, by definition, $E[|X|^r] < \infty$. If $0 < r \leq 1$, by $c_r$ inequality and $E[|X_n - X|^r] \to 0$ as $n \to \infty$, it follows that for sufficiently large $n$, 
+$$E[|X_n|^r] = E[|(X_n - X) + X|^r] \leq E[|X_n - X|^r] + E[|X|^r] < \infty.$$
+Interchanging the roles of $X_n$ and $X$ in the above expression, then $E[|X|^r] \leq E[|X_n - X|^r] + E[|X_n|^r]$. Therefore
+$$|E[|X_n|^r] - E[|X|^r]| \leq E[|X_n - X|^r] \to 0$$
+as $n \to \infty$, i.e., $E[|X_n|^r] \to E[|X|^r]$ as $n \to \infty$. 
+
+If $r > 1$, by Minkowski's inequality, 
+$$E^{\frac{1}{r}}[|X_n|^r] = E^{\frac{1}{r}}[|(X_n - X) + X|^r] \leq E^{\frac{1}{r}}[|X_n - X|^r] + E^{\frac{1}{r}}[|X|^r].$$
+Switching the roles of $X_n$ and $X$ above to obtain
+$$E^{\frac{1}{r}}[|X|^r] \leq E^{\frac{1}{r}}[|X_n - X|^r] + E^{\frac{1}{r}}[|X_n|^r].$$
+Thus
+$$\left|E^{\frac{1}{r}}[|X_n|^r] - E^{\frac{1}{r}}[|X|^r]\right| \leq E^{\frac{1}{r}}[|X_n - X|^r] \to 0$$
+as $n \to \infty$. Hence $E^{\frac{1}{r}}[|X_n|^r] \to E^{\frac{1}{r}}[|X|^r]$ as $n \to \infty$, the result then follows by noting that the function $x \mapsto x^r$ is continuous on $(0, +\infty)$.
+\end{proof}
+
+\item[Problem 2]
+\begin{proof} \ 
+\begin{itemize}
+\item $X_n \overset{L^s}\to X \Rightarrow X_n \overset{L^r}\to X$: Since for $s > r \geq 1$, we have (which may be termed as the monotonicity of the $L^p$ norm):
+$$E^{\frac{1}{r}}[|X_n - X|^r] \leq E^{\frac{1}{s}}[|X_n - X|^s],$$
+the result follows. 
+
+\item $X_n \overset{L^r}\to X \Rightarrow X_n \overset{P}\to X$: This can be easily seen by Markov's inequality:
+$$P\left[|X_n - X| \geq \eps\right] = P[|X_n - X|^s \geq \eps^s] \leq \frac{E[|X_n - X|^s]}{\eps^s}.$$
+
+\item $X_n \overset{P}\to X \Rightarrow X_n \overset{d}\to X$: Let $F_n$ and $F$ denote the distribution functions of $X_n$ and $F$ respectively. Given $\eps > 0$, let $x$ be any continuity point of $F$. If $X_n \leq x$, then either $X \leq x + \eps$ or $|X_n - X| > \eps$. In other words, $[\omega: X_n(\omega) \leq x] \subset [\omega: X(\omega) \leq x + \eps] \cup [\omega: |X_n(\omega) - X(\omega)| > \eps]$. Hence
+$$F_n(x) = P[X_n \leq x] \leq P[X \leq x + \eps] + P[|X_n - X| > \eps].$$
+Similarly, noting that $[\omega: X(\omega) \leq x - \eps] \subset [\omega: X_n(\omega) \leq x] \cup [\omega: |X_n(\omega) - X(\omega)| > \eps]$, it follows that
+$$P[X \leq x - \eps] \leq P[X_n \leq x] + P[|X_n - X| > \eps].$$
+Since $X_n \overset{P}\to X$, $P[|X_n - X| > \eps] \to 0$ as $n \to \infty$. Thus the above two arrays of inequalities give that
+$$F(x - \eps) \leq \liminf_{n \to \infty} F_n(x) \leq \limsup_{n \to \infty} F_n(x) \leq F(x + \eps).$$
+Since $x$ is a continuity point of $F$, by letting $\eps \downarrow 0$, we conclude that $\lim\limits_{n \to \infty} F_n(x) = F(x)$, i.e., $X_n \overset{d}\to X$.
+
+\item $X_n \overset{a.s.}\to X \Rightarrow X_n \overset{P}\to X$: It is helpful to express the set $A = [\omega: \lim_{n \to \infty}X_n(\omega) = X(\omega)]$ as follows:
+\begin{align*}
+& [\omega: \lim_{n \to \infty} X_n(\omega) = X(\omega)] \\
+= & [\omega: \forall \eps > 0, \exists N_\eps, |X_n(\omega) - X(\omega)| < \eps, \forall n \geq N] \\
+= & \bigcap_{\eps > 0}\bigcup_{N = 1}^\infty\bigcap_{n = N}^\infty [\omega: |X_n(\omega) - X(\omega)| < \eps].
+\end{align*}
+By condition we have $P(A) = 1$, which implies that $P[|X_n - X| < \eps] \to 1$ as $n \to \infty$ for as long as $\eps$ is fixed, the set $\bigcup_{N = 1}^\infty\bigcap_{n = N}^\infty [\omega: |X_n(\omega) - X(\omega)| < \eps]$ contains $A$. 
+\end{itemize}
+The counterexamples are given as follows:
+\begin{itemize}
+\item $X_n \overset{d}\to X \nRightarrow X_n \overset{P}\to X$: Let $X_n \equiv X \sim \text{Bernoulli}(0.5)$, $Y \sim \text{Bernoulli}(0.5)$ that is independent of $X$. Clearly, $X_n \overset{d}\to Y$, but $X_n$ does not converge to $Y$ in probability, since 
+$$P[|X_n - Y| \geq 1] = P[|X - Y| \geq 1] = P[X = 1, Y = 0] + P[Y = 1, X = 0] = 0.5,$$
+which does not converge to $0$ as $n \to \infty$.
+
+\item $X_n \overset{P}\to X \nRightarrow X_n \overset{a.s.}\to X$: This counterexample is classical. Let the probability space be $((0, 1], \mathscr{B}(0, 1], \lambda)$, where $\mathscr{B}(0, 1]$ is the Borel $\sigma$-field on $(0, 1]$ and $\lambda$ is the Lebesgue measure. Let $X_1 = 1$, $X_2 = I_{(0, 1/2]}(\omega)$, $X_3 = I_{(1/2, 1]}(\omega)$, $X_4 = I_{(0, 1/4]}(\omega)$, $X_5 = I_{(1/4, 1/2]}(\omega), \ldots$. In general, if $n = 2^k + m$, where $0 \leq m < 2^k$ and $k \geq 0$, then $X_n = I_{(m2^{-k}, (m + 1)2^{-k}]}(\omega)$. By construction, since $X_n$ is moving over $(0, 1]$ endlessly, it does not converge at any point $\omega \in (0, 1]$ (my first probability teacher described this function as ``a shrinking travelling dark cloud"). Therefore, $X_n \overset{a.s.}\nrightarrow 0$. However, the measure (length) of the set it does not converge to $0$ tends to $0$, since for any given $\eps > 0$, there exists $k$ such that $2^{-k} < \eps$. Then for every $\delta > 0$, for $n \geq 2^k$, we have
+$$P[|X_n - 0| \geq \delta] \leq \frac{1}{2^k} < \eps.$$
+That means $X_n \overset{P}\to 0$.
+
+\item $X_n \overset{P}\to X \nRightarrow X_n \overset{L^1}\to X$: Set the probability space as above. Define $X_n(\omega) = nI_{(0, n^{-1})}(\omega)$, where $I$ denotes the indicator function. For any fixed $\omega \in (0, 1]$, there exists sufficiently large $n$ such that $n^{-1} < x$, hence $X_n \to 0$ everywhere, implying that $X_n \overset{P}\to 0$. However, $E[|X_n - 0|] = n \times n^{-1} = 1 \not\to 0$ as $n \to \infty$, i.e., $X_n \not\to_{L^1} 0$.
+
+\item $X_n \overset{L^r}\to X \nRightarrow X_n \overset{L^s}\to X$: Set the probability space as above. Define $X_n(\omega) = \sqrt{n}I_{(0, n^{-1})}(\omega)$. It is easy to check that $E[|X_n - 0|] = \frac{1}{\sqrt{n}} \to 0$ as $n \to \infty$ but $E[|X_n - 0|^2] = 1 \not\to 0$ as $n \to \infty$. Hence convergence in mean does not imply convergence in quadratic mean.
+
+\item $X_n \overset{a.s.}\to X \nRightarrow X_n \overset{L^1}\to X$: Use the same counterexample as the third item.
+
+\item $X_n \overset{L^1}\to X \nRightarrow X_n \overset{a.s.}\to X$: Use the same counterexample as the second item. For $n = 2^k + m$ and all $r > 0$, $E[|X_n - 0|^r] = \frac{1}{2^{kr}} \to 0$ as $k \to \infty$. Hence $X_n \overset{L^r}\to 0$ for all $r > 0$, including the case $r = 1$.
+\end{itemize}
+\end{proof}
+
+\item[2.15]
+\begin{description}
+\item[(a)]
+\begin{proof}
+Given $\eps > 0$, choose $b$, $c$, the partition $\{t_0, \ldots, t_m\}$ and the approximation function $h$ as the hint suggests. Since $X_n \Rightarrow X$ and $t_0, \ldots, t_m$ are all continuity points of $F$, we have $F_n(t_i) \to F(t_i)$ as $n \to \infty$ for each $i \in \{0, \ldots, m\}$, that is, there exists $N \in \nn$, such that $\sup\limits_{0 \leq i \leq m}|F_n(t_i) - F(t_i)| < \frac{\eps}{2Mm}$ for all $n > N$, where $M$ is such that $|g(x)| \leq M$ for all $x \in \real$. It then follows for each $n > N$,
+\begin{align*}
+& |E[h(X_n)] - E[h(X)]| \\
+= & \left|\sum_{i = 1}^m g(t_i)P[t_{i - 1} < X_n \leq t_i] - \sum_{i = 1}^m g(t_i)P[t_{i - 1} < X \leq t_i]\right| \\
+= & \left|\sum_{i = 1}^m g(t_i)[(F_n(t_i) - F(t_i)) + (F_n(t_{i - 1}) - F(t_{i - 1}))]\right| \\
+\leq &  \sum_{i = 1}^m |g(t_i)||F_n(t_i) - F(t_i)| + \sum_{i = 1}^m |g(t_i)||F_n(t_{i - 1}) - F(t_{i - 1})| \\
+\leq & M\sum_{i = 1}^m \frac{\eps}{2Mm} +  M\sum_{i = 1}^m \frac{\eps}{2Mm} = \eps.
+\end{align*}
+This completes the proof.
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+By the decomposition given in hint and the result of part (a), it remains to show that $E[g(X_n)] - E[h(X_n)]$ can be bounded by arbitrarily small positive $\eps$ for all sufficiently large $n$, and $|E[g(X)] - E[h(X)]|$ can be bounded by small $\eps$. 
+Write
+\begin{align*}
+& |E[g(X_n)] - E[h(X_n)]| \\
+= & |E[g(X_n)I_{[b \leq X_n \leq c]}] - E[h(X_n)I_{[b \leq X_n \leq c]}] + E[g(X_n)I_{[X_n < b] \cup [X_n > c]}] \\
+& - E[h(X_n)I_{[X_n < b] \cup [X_n > c]}]| \\
+\leq & |E[g(X_n)I_{[b \leq X_n \leq c]}] - E[h(X_n)I_{[b \leq X_n \leq c]}]| + 4M\eps \\
+\leq & \sum_{i = 1}^m \eps |F_n(t_i) - F(t_i)| + \sum_{i = 1}^m \eps |F_n(t_{i - 1}) - F(t_{i - 1})| + 4M\eps \\
+< & C\eps
+\end{align*}
+for some positive constant $C$ whenever $n$ is large enough. Similarly, we can show the second assertion. This is somewhat a sketch of proof, which is not hard to extend to a rigorous proof so that in the rightmost you will get $\eps$ exactly.
+\end{proof}
+\end{description}
+
+\item[2.16]
+\begin{description}
+\item[(a)]
+\begin{proof}
+Given $\eps > 0$, since $t \in C(F)$, there exists $\delta_0 > 0$ such that $|x - t| < \delta_0$ implies that $|F(x) - F(t)| < \eps$. 
+Choose any $\delta \in (0, \delta_0)$, then $0 \leq F(t + \delta) - F(t) < \eps$ and $0 \leq F(t) - F(t - \delta) < \eps$, which imply $F(t + \delta) < F(t) + \eps$ and $F(t - \delta) > F(t) - \eps$.
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+Fix $x \in C(F)$, suppose that $y > x$. Let $f(t)$ be $1$ for $t \leq x$, $0$ for $t \geq y$, and interpolate linearly on $[x, y]$: $f(t) = (y - t)/(y - x)$ for $x \leq t \leq y$. Since $F_n(x) \leq E[f(X_n)]$ and $E[f(X)] \leq F(y)$, it follows from the condition that $\limsup_{n \to \infty} F_n(x) \leq F(y)$; letting $y \downarrow x$ shows that $\limsup_{n \to \infty} F_n(x) \leq F(x)$. Similarly, $F(u) \leq \liminf_n F_n(x)$ for $u < x$ and hence $F(x-) \leq \liminf_n F_n(x)$. This implies convergence at continuity points. 
+\end{proof}
+\end{description}
+
+\item[2.17]
+\begin{proof}
+Fix $Z \sim \gaussian(0, 1)$. For each $n \in \nn$, define $X_n = Z$, 
+$Y_n = Z + U/n$, where $U \sim \mathcal{U}(-1, 1)$ is taken to be independent
+of $Z$.\footnote{Here is another simpler (yet might be too trivial) counterexample: $X_n = Z, Y_n = Z + 1/n$, $n = 1, 2, \ldots$.} We shall show that:
+\begin{description}
+\item{(i)} Every point of $\real^2$ is a continuity point of the distribution
+function of $(Z, Z)$. 
+\item{(ii)} $(X_n, Y_n) \Rightarrow (Z, Z)$;
+\item{(iii)} Let $S \coloneqq \{(x, y): y = x\}$, i.e., the straight line
+with slope $1$ passing the origin. Then $P[(X_n, Y_n) \in S] \not\to 
+P[(Z, Z) \in S]$. Obviously, $S$ is a connected set in $\real^2$.
+\end{description}
+
+To show (i), let's first find the distribution function $F(x, y)$ of $(Z, Z)$.
+By definition, $F(x, y) = P[(Z, Z) \leq (x, y)] = P[Z \leq x, Z \leq y] = 
+P[Z \leq \min(x, y)] = \Phi(\min(x, y))$, where $\Phi(\cdot)$ is the 
+distribution function of $Z$. Since the mappings $(x, y) \mapsto \min(x, y)$
+is continuous on $\real^2$, and $z \mapsto \Phi(z)$ is continuous on $\real^1$,
+their composition $\Phi(\min(x, y))$ is continuous everywhere on $\real^2$
+as well (\cite{rudin1964}, Theorem 4.7). 
+
+To show (ii), because of (i), it suffices to show that as $n \to \infty$,
+$P[X_n \leq x, Y_n \leq y] \to \Phi(\min(x, y))$ for every $(x, y) \in 
+\real^2$. Let's first consider the case $x < y$. Then for all sufficiently
+large $n$, we have $x < y - u/n$ for each $u \in (-1, 1)$. It then follows by
+the independence of $Z$ and $U$ that 
+\begin{align*}
+& P[X_n \leq x, Y_n \leq y] = P[Z \leq x, Z + U/n \leq y] \\
+= & \int_{-1}^1 P[Z \leq x, Z \leq y - u/n] \times \frac{1}{2} \dd u 
+= \frac{1}{2}\int_{-1}^1 \Phi(x) \dd u = \Phi(x).
+\end{align*}
+
+The case $x > y$ can be handled similarly. If $x = y$, then
+\begin{align*}
+& P[X_n \leq x, Y_n \leq x] = P[Z \leq x, Z + U/n \leq x] \\
+= & \int_{-1}^1 P[Z \leq x, Z \leq x - u/n] \times \frac{1}{2} \dd u \\
+= & \frac{1}{2}\int_{-1}^0 P[Z \leq x, Z \leq x - u/n] \dd u 
++ \frac{1}{2}\int_0^1 P[Z \leq x, Z \leq x - u/n] \dd u \\
+= & \frac{1}{2}\int_{-1}^0 \Phi(x) \dd u
++ \frac{1}{2} \int_0^1 \Phi(x - u/n) \dd u \\
+\to & \Phi(x)
+\end{align*}
+as $n \to \infty$. The last step follows from the dominated convergence 
+theorem in view of $\Phi(\cdot)$ is bounded by $1$. In summary, $(X_n, Y_n) 
+\Rightarrow (Z, Z)$. 
+
+Lastly, let's show (iii). For each fixed $n \in \nn$, 
+we have $P[(X_n, Y_n) \in S] = P[X_n = Y_n] = P[Z = Z + U/n] = P[U = 0] = 0$. 
+On the other hand,
+$P[(Z, Z) \in S] = 1$. Therefore $P[(X_n, Y_n) \in S]$ clearly does not 
+converge to $P[(Z, Z) \in S]$. 
+\end{proof}
+
+\item[2.21]
+\begin{proof}
+For simplicity, assume both $X_n$ and $Y_n$ are univariate. Let $X_n \equiv Y_n = Y \sim \mathcal{N}(0, 1)$, and $X \sim \mathcal{N}(0, 1)$ be independent of $Y$. Clearly, we have $X_n \Rightarrow X$, $Y_n \to_P Y$. However, $(X_n, Y_n) = (Y, Y) \not\Rightarrow (X, Y)$, for $P[(Y, Y) \leq (0, 0)] = P[Y \leq 0] = \frac{1}{2} \not\to P[(X, Y) \leq (0, 0)] = P[X \leq 0]P[Y \leq 0] = \frac{1}{4}$.
+\end{proof}
+
+\item[2.24]
+\begin{proof}
+\item[(a)] It is worth pointing out that \emph{\color{red}the hint is wrong}! As a counterexample, define $F$ as follows:
+\begin{align*}
+F(x) = \begin{cases}
+0 & x < -1; \\[1ex]
+1 - \frac{1}{i} & -\frac{1}{i} \leq x < -\frac{1}{i + 1}, i = 1, 2, \ldots;  \\[1ex]
+1 & x \geq 0.
+\end{cases}
+\end{align*}
+
+Since $\lim_{x \to 0} F(x) = F(0) = 1$, $0$ is a continuity point of $F$. However, any neighborhood of $0$ contains a (in fact, infinitely many) jump point of $F$. Therefore, the statement made in the hint is overly strong. Instead of using this wrong statement, notice that the continuity points of $F$ are \emph{dense} in $\real^k$, so we may continue the proof by manipulating the inequalities given in the hint. The proof of the dense statement needs some measure theory, so I will omit it here. For those who are interested in this result, see page $260$ of \cite{billingsley95}.
+
+For an alternative proof for this lemma, see the proof of Theorem $6$ in Section $6$ of \cite{ferguson1996}, which is one of the optional textbooks listed in syllabus.
+
+\item[(b)] By the above lemma, it suffice to show that $(X_n^T, c^T)^T \Rightarrow (X^T, c^T)^T$ and $(0^T, (Y_n - c)^T)^T \to_P (0^T, 0^T)^T$. For clarity, assume $X_n \in \real^n$ and $Y_n \in \real^m$. To show that $(0^T, (Y_n - c)^T)^T \to_P (0^T, 0^T)^T$, we check the definition of convergence in probability. For given $\eps > 0$, since $Y_n \to_P c$, it follows that
+$$P[\|(0^T, (Y_n - c)^T)^T - (0, 0)^T\|_{\real^{n + m}} \geq \eps] = P[\|Y_n - c\|_{\real^m} \geq \eps] \to 0$$
+as $n \to \infty$, where $\|\cdot\|_{\real^i}$ denotes the Euclidean distance on $\real^i$. Therefore $(0^T, (Y_n - c)^T)^T \to_P (0^T, 0^T)^T$.
+
+We may also verify the weak convergence by original definition. Alternatively, a more compact way is to use the equivalent characterization (Theorem $2.28$) for weak convergence. To show $(X_n^T, c^T) \Rightarrow (X^T, c^T)$, by the sufficiency part of Theorem $2.28$, we need to show for any given bounded and continuous function $g$ mapping $\real^{n + m}$ into $\real^1$, it holds that $E[g(X_n, c)] \to E[g(X, c)]$ as $n \to \infty$. It is straightforward to verify that given $g$ is bounded and continuous on $\real^{n + m}$, then $f(x) = g(x, c)$ is a bounded and continuous function mapping $\real^n$ to $\real$, thus $E[f(X_n)] \to E[f(X)]$ as $n \to \infty$ for $X_n \Rightarrow X$ and the necessity part of Theorem $2.28$. Noting that by construction, $E[f(X_n)] = E[g(X_n, c)]$, $E[f(X)] = E[g(X, c)]$, hence the result follows.
+\end{proof}
+
+\begin{comment}
+\item[3.1]
+\begin{description}
+\item[(a)] Trivial.
+
+\item[(b)]
+\begin{proof}
+We have the following diagram: 
+\begin{align*}
+X_n \overset{a.s.}\to X \iff P(S) = 1 \iff \lim_{n \to \infty}P(A_n) = 1, \text{ for any $\eps > 0$},
+\end{align*}
+where the second equivalence relation follows $(a)$. The proof is complete.
+\end{proof}
+\end{description}
+
+\item[3.3]
+\begin{proof}
+As the hint suggests and recall what we have done in Homework $1$, $[B_n \text{ i.o.}] = \limsup_{n \to \infty} B_n = \bigcap_{n = 1}^\infty\bigcup_{k = n}^\infty B_k$, it then follows that for each $n \in \nn$,
+$$P[B_n \text{ i.o.}] = P\left[\bigcap_{n = 1}^\infty\bigcup_{k = n}^\infty B_k\right] \leq P\left[\bigcup_{k = n}^\infty B_k\right] \leq \sum_{k = n}^\infty P(B_k). $$
+Let $n \to \infty$ on the right hand side of the above expression and use $\sum_{n = 1}^\infty P(B_n) < \infty$, we conclude that $P[B_n \text{ i.o.}] = 0$.
+\end{proof}
+\end{comment}
+\end{description}
+
+\newpage
+
+\section*{Homework 5}
+\begin{description}
+\item[Problem 1]
+\begin{description}
+\item[(a)] 
+\begin{proof}
+First assume $a \in \real$. Given $\eps > 0$, since $a_n \to a$ as $n \to \infty$, there exists $N \in \nn$ such that $n > N$ implies that $|a_n - a| < \eps/2$. Let $M = \max\limits_{1 \leq i \leq N} \{|a_i - a|\}$. It follows that
+for each $n > N \vee 2NM/\eps$ (\emph{remark}: $\vee$ is an extensively used notation 
+in probability theory, for two real numbers $x$ and $y$, $x \vee y \coloneqq \max\{x, 
+y\}$),
+\begin{align*}
+& |A_n - a| = \left|\frac{1}{n}\sum_{i = 1}^n a_i - a\right| \\
+= & \left|\frac{1}{n}\sum_{i = 1}^n (a_i - a)\right| \\
+\leq & \frac{1}{n}\sum_{i = 1}^N |a_i - a| + \frac{1}{n}\sum_{i = N + 1}^n |a_i - a| \\
+\leq & \frac{NM}{n} + \frac{n - N}{n}\frac{\eps}{2} \\
+< & \frac{\eps}{2} + \frac{\eps}{2} = \eps.
+\end{align*}
+This shows that if $a \in \real$, $A_n \to a$ as $n \to \infty$.
+
+This result also holds if $a = +\infty$ or $a = -\infty$. The above proof can be adapted \emph{mutatis mutandis} for these two cases.
+\end{proof}
+
+\item[(b)] 
+\begin{proof}
+Define $S_n = \sum_{i = 1}^n a_i$ to be the partial sum sequence for $\{a_n\}$. The convergence of series by definition amounts to that $\lim\limits_{n \to \infty} S_n = a \in \real$. Therefore, for given $\eps > 0$, there exists $N \in \nn$ such that $|S_n - a| < \eps$ for all $n > N$. It then follows that for each $n > N + 1$, 
+$$|B_n - 0| = |a - S_{n - 1}| < \eps.$$
+The proof is thus complete. 
+\end{proof}
+
+\item[(c)] 
+\begin{proof}
+For this problem, we shall apply an important technique called \emph{Abel's summation 
+by parts formula}, which can be found from Theorem $3.41$ in \cite{rudin1964}. I will 
+also derive it here as one part of our proof.
+
+Let $A_n = a_1 + \cdots + a_n, n = 1, 2, \ldots$. Since $a_1 = A_1, a_n = A_n - A_{n - 1}, n \geq 2$, it follows that
+\begin{align*}
+& \sum_{i = 1}^n a_ib_i = a_1b_1 + \cdots + a_nb_n \\
+= & A_1b_1 + (A_2 - A_1)b_2 + (A_3 - A_2)b_3 + \cdots + (A_{n - 1} - A_{n - 2})b_{n - 1} + (A_n - A_{n - 1})b_n \\
+= & A_1(b_1 - b_2) + A_2(b_2 - b_3) + \cdots + A_{n - 1}(b_{n - 1} - b_n) + A_nb_n \\
+= & \sum_{i = 1}^{n - 1}A_i(b_i - b_{i + 1}) + A_nb_n.
+\end{align*}
+
+Since $A_n \to a$ and $b_n \uparrow +\infty$ as $n \to \infty$, to show that $\displaystyle C_n = \frac{1}{b_n}\sum_{i = 1}^n a_ib_i = \frac{1}{b_n}\sum_{i = 1}^{n - 1}A_i(b_i - b_{i + 1}) + A_n \to 0$, it is equivalent to show that $\displaystyle \frac{1}{b_n}\sum_{i = 1}^{n - 1}A_i(b_i - b_{i + 1}) \to -a$ as $n \to \infty$. Given $\eps > 0$, since $A_n \to a$ as $n \to \infty$, there exists $N \in \nn$ such that $n > N$ implies that $|A_n - a| < \eps/3$. Denote $\max\limits_{1 \leq i \leq N}\{|A_i - a|\}$ by $M$. Since $b_n \to +\infty$, there exists $N' \in \nn$ such that $n > N'$ implies that $|ab_1/b_n| < \eps/3$ and $M(b_{N + 1} - b_1)/b_n < \eps/3$. Hence, by noting the monotonicity of sequence $\{b_n\}$, for each $n > N \vee N' + 1$, we have
+\begin{align*}
+& \left|\frac{1}{b_n}\sum_{i = 1}^{n - 1} A_i(b_i - b_{i + 1}) - (-a)\right| \\
+= & \left|\frac{1}{b_n}\sum_{i = 1}^{n - 1} A_i(b_i - b_{i + 1}) + \frac{1}{b_n}\sum_{i = 1}^{n - 1} a(b_{i + 1} - b_i) + \frac{ab_1}{b_n}\right| \\
+\leq & \left|\frac{1}{b_n}\sum_{i = 1}^{n - 1} (a - A_i)(b_{i + 1} - b_i)\right| + \left|\frac{ab_1}{b_n}\right| \\
+\leq & \left|\frac{1}{b_n}\sum_{i = 1}^{N} (a - A_i)(b_{i + 1} - b_i)\right| + \left|\frac{1}{b_n}\sum_{i = N + 1}^{n - 1} (a - A_i)(b_{i + 1} - b_i)\right|+ \left|\frac{ab_1}{b_n}\right| \\
+\leq & \frac{M(b_{N + 1} - b_1)}{b_n} + \frac{\eps}{3}\cdot\frac{b_n - b_{N + 1}}{b_n} + \frac{\eps}{3} \\
+< & \frac{\eps}{3} + \frac{\eps}{3} + \frac{\eps}{3} = \eps.
+\end{align*}
+This completes the proof.
+\end{proof}
+\end{description}
+
+\item[Problem 2]
+The \emph{Etemadi's maximal inequality} is Theorem $22.5$ in \cite{billingsley95}.
+
+\item[3.3]
+\begin{proof}
+As the hint suggests and recall what we have done in Homework $1$, $[B_n \text{ i.o.}] = \limsup_{n \to \infty} B_n = \bigcap_{n = 1}^\infty\bigcup_{k = n}^\infty B_k$, it then follows that for each $n \in \nn$,
+$$P[B_n \text{ i.o.}] = P\left[\bigcap_{n = 1}^\infty\bigcup_{k = n}^\infty B_k\right] \leq P\left[\bigcup_{k = n}^\infty B_k\right] \leq \sum_{k = n}^\infty P(B_k). $$
+Let $n \to \infty$ on the right hand side of the above expression and use $\sum_{n = 1}^\infty P(B_n) < \infty$, we conclude that $P[B_n \text{ i.o.}] = 0$.
+\end{proof}
+
+\item[3.4]
+\begin{description}
+\item[(a)]
+\begin{proof}
+Denote $X_1 + X_2 + \cdots + X_n$ by $S_n$, it is easily seen that 
+\begin{equation}\label{SLLN}
+S_n^4 = \sum X_\alpha X_\beta X_\gamma X_\delta.
+\end{equation}
+Depending on how the indices match up, each term in this sum reduces to one of the following five forms, where in
+each case the indices are now \emph{distinct}:
+\begin{equation*}
+\begin{cases}
+X_i^4, \\
+X_i^2 X_j^2, \\
+X_i^2 X_j X_k, \\
+X_i^3 X_j, \\
+X_i X_j X_k X_l.
+\end{cases}
+\end{equation*}
+By independence assumption, all terms with the latter three forms have $0$ expected value. The number of occurrences in the sum \eqref{SLLN} of the first form is $n$. The number of occurrences of the second form is $3n(n - 1)$, because there are $n$ choices for the $\alpha$ in \eqref{SLLN}, three ways to match it with $\beta, \gamma$ or $\delta$, and $n - 1$ choices for the value common to the remaining two indices. Therefore
+$$E[S_n^4] = n\mu_4 + 3n(n - 1)\mu_2^2,$$
+where $\mu_k = E[X_1^k], k = 2, 4$ (it follows by Schwarz inequality that if $\mu_4 < \infty$, then $\mu_2 < \infty$).  
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+By Markov's inequality, for any given $\eps > 0$, 
+\begin{align*}
+P[|\overbar{X}_n| \geq \eps] = P[|S_n| \geq n \eps] \leq & \frac{E[S_n^4]}{n^4\eps^4} = \frac{n\mu_4 + 3n(n - 1)\mu_2^2}{n^4\eps^4} \leq \frac{M}{n^2}
+\end{align*}
+for some positive constant $M$ that is independent of $n$. 
+\end{proof}
+
+\item[(c)]
+\begin{proof}
+By the result of part (b), we have
+$$\sum_{n = 1}^\infty P[|\overbar{X}_n| \geq \eps] \leq M\sum_{n = 1}^\infty \frac{1}{n^2} < \infty.$$
+It then follows by Lemma $3.9$ that $\overbar{X}_n \to_{a.s.} 0$. 
+\end{proof}
+\end{description}
+\item[3.7]
+\begin{description}
+\item[(a)]
+\begin{proof}
+Without loss of generality, we may assume $\mu = 0$. Let $S_n = X_1 + \cdots + X_n$. 
+$$\max_{2^{k - 1} \leq n < 2^k} |\overbar{X}_n| = \max_{2^{k - 1} \leq n < 2^k} \frac{|S_n|}{n} \leq 
+ \max_{2^{k - 1} \leq n < 2^k} \frac{|S_n|}{2^{k - 1}} \leq \frac{1}{2^{k - 1}} \max_{1 \leq n \leq 2^k}|S_n|$$
+ Hence by Kolmogorov's inequality, 
+\begin{align*}
+ P[Y_k \geq \eps] & \leq P\left[\frac{1}{2^{k - 1}}\max_{1 \leq n \leq 2^k} |S_n| \geq \eps\right] \leq
+ P\left[\max_{1 \leq n \leq 2^k} |S_n| \geq 2^{k - 1} \eps\right] \leq \frac{\sum_{i = 1}^{2^k} \Var(X_i)}{2^{2k - 2}\eps^2} \\
+& = \frac{4\sum_{i = 1}^{2^k} \Var(X_i)}{{4^k}\eps^2}, \quad k = 1, 2, \ldots. 
+\end{align*}
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+By the celebrated geometric series sum formula,
+$$\sum_{k = \lceil \log_2 i\rceil}^\infty \frac{1}{4^k} = \frac{\frac{1}{4^{\lceil \log_2 i \rceil}}}{1 - \frac{1}{4}} \leq \frac{4}{3}\frac{1}{4^{\log_2 i}} = \frac{4}{3i^2}.$$
+By the result of part (a) and Tonelli's theorem (notice that all the summands are nonnegative):
+\begin{align*}
+& \sum_{k = 1}^\infty P[Y_k \geq \eps] \\
+\leq & \frac{4}{\eps^2} \sum_{k = 1}^\infty \frac{1}{4^k}\sum_{i = 1}^{2^k} \Var(X_i) \\
+= & \frac{4}{\eps^2} \sum_{i = 1}^\infty \left[\sum_{k = \lceil \log_2 i \rceil}^\infty \frac{1}{4^k}\right] \Var(X_i) \\
+\leq & \frac{4}{\eps^2} \sum_{i = 1}^\infty \frac{4}{3i^2}\Var(X_i) \\
+= & \frac{16}{3\eps^2} \sum_{i = 1}^\infty \frac{\Var(X_i)}{i^2} < \infty.
+\end{align*}
+Hence by Lemma $3.9$, $Y_n \to_{a.s.} 0$. Given $\eps > 0$, $Y_n \to_{a.s.} 0$ implies that there exists a set $A$ with probability $1$, and for each $\omega \in A$, there exists $N \in \nn$, $n > N$ implies that $|Y_n(\omega)| = Y_n(\omega) < \eps$. Now for each $n > 2^{N}$, there exists $k \in \nn$ such that $n \in \{2^{k - 1}, \ldots, 2^k - 1\}$,  for which case $2^k - 1 \geq n > 2^N$, implying $k > N$,  it then follows that
+$$|\overbar{X}_n(\omega)| \leq \max_{2^{k - 1} \leq i < 2^k} |\overbar{X}_i(\omega)| = Y_k(\omega) < \eps. $$
+This shows that for each $\omega \in A$, $\overbar{X}_n(\omega) \to 0$ as $n \to \infty$, hence $\overbar{X}_n \to_{a.s.} 0$. 
+\end{proof}
+\end{description}
+\end{description}
+
+\newpage
+
+\section*{Quiz 6}
+\begin{proof}
+Denote the distribution function of $M_n$ by $F_n$. If $x < 0$, then $F_n(x) = 0$. If $x \geq 0$, then
+$$F_n(x) = P[M_n \leq x] = P[X_1 \leq x, \ldots, X_n \leq x] = (1 - e^{-\lambda x})^n.$$
+Therefore, for each $x \in \real$, $\lim\limits_{n \to \infty} F_n(x) = 0$. 
+Hence $F_n$ \emph{does not} converge in distribution to any \emph{probability} 
+distribution. On the other hand, for each $x \in \real$, 
+\begin{align*}
+P[M_n - \lambda^{-1}\log n \leq x] = & F_n(x + \lambda^{-1}\log n) = \left(1 - e^{-(\lambda x + \log n)}\right)^n = \left(1 - \frac{e^{-\lambda x}}{n}\right)^n \\
+\to & e^{-e^{-\lambda x}} \eqqcolon F(x)
+\end{align*}
+as $n \to \infty$. It is straightforward to check $F(\cdot)$ above is 
+nondecreasing, continuous and normalized, hence a valid probability 
+distribution function. This limiting distribution is known as \emph{Gumbel's 
+extreme value distribution}.
+\end{proof}
+
+\newpage
+
+\section*{Homework 6}
+
+\begin{description}
+\begin{comment}
+\item[Problem 1]
+\begin{proof}
+\emph{Necessity:} Suppose $X$ is integrable, hence $E[|X|] < \infty$. Notice that $E[|X|I_{[|X| \geq c]}] \to 0$ as $c \to \infty$ is equivalent to $E[|X|I_{[|X| \geq n]}] \to 0$ as $n \to \infty$ (why?), so I will show that $E[|X|] < \infty$ implies that $E[|X|I_{A_n}] \to 0$ as $n \to \infty$, where $A_n \equiv [|X| \geq n], n = 1, 2, \ldots$. Clearly, $\{|X|I_{A_n}\}$ is dominated by $|X|$, so if we can show that $|X|I_{A_n} \to 0$ almost surely, the result then follows by applying Lebesgue's dominated convergence theorem. 
+
+To show that $|X|I_{A_n} \to_{a.s.} 0$, notice that for each $n$,
+$$E[|X|] = E[|X|I_{A_n}] + E[|X|I_{A_n^c}] \geq nP(A_n).$$
+Hence we must have $P(A_n) \to 0$ as $n \to \infty$ otherwise it would contradict to the fact $E[|X|] < \infty$. Clearly $\{A_n\}$ is decreasing so that we can define $A \coloneqq \cap_{n = 1}^\infty A_n$. By the continuity
+of probability measure, it follows that $P(A) = \lim_n P(A_n) = 0$. For each $\omega \in A^c$, since $A_n \downarrow A$, we have
+$$|X(\omega)|I_{A_n}(\omega) \to |X(\omega)|I_A(\omega) = 0,$$
+whence $|X|I_{A_n} \to 0$ outside a set of probability $0$, i.e., $|X|I_{A_n} \to_{a.s.} 0$.  
+
+\emph{Sufficiency:} Since $E[|X|I_{[|X| \geq c]}] \to 0$ as $c \to \infty$, given $\eps = 1 > 0$, there exists a sufficiently large $c_0$ such that $E[|X|I_{[|X| \geq c_0]}] < 1$, thereby
+$$E[|X|] = E[|X|I_{[|X| < c_0]}] + E[|X|I_{[|X| \geq c_0]}] < c_0 + 1 < \infty.$$
+That is, $X$ is integrable.
+\end{proof}
+\end{comment}
+
+\item[Problem 1]
+Recall that the \emph{quantile function} $F^-$ is defined by $F^-(q) = \inf[x: F(x) \geq q], q \in (0, 1)$.
+
+\begin{itemize}
+\item 
+\begin{proof}
+Suppose that $0 < q_1 < q_2 < 1$, denote $F^-(q_1)$ and $F^-(q_2)$ by $\xi_1$ and $\xi_2$ respectively. For 
+each $x$ such that $F(x) \geq q_2$, it follows by $q_2 > q_1$ that $F(x) \geq q_1$, hence $\xi_1 \leq x$. Since 
+this holds for every $x$ such that $F(x) \geq q_2$, it follows that $\xi_1 \leq \inf[x: F(x) \geq q_2] = \xi_2$, i.e., 
+$F^-$ is increasing (though $F^-$ needs not to be \emph{strictly} increasing).
+
+Fix $q \in (0, 1)$, and let $\{q_n\}$ be a sequence such that $q_n \uparrow q$. By the monotonicity of $F^-$ just 
+proved, the sequence $\{F^-(q_n)\}$ is increasing and bounded above by $F^-(q)$, hence $\{F^-(q_n)\}$ must
+converge to some limit $a \leq F^-(q)$, by monotone bounded convergence theorem (Theorem $3.14$ in \cite{rudin1964}). If $a < F^-(q)$, then $F(a) < q$, otherwise $F(a) \geq q$ would imply that $F^-(q) \leq a$, which 
+would be in contradiction to $a < F^-(q)$. On the other hand, since $F^-(q_n) \leq a$, by monotonicity of $F$, we 
+have $F(F^-(q_n)) \leq F(a)$. By the property which will be shown in the third item, this implies that $q_n \leq F(a)$ for all $n$, thereby $\limsup_n q_n \leq F(a) < q$, which is in contradiction to $q_n \uparrow q$. Hence $a = F^-(q)$, i.e., $\lim_{q_n \uparrow q} F^-(q_n) = F^-(q)$, that is, $F^-$ is left continuous at $q$.
+\end{proof}
+
+\item 
+\begin{proof}
+By definition, $F^-(F(x)) = \inf[y: F(y) \geq F(x)]$. Since $F(x) \geq F(x)$, it follows that $x \in [y: F(y) \geq F(x)]$, 
+hence $x \geq \inf[y: F(y) \geq F(x)] = F^-(F(x))$.
+\end{proof}
+
+\item
+\begin{proof}
+For $q \in (0, 1)$, denote $F^-(q)$ by $\xi$, $[x: F(x) \geq q]$ by $E$. Since $\xi = \inf E$, for each $n \geq 1$, there exists $x_n \in E$ such that $x_n < \xi + \dfrac{1}{n}$. Since $F$ is monotone and $x_n \in E$, it follows that
+$F(\xi + 1/n) \geq F(x_n) \geq q$. Let $n \to \infty$ and notice that $F$ is right continuous at $\xi$, we conclude 
+that $F(\xi) \geq q$, i.e., $F(F^-(q)) \geq q$. 
+\end{proof}
+\end{itemize}
+
+\begin{rem}
+By the results proved above, for any distribution function $F$, we have the following important relation:
+\begin{equation}\label{quantile}
+\boxed{F(x) \geq q  \text{ if and only if } x \geq F^-(q)}
+\end{equation}
+This relation has an intuitive interpretation in the sense that $F^- \circ F$ can 
+be viewed as an identity transformation (but it's not a rigorous proof, it just 
+helps you memorize). By considering the contrapositive statements of 
+\eqref{quantile}, it also holds that
+\begin{equation}\label{cpquantile}
+\boxed{x < F^{-}(q) \text{ if and only if } F(x) < q}
+\end{equation}
+
+Pay close attention that the inequalities in \eqref{quantile} are non-strict, 
+while that in \eqref{cpquantile} are strict. Do not confuse them with each other!
+
+Problem 2 and Problem 3 below will show you the usefulness of \eqref{quantile}
+and \eqref{cpquantile}.
+\end{rem}
+
+\item[Problem 2]\footnote{I want to thank Vincent Pisztora for inspiring me to give a 
+simpler and clearer proof, instead of my own proof by contradiction earlier.}
+\begin{proof}
+First suppose that $\{F_n\}$ is a nonrandom sequence of distribution functions such that
+\begin{equation}\label{gc0}
+\sup_{x \in \real} |F_n(x) - F(x)| \to 0.
+\end{equation}
+
+Let $\eps > 0$ be given. We wish to show that there exists $N = N(\eps)$ such that for all $n > N$
+$$|\med(F_n) - \med(F)| \leq \eps.$$
+
+For simplicity, write $\med(F) = m$. By definition of median and the ``well-behaved" condition of 
+$F$, we can choose $\delta > 0$ such that
+\begin{equation}\label{fact}
+F(m - \eps) < \frac{1}{2} - \delta < \frac{1}{2} + \delta < F(m + \eps).
+\end{equation}
+
+Next choose $N$ so that for all $n > N$,
+\begin{equation*}
+\sup_{x \in \real} |F_n(x) - F(x)| < \delta.
+\end{equation*}
+
+Let $n > N$ and $m_n = \med(F_n) = F_n^{-}(1/2)$. First note that $|F_n(m + \eps) - 
+F(m + \eps)| < \delta$ implies that 
+\begin{equation*}
+    F_n(m + \eps) > F(m + \eps) - \delta > \frac{1}{2}.
+\end{equation*}
+This inequality and \eqref{quantile} further implies $m + \eps {\color{red}{\geq}} 
+F_n^{-}(1/2) = m_n$. On the other hand, $|F_n(m - \eps) - F(m - \eps)| < \delta$ 
+implies that
+\begin{equation*}
+    F_n(m - \eps) < F(m - \eps) + \delta < \frac{1}{2}.
+\end{equation*}
+This inequality and \eqref{cpquantile} further implies $m - \eps < F_n^{-}(1/2) = m_n$.
+Together, we showed that for all $n > N$, 
+\begin{equation}\label{temp1}
+    |m_n - m| {\color{red}{\leq}} \eps,
+\end{equation}
+which shows $m_n \to m$ as $n \to \infty$. I highlighted the two inequalities above to
+draw your attention once more that $\geq$ and $\leq$ there cannot be replaced by strict
+inequalities. 
+
+By the Glivenko-Cantelli Theorem, the umbrella condition 
+\eqref{gc0} holds almost surely, with $F_n$ there replaced by $\hat{F}_n$, it therefore follows
+by \eqref{temp1} that $\med(\hat{F}_n) \to_{a.s.} \med(F)$ as $n \to \infty$.
+\end{proof}
+
+\item[Problem 3]
+\begin{proof}
+For consistency, I will still use $F^-$ to denote the quantile function. Suppose $0 < q < 1$. Given 
+$\eps > 0$, choose $x$ so that $F^-(q) - \eps < x < F^-(q)$ and $x \in C(F)$. Then \eqref{quantile} implies that $F(x) < q$; $F_n(x) \to F(x)$ now implies that, for $n$ large enough, $F_n(x) < q$ and hence $F^-(q) - \eps < x < F_n^-(q)$. Thus, $\liminf_n F_n^-(q) \geq F^-(q)$. 
+
+On the other hand, if $q < q'$ and $\eps$ is positive, choose a $y$ for which $F^-(q') < y < F^-(q') + \eps$ and $y \in C(F)$. Now $q < q' \leq F(F^-(q')) \leq F(y)$, and so, for $n$ large enough, $q \leq F_n(y)$ and hence by \eqref{quantile} $F_n^-(q)
+ \leq y < F^-(q') + \eps$. Thus $\limsup_n F_n^-(q) \leq F^-(q')$ if $q < q'$. Therefore, $F_n^-(q) \to F^-(q)$ if $F^-$ is continuous at $q$.
+
+Since $F^-$ is nondecreasing on $(0, 1)$, as showed in the first item of Problem 
+$1$, it has at most countably many discontinuities. The proof is complete.
+\end{proof}
+
+\item[3.11]
+\begin{proof}
+Since $|X_n| \geq \inf_{k \geq n}|X_k|$ for each $n$, it follows that 
+\begin{equation}\label{mct}
+E[|X_n|] \geq E\left[\inf_{k \geq n} |X_k|\right], n = 1, 2, \ldots.
+\end{equation}
+Additionally, since the sequence $\{\inf_{k \geq n}|X_k|\}$ is nondecreasing and nonnegative everywhere, by monotone convergence theorem, a passage to limits on both sides of \eqref{mct} gives that
+\begin{align*}
+    \liminf_n E\left[\inf_{k \geq n} |X_k|\right] & = \lim_n E\left[\inf_{k \geq n} |X_k|\right] 
+    = E\left[\lim_n \inf_{k \geq n} |X_k|\right] \\
+    & = E\left[\liminf_n |X_n|\right] \leq \liminf_n E\left[|X_n|\right].
+\end{align*}
+
+The proof is complete.
+\end{proof}
+
+\item[3.12]
+\begin{description}
+\item[(a)]
+\begin{proof}
+For any two random variables $A$ and $B$ and given $\alpha > 0$, set $C = |A| \vee |B|$. Since $[|A + B| \geq \alpha] \subset [C \geq \alpha/2]$, it follows that $E[|A + B| I_{[|A + B| \geq \alpha]}] \leq 2E[CI_{[|A + B| \geq \alpha]}] \leq 2E[CI_{[C \geq \alpha/2]}]$. On the other hand, $[C \geq \alpha/2] = [C \geq \alpha/2, C = |A|] \cup [C \geq \alpha/2, C = |B|]$ implies that 
+\begin{align*}
+& E[CI_{[|C| \geq \alpha/2]}] \\
+\leq & E[C(I_{[C \geq \alpha/2, C = |A|]} + I_{[C \geq \alpha/2, C = |B|]})] \\
+\leq & E[|A|I_{[|A| \geq \alpha/2]}] + E[|B|I_{[|B| \geq \alpha/2]}] 
+\end{align*}
+Combining these two inequalities then gives that 
+$$E[|A + B|I_{[|A + B| \geq \alpha]}] \leq 2E[|A|I_{[|A| \geq \alpha/2]}] + 2E[|B|I_{[|B| \geq \alpha/2]}].$$
+
+Now suppose that $\{A_n\}$ and $\{B_n\}$ are both uniformly integrable. By the inequality just showed, for each $\alpha > 0$, 
+$$E[|A_n + B_n|I_{[|A_n + B_n| \geq \alpha]}] \leq 2E[|A_n|I_{[|A_n| \geq \alpha/2]}] + 2E[|B_n|I_{[|B_n| \geq \alpha/2]}], n = 1, 2, \ldots.$$
+whence 
+$$\sup_n E[|A_n + B_n|I_{[|A_n + B_n| \geq \alpha]}] \leq 2\sup_n E[|A_n|I_{[|A_n| \geq \alpha/2]}] + 2\sup_n E[|B_n|I_{[|B_n| \geq \alpha/2]}].$$
+Let $\alpha \to \infty$ on both sides of the above inequality, and apply the uniform integrability of $\{A_n\}$ and $\{B_n\}$, it can be seen that $\lim\limits_{\alpha \to \infty} \sup\limits_n E[|A_n + B_n|I_{[|A_n + B_n| \geq \alpha]}] = 0$, that is, $\{A_n + B_n\}$ is uniformly integrable.
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+Since $\{Y_n\}$ is uniformly integrable and $Z_n \overset{d}= Y_n$, $\{Z_n\}$ is also uniformly integrable, hence there exists a large $\alpha_0$, such that $\sup\limits_n E[|Z_n|I_{[|Z_n| \geq \alpha_0]}] < 1$.
+It then follows that $\sup\limits_n E[|Z_n|] = \sup\limits_n\{E[|Z_n|I_{[|Z_n| < \alpha_0]}] + E[|Z_n|I_{[|Z_n| \geq \alpha_0]}]\} < \alpha_0 + 1 < \infty$.
+Therefore by Fatou's lemma,
+$$E[|Z|] = E[\lim_n |Z_n|] \leq \liminf_n E[|Z_n|] \leq \sup_n E[|Z_n|] < \infty.$$
+That is, $Z$ is integrable, implying that as a sequence, $\{-Z\}$ is uniformly integrable. By the result of part (a), $\{Z_n - Z\}$ is uniformly integrable, while this is equivalent to say that $\{X_n\} = \{|Z_n - Z|\}$ is uniformly integrable. 
+\end{proof}
+
+\item[(c)]
+\begin{proof}
+Suppose that $\{X_n\}$ is uniformly integrable and $X_n \to_{a.s.} 0$. 
+
+Given $\eps > 0$, by the uniform integrability of $\{X_n\}$, there exists $\alpha_0 > 0$ such that $\sup\limits_n E[|X_n|I_{[|X_n| \geq \alpha_0]}] < \eps/2$. On the other hand, it is easily seen that the sequence $\{|X_n|I_{[|X_n| < \alpha_0]}\}$ is dominated by $\alpha_0$ and converges to $0$ almost surely, hence by Lebesgue's dominated convergence theorem, there exists $N \in \nn$ such that $n > N$ implies that $E[|X_n|I_{[|X_n| < \alpha_0]}] < \eps/2$. Therefore for each $n > N$, $|E[X_n] - 0| \leq E[|X_n|] = E[|X_n|I_{[|X_n| < \alpha_0]}] + E[|X_n|I_{[|X_n| \geq \alpha_0]}] < \eps/2 + \eps/2 = \eps$, i.e., $E[X_n] \to 0$ as $n \to \infty$. The proof is complete. 
+\end{proof}
+\end{description}
+
+\item[3.13]
+\begin{proof}
+Given $\alpha > 0$, $E[|Y_n|^{1 + \eps}] =  E[|Y_n|^{1 + \eps}I_{[|Y_n| < \alpha]}] + E[|Y_n|^{1 + \eps}I_{[|X_n| \geq \alpha]}] \geq E[|Y_n| \cdot |Y_n|^\eps I_{[|Y_n| \geq \alpha]}] \geq \alpha^\eps E[|Y_n|I_{[|Y_n| \geq \alpha]}]$ for each $n$, which implies that 
+$$\sup_n E[|Y_n|I_{[|Y_n| \geq \alpha]}] \leq \frac{1}{\alpha^\eps} \sup_n E[|Y_n|^{1 + \eps}] \to 0$$
+as $\alpha \to \infty$, i.e., $\{Y_n\}$ is uniformly integrable. 
+\end{proof}
+
+\item[3.14]
+\begin{proof}
+The given hint is not quite relevant. A clearer proof can be made as follows.
+
+Given $\alpha > 0$, it follows by the expectation formula and the law of total probability that
+\begin{align*}
+    & E[|Y_n|I_{[|Y_n| \geq \alpha]}] \\
+    = & \int_0^\infty P[|Y_n|I_{[|Y_n| \geq \alpha]} \geq t] \dd t \\
+    = & \int_0^\infty \left\{P[|Y_n|I_{[|Y_n| \geq \alpha]} \geq t, |Y_n| \geq \alpha] + 
+    P[|Y_n|I_{[|Y_n| \geq \alpha]} \geq t, |Y_n| < \alpha]\right\} \dd t \\
+    = & \int_0^\alpha P[|Y_n| \geq \alpha] \dd t + \int_{\alpha}^\infty P[|Y_n| \geq t] \dd t \\
+    = & \alpha P[|Y_n| \geq \alpha] + \int_\alpha^\infty P[|Y_n| \geq t] \dd t \\
+    \leq & \alpha P[|Z| \geq \alpha] + \int_\alpha^\infty P[|Z| \geq t] \dd t,
+\end{align*}
+where the last inequality is due to the provided condition. Same calculation as above 
+shows that the last expression equals to $E[|Z|I_{[|Z| \geq \alpha]}]$. Since this upper
+bound is independent of $n$, we have
+\begin{equation*}
+    \sup_n E[|Y_n|I_{[|Y_n| \geq \alpha]}] \leq E[|Z|I_{[|Z| \geq \alpha]}].
+\end{equation*}
+It thus remains to show $E[|Z|I_{[|Z| \geq \alpha]}] \to 0$ as $\alpha \to \infty$,
+which is a direct consequence of the integrability of $Z$. Specifically, since 
+$|Z|I_{[|Z| \geq \alpha]}$ is dominated by $|Z|$ and it converges to $0$ almost surely
+as $\alpha \to \infty$, the Lebesgue dominated convergence theorem ensures 
+$E[|Z|I_{[|Z| \geq \alpha]}] \to 0$ as $\alpha \to \infty$. Therefore, 
+$\{Y_n\}$ is uniformly integrable. This completes the proof. 
+\end{proof}
+\end{description}
+
+\newpage
+
+\section*{Homework 7}
+\begin{description}
+\begin{comment}
+\item[Problem 1]
+By integrating $f(x)$ over $\real$, it is easy to verify that $f$ is indeed a probability density function. On the other hand, we have
+\begin{align*}
+& E[X^+] = \int_e^\infty x \frac{(\log x + 1)e}{2x^2\log^2 x} \dd x = \frac{e}{2}\int_e^\infty \frac{1}{x\log x} \dd x + \frac{e}{2}\int_e^\infty \frac{1}{x\log^2 x} \dd x = \infty. \\
+& E[X^-] = \int_{-\infty}^{-e} (-x) \frac{(\log(-x) + 1)e}{2x^2 \log(-x)} \dd x = E[X^+] = \infty.
+\end{align*}
+Then $E[X]$ does not exist since both $E[X^+]$ and $E[X^-]$ are infinite. 
+
+We next show that $\varphi'(0)$ exists and finite. Since $f$ is symmetric, the characteristic function $\varphi(t)$ must be real. In fact, noting that $\cos(\alpha) = 1 - 2\sin^2(\alpha/2)$, we have
+\begin{equation*}
+\frac{\varphi(t) - \varphi(0)}{t} = 2\int_e^\infty \frac{\cos(tx) - 1}{t}f(x) \dd x = -4\int_e^\infty \frac{\sin^2(tx/2)}{t}f(x) \dd x.
+\end{equation*}
+We first show that the right limit of the above expression exists and equals to zero. Suppose $t > 0$, change of variable $u = tx/2$:
+\begin{align*}
+& \int_e^\infty \frac{\sin^2(tx/2)}{t}f(x) \dd x \\
+= & e\int_{te/2}^\infty \frac{\sin^2 u}{t} \frac{\log(2u/t) + 1}{(2u/t)^2\log^2(2u/t)} \frac{2}{t} \dd u \\
+= & \frac{e}{2} \int_{te/2}^\infty \frac{\sin^2 u}{u^2} \left(\frac{1}{\log(2u/t)} + \frac{1}{\log^2(2u/t)}\right) \dd u \\
+= & \frac{e}{2} \int_0^\infty \frac{\sin^2 u}{u^2} \left(\frac{1}{\log(2u/t)} + \frac{1}{\log^2(2u/t)}\right)I_{(te/2, \infty)}(u) \dd u.
+\end{align*}
+Since the function $\frac{1}{\log(2u/t)} + \frac{1}{\log^2(2u/t)}$ is nonincreasing in $u$, the integrand above is dominated by $\sin^2 u/u^2$ for all $t > 0$, and since $\int_0^\infty \sin^2 u/u^2 \dd u < \infty$ (why?), it follows 
+by Lebesgue's dominated convergence theorem that
+\begin{align*}
+& \varphi_+'(0) = -4\lim_{t \downarrow 0} \int_e^\infty \frac{\sin^2(tx/2)}{t}f(x) \dd x \\
+= & -2e \int_0^\infty \lim_{t \downarrow 0} \frac{\sin^2 u}{u^2} \left(\frac{1}{\log(2u/t)} + \frac{1}{\log^2(2u/t)}\right)I_{(te/2, \infty)}(u) \dd u \\
+= & -2e \int_0^\infty 0 \dd u = 0.
+\end{align*}
+
+In the same manner we can show that the left derivative $\varphi_-'(0) = 0$. Therefore $\varphi'(0)$ exists and $\varphi'(0) = 0 < \infty$. The proof is complete. 
+\end{comment}
+
+\item[Problem 1]
+\begin{proof}
+Since $\int_{-\infty}^\infty |\varphi(t)| \dd t < \infty$, the integral $\int_{-\infty}^\infty e^{-itx}\varphi(t) \dd t$ exists for every $x$, for which case it can be shown that the (anti-Fourier) transformation
+\begin{equation*}
+f(x) = \frac{1}{2\pi} \int_{-\infty}^\infty e^{-itx} \varphi(t) \dd t
+\end{equation*}
+defines a probability density function over $\real$. Straightforward calculation shows that 
+$$f(x) = \frac{1}{\pi}\frac{1 - \cos x}{x^2}, -\infty < x < \infty.$$
+This completes proof.
+\end{proof}
+
+\item[Problem 2]
+\begin{description}
+\item{(a)} Suppose $X \sim \text{Poisson}(\lambda)$, then $P[X = k] = e^{-\lambda}
+\lambda^k/k!$, $k = 0, 1, 2, \ldots$. Hence
+\begin{align*}
+\phi_X(t) = \sum_{k = 0}^\infty e^{itk}e^{-\lambda}\frac{\lambda^k}{k!}
+= e^{-\lambda}\sum_{k = 0}^\infty \frac{(\lambda e^{it})^k}{k!}
+= e^{\lambda(e^{it} - 1)}.
+\end{align*}
+
+\item{(b)} Suppose $X \sim \text{Geometric}(p)$, then\footnote{Here we use $X$ to 
+denote the number of trials until the first success.} $P[X = k] = (1 - p)^{k - 1}p$,
+$k = 1, 2, \ldots$. Hence
+\begin{align*}
+\phi_X(t) = \sum_{k = 1}^\infty e^{itk}(1 - p)^{k - 1}p = 
+\frac{p}{1 - p} \sum_{k = 1}^{\infty}[(1 - p)e^{it}]^k = 
+\frac{pe^{it}}{1 - (1 - p)e^{it}}.
+\end{align*}
+
+\item{(c)} Suppose $X \sim \text{Exp}(\lambda)$, then $f(x) = \lambda e^{-\lambda x}$,
+$x > 0$. To evaluate $\phi_X(t) = \int_0^\infty e^{itx} \lambda e^{-\lambda x} \dd x$, 
+we need to evaluate 
+\begin{align*}
+    C(t) = \int_0^\infty \cos(tx)e^{-\lambda x} \dd x \text{ and }
+    S(t) = \int_0^\infty \sin(tx)e^{-\lambda x} \dd x
+\end{align*}
+separately. By definition, $\phi_X(t) = \lambda C(t) + i\lambda S(t)$, see 
+pp.218-219, p.342 of \cite{billingsley95}. Integrating by parts twice, it follows that
+\begin{align*}
+    C(t) = \frac{\lambda}{\lambda^2 + t^2}, \quad
+    S(t) = \frac{t}{\lambda^2 + t^2}.
+\end{align*}
+Therefore, 
+\begin{align*}
+    \phi_X(t) = \frac{\lambda^2}{\lambda^2 + t^2} + \frac{i\lambda t}{\lambda^2 + t^2}
+    = \frac{\lambda}{\lambda - it}.
+\end{align*}
+
+For a contour integration approach (which needs some complex analysis background), 
+check the following link:
+
+\url{http://math.stackexchange.com/questions/2172433}
+
+\item{(d)} Suppose $X \sim \text{Cauchy}(x_0, \gamma)$, i.e., the density of $X$ is
+given by
+\begin{equation*}
+    f(x) = \frac{1}{\pi\gamma\left[1 + \left(\dfrac{x - x_0}{\gamma}\right)^2\right]},
+    \; x \in \real.
+\end{equation*}
+
+The characteristic function of $X$ is given by
+\begin{align*}
+    \phi_X(t) = \exp(itx_0 - \gamma|t|).
+\end{align*}
+
+The derivation of this result is 
+somewhat technical. One approach is to use the inversion formula (i.e., inverse Fourier
+transformation), see p.349 of \cite{billingsley95} for details. Another more direct 
+approach is to apply the contour integration technique in complex analysis. For those
+who are interested, refer to the pdf document I uploaded in the Solution folder.
+\end{description}
+\begin{comment}
+\item[Problem 3]
+\begin{proof}
+Let $Y_{nk} = X_k - \frac{1}{k}, k = 1, \ldots, n$, $L_n = \sum_{k = 1}^n k^{-1}$. We then have $E[Y_{nk}] = 0$, $s_n^2 = \sum_{k = 1}^n E[Y_{nk}^2] = \sum_{k = 1}^n \frac{1}{k} - \sum_{k = 1}^n \frac{1}{k^2} = L_n + O(1)$. Lindeberg's condition for $Y_{nk}$ is easily verified because these random variables are bounded by $1$. Thus the Lindeberg central limit theorem gives that $(S_n - L_n)/s_n \Rightarrow \mathcal{N}(0, 1)$. Now, in fact,
+$L_n = \log n + O(1)$, and so by Slutsky's theorem that the sum can be renormalized: $(S_n - \log n)/\sqrt{\log n} \Rightarrow \mathcal{N}(0, 1)$.
+\end{proof}
+\end{comment}
+
+\item[4.1(b)]
+\begin{proof}
+If $Y \sim \mathcal{N}(0, I_k)$, then $Y_1, \ldots, Y_k$ are independent, it follows by part (a) that
+$$\phi_Y(t) = E[e^{it^TY}] = \prod_{j = 1}^k E[e^{it_jY_j}] = e^{-\frac{1}{2}\sum_{j = 1}^k t_j^2} = e^{-\frac{1}{2}t^Tt}.$$
+Hence if $X = \mu + Q^T Y$ with $\Sigma = QQ^T$, then
+\begin{align*}
+\phi_X(t) & = e^{it^T\mu} E[e^{i(t^TQ)Y}] = e^{it^T\mu} E[e^{i(Q^Tt)^TY}] \\ 
+& = e^{it^T\mu} e^{-\frac{1}{2}(Q^T t)^T(Q^T t)} = e^{it^T\mu} e^{-\frac{1}{2}t^T QQ^T t} = e^{it^T\mu - \frac{1}{2}t^T\Sigma t}. 
+\end{align*}
+The proof is complete.
+\end{proof}
+
+\begin{comment}
+\item[4.2]
+\begin{description}
+\item[(a)]
+\begin{proof}
+In fact we do not need any conditioning argument (if possible, try circumventing using conditioning argument since the rigorous definition of conditional expectation/probability has not been taught until STAT 517). For
+clarity, suppose both $X$ and $Y$ are $k$-dimensional random vectors. Denote the distribution functions of $X$ and $Y$ by $F$ and $G$, respectively. By the definition of expectation and characteristic function, we have
+\begin{align*}
+& E[\exp(-ia^TY)\varphi_X(Y)] \\
+= & \int_{\real^k} \exp(-ia^T y) \varphi_X(y) dG(y) \\
+= & \int_{\real^k} \exp(-ia^T y)\left[\int_{\real^k} \exp(iy^T x) dF(x)\right] dG(y) \\
+= & \int_{\real^k} \left[\int_{\real^k} \exp[i(x - a)^T y] dG(y) \right] dF(x) \\
+= & \int_{\real^k} \varphi_Y(x - a) dF(x) \\
+= & E[\varphi_Y(X - a)]. 
+\end{align*}
+In the third equality of the above derivation, we applied Fubini's theorem since the integrand is bounded by $1$, and $\int_{\real^d \times \real^d} 1 d(F \times G(x, y)) = 1 < \infty$. 
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+It is worth pointing out the statement made in the problem holds only when {\color{red}$X$ and $Y$ are independent}. Otherwise $X + Y$ doesn't necessarily to be absolutely continuous, i.e., have a density, hence the 
+notation $f_{X + Y}(s)$ wouldn't make any sense. For a trivial counterexample, consider taking $X = -Y$. So in the following we assume the independence between $X$ and $Y$.
+
+To identify $f_{X + Y}(s)$, it is routine to start with looking for $P[X + Y \leq s]$, i.e., the distribution function of $X + Y$. For clarity, write $X = (X_1, \ldots, X_k),  Y = (Y_1, \ldots, Y_k), s = (s_1, \ldots, s_k) \in \real^k$. Also 
+denote the joint distribution of $(X, Y)$ (which is a function of $2k$ variables) by $H(x, y)$. By independence assumption, $H(x, y) = F(x) \prod_{i = 1}^k \Phi(y_i/\sigma)$, where $F$ denotes the distribution function of $X$ and $\Phi$ denotes the distribution function of a standard normal random variable. 
+\begin{align*}
+& P[X + Y \leq s] = P[X_1 + Y_1 \leq s_1, \ldots, X_k + Y_k \leq s_k] \\
+= & \int_{[(x, y): x_i + y_i \leq s_i, i = 1, \ldots, k]} dH(x, y) \\
+= & \int_{\real^k} \left[\int_{[y: y_i \leq s_i - x_i, i = 1, \ldots, k]} d\prod_{i = 1}^k \Phi(y_i/\sigma) \right] dF(x) \\
+= & \int_{\real^k} \prod_{i = 1}^k \Phi\left(\frac{s_i - x_i}{\sigma}\right) dF(x).
+\end{align*}
+It follows by Theorem 16.8 (ii) of \cite{billingsley95} that we can take derivative into the integral (sequentially) and conclude that
+\begin{align*}
+f_{X + Y}(s) = \frac{\partial^k P[X + Y \leq s]}{\partial s_k \cdots \partial s_1} = \int_{\real^k} \frac{1}{\sigma^k}\prod_{i = 1}^k \phi\left(\frac{s_i - x_i}{\sigma}\right) dF(x) = E[f_Y(s - X)].
+\end{align*}
+where $\phi$ denotes the density of $\Phi$. 
+\end{proof}
+
+\begin{rem}
+By above argument, it can be seen that even if $X$ itself is not absolutely continuous (for example, $X$ can be discrete random variables such as binomial), after adding an independent normal white noise $Y$ to it, $X + Y$ 
+becomes absolutely continuous! This interesting phenomenon reveals the nice smoothing property of normal random variables. 
+\end{rem}
+
+\item[(c)]
+\begin{proof}
+The equality in this part is straightforward to verify. Combining it with the equality derived in part (a), we have
+\begin{align*}
+f_{X + Y}(s) = (\sqrt{2\pi\sigma^2})^{-k} E\left[\exp(-is^TY/\sigma^2)\varphi_X(Y/\sigma^2)\right].
+\end{align*}
+Hence the distribution of $X + Y$ depends on $X$ only through $\varphi_X$. Thus if $X_1$ and $X_2$ are random vectors such that $\varphi_{X_1} = \varphi_{X_2}$, it then follows that for $Y$ defined in this problem, it
+holds that $X_1 + Y \overset{d}{= } X_2 + Y$. The result follows by letting $\sigma \to 0$ and Slutsky's theorem.
+\end{proof}
+\end{description}
+
+\begin{rem}
+The more classical proof of the statement that the characteristic function of a random variable uniquely determines its distribution is given in Theorem 26.2 in \cite{billingsley95}, known as \emph{inversion and the uniqueness theorem}.
+\end{rem}
+\end{comment}
+
+\item[4.4]
+\begin{proof}
+Define $Y \coloneqq \Sigma^{-1/2}(X - \mu)$, where $\Sigma^{-1/2} = Q\Lambda^{-1/2}Q^T$. Then $E[Y] = 0$, $\Var(Y) = I$, hence $Y \sim \mathcal{N}(0, I_k)$. Therefore
+$$(X - \mu)^T\Sigma^{-1}(X - \mu) = (\Sigma^{-1/2}(X - \mu))^T(\Sigma^{-1/2}(X - \mu)) = Y^T Y = \sum_{j = 1}^k Y_j^2 \sim \chi_k^2,$$
+in view of $Y_1, \ldots, Y_k \text{ i.i.d.} \sim \mathcal{N}(0, 1)$.
+\end{proof}
+
+\item[4.5]
+\begin{description}
+\item[(a)]
+\begin{proof}
+Denote $S_n = X_1 + \cdots + X_n$, then $X_1, \ldots, X_n \text{ i.i.d.} \sim \text{Poisson}(1)$ implies that $S_n \sim \text{Poisson}(n)$. Noticing that $[Y_n > 0] = [S_n > n]$, hence
+\begin{align*}
+& E[Y_n^+] \\
+= & E\left[\sqrt{n}\left(\frac{S_n}{n} - 1\right)I[S_n > n]\right] \\
+= & \sum_{k = n + 1}^\infty \sqrt{n} \left(\frac{k}{n} - 1\right) e^{-n}\frac{n^k}{k!} \\
+= & \sqrt{n} e^{-n} \sum_{k = n + 1}^\infty \left[\frac{n^{k - 1}}{(k - 1)!} - \frac{n^k}{k!}
+\right]\\
+= & n^{n + 1/2}\frac{e^{-n}}{n!}
+\end{align*}
+The last equality holds because of the obvious telescoping structure and the fact 
+\begin{equation*}
+    \lim_{N \to \infty} \frac{n^N}{N!} = 0
+\end{equation*}
+for fixed $n \in \nn$. To see this (without applying the Stirling's formula), write
+\begin{equation*}
+    \frac{n^N}{N!} = \frac{n}{N} \times \frac{n}{N - 1} \times \cdots \times \frac{n}{2n}
+    \times \frac{n^{2n - 1}}{(2n - 1)!} < \left(\frac{1}{2}\right)^{N - 2n + 1} \times 
+    \frac{n^{2n - 1}}{(2n - 1)!} \to 0
+\end{equation*}
+as $N \to \infty$.
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+By classical CLT, $Y_n \Rightarrow Z \sim \mathcal{N}(0, 1)$. Since the function $x \mapsto x^+ = x \vee 0$ is continuous in $x$, it follows by continuous mapping theorem that $Y_n^+ \Rightarrow Z^+$. Since $E[Z^+] = \dfrac{1}{\sqrt{2\pi}}$, to show the result, it remains to show that $Y_n^+ \Rightarrow Z^+$ implies that $E[Y_n^+] \to E[Z^+]$, which is implied by the uniform integrability of $\{Y_n\}$ (since $Y_n^+ = Y_n \vee 0$ and $0$ is clearly
+uniformly integrable).
+
+Recall that $S_n \sim \text{Poisson}(n)$, thus $E[Y_n^2] = nE[(S_n/n - 1)^2] = \frac{1}{n}E[S_n^2] - 2E[S_n] + n = \frac{1}{n}(n + n^2) - 2n + n = 1$ for every $n$, which implies that $\sup_n E[Y_n^2] = 1 < \infty$. By the result of Exercise $3.13$, this implies that $\{Y_n\}$ is uniformly integrable and the proof is complete.
+\end{proof}
+\end{description}
+
+\item[4.6]
+\begin{proof}
+Under the assumption of WLLN, $\mu = E[X_1] < \infty$ exists. For each fixed $t \in \real$, we have
+\begin{align*}
+\varphi_{\overbar{X}_n}(t) = \varphi_{\sum_i X_i}(t/n) = (\varphi_{X_1}(t/n))^n = \left(1 + \frac{it\mu}{n} + o\left(\frac{t}{n}\right)\right)^n \to e^{it\mu}
+\end{align*}
+as $n \to \infty$. Notice that $e^{it\mu}$ is exactly the characteristic function of constant $\mu$, thus the WLLN follows from continuity theorem.
+\end{proof}
+
+\item[4.7]
+\begin{proof}
+By Cram\'{e}r-Wold device, it suffices to show that for every $c \in \real^k$, it holds that
+\begin{align}\label{hw7:mclt}
+\sqrt{n}(c^T \overbar{X}_n - c^T \mu) \Rightarrow \mathcal{N}(0, c^T \Sigma c).
+\end{align}
+But under the given condition, the sequence $c^T X_1, c^T X_2, \ldots$ is a sequence of i.i.d.\ random variables with mean $c^T\mu$ and variance $c^T\Sigma c$. \eqref{hw7:mclt} thus follows directly from the classical CLT.
+\end{proof}
+
+\begin{comment}
+\item[4.11]
+\begin{proof}
+Let $Y_{ni}$ be defined as in Exercise $4.13$. Since $\max\limits_{1 \leq i \leq n}\Var(Y_{ni})/s_n^2 = \frac{p_n(1 - p_n)}{np_n(1 - p_n)} = 1/n \to 0$ as $n \to \infty$, by Lindeberg-Feller CLT, $(X_n - np_n)/s_n \Rightarrow \mathcal{N}(0, 1)$ implies that Lindeberg's condition must hold, that is, for every $\eps > 0$, 
+\begin{align}\label{hw7:feller}
+\frac{1}{np_n(1 - p_n)} \sum_{i = 1}^n E\left\{Y_{ni}^2 I[|Y_{ni}| \geq \eps \sqrt{np_n(1 - p_n)}]\right\} \to 0
+\end{align}
+as $n \to \infty$.
+
+If $s_n = \sqrt{np_n(1 - p_n)} \not\to \infty$ as $n \to \infty$, then $\{s_n\}$ contains a bounded subsequence, i.e., there exist $M > 0$ and $\mathscr{K} \subset \nn$ such that $0 < s_m < M, m \in \mathscr{K}$. Thus there 
+exists $\eps > 0$ such that $\eps s_m < 1/2$ for all $m \in \mathscr{K}$.  For $m \in \mathscr{K}$, if $p_m \geq 1/2$, then $E[Y_{m1}^2 I[|Y_{m1}| \geq 1/2]] = p_m^2 (1 - p_m) \geq p_m(1 - p_m)/2$; if $p_m < 1/2$, then
+$E[Y_{m1}^2 I[|Y_{m1}| \geq 1/2]] = (1 - p_m)^2 p_m \geq p_m(1 - p_m)/2$. Hence that $Y_{m1}, \ldots, Y_{mm}$ are i.i.d.\ implies that for each $m \in \mathscr{K}$:
+\begin{align*}
+& \frac{1}{s_m^2} \sum_{i = 1}^m E\left\{Y_{mi}^2 I[|Y_{mi}| \geq \eps s_m]\right\} \\
+\geq & \frac{1}{mp_m(1 - p_m)} \sum_{i = 1}^m E\left\{Y_{mi}^2 I[|Y_{mi}| \geq 1/2]\right\} \\
+= & \frac{1}{p_m(1 - p_m)} E[Y_{m1}^2 I[|Y_{m1}| \geq 1/2]] \\
+\geq & \frac{1}{p_m(1 - p_m)}\frac{1}{2}p_m(1 - p_m) = \frac{1}{2},
+\end{align*}
+which contradicts \eqref{hw7:feller}. Therefore it necessarily holds that $np_n(1 - p_n) \to \infty$ as $n \to \infty$.
+\end{proof}
+\end{comment}
+\end{description}
+
+\newpage
+\section*{Quiz 7}
+\begin{description}
+\item[Problem 1] It seems that this problem missed a crucial condition
+that the characteristic function $\varphi_X(t) \neq 0, \forall t \in 
+\real^1$, where $X$ is the limiting distribution of $X_n$. Everyone
+gets full credits for this problem.
+
+\item[Problem 2] To show this statement by charateristic function, we need the following 
+lemma (see, e.g., \cite{chung2001probability}, p.177):
+\begin{lem}
+If the complex numbers $c_n$ have the limit $c$, then
+\begin{equation*}
+    \lim_{n \to \infty} \left(1 + \frac{c_n}{n}\right)^n = e^c.
+\end{equation*}
+\end{lem}
+For a rigorous proof of this lemma, check the most voted answer of the following link\footnote{I pointed this out because the proof for the case that $c_n$ are real numbers (which we are familiar with) is essentially different from that for the case that $c_n$ are complex numbers.}:
+
+\url{http://math.stackexchange.com/questions/374747/}
+
+Since $X_n \sim \text{Bin}(n, p_n)$, the characteristic function of $X_n$ is 
+$\varphi_{X_n}(t) = (1 + p_n(e^{it} - 1))^n$, rewrite $\varphi_{X_n}(t)$ as
+\begin{align*}
+    \left(1 + \frac{np_n(e^{it} - 1)}{n}\right)^n
+\end{align*}
+then applies the lemma with $c_n = np_n(e^{it} - 1)$, it follows that
+$\varphi_{X_n}(t) \to \exp(\lambda(e^{it} - 1))$ as $n \to \infty$, which is precisely the
+characteristic function of the $\text{Poisson}(\lambda)$ distribution. The result follows
+by the continuity theorem. 
+\end{description}
+
+\newpage
+
+\section*{Homework 8}
+\begin{description}
+\item[4.12]
+\begin{description} 
+\item[(a)]
+\begin{proof}
+To show the assertion, it suffices to verify the Lindeberg condition for the triangular
+array $a_{ni}(X_i - \mu), i = 1, \ldots, n, n = 1, 2, \ldots$. It is easy to see that 
+$s_n^2 = \sum\limits_{i = 1}^n \Var(a_{ni}(X_i - \mu)) = \sigma^2\sum\limits_{i = 1}^n 
+a_{ni}^2$. Given $\eps > 0$, 
+\begin{align*}
+    & \frac{1}{s_n^2} \sum_{i = 1}^n E[a_{ni}^2(X_i - \mu)^2 
+    I_{[|a_{ni}||X_i - \mu| \geq \eps s_n]}] \\
+ \leq & \frac{1}{s_n^2} \sum_{i = 1}^n a_{ni}^2 E[(X_i - \mu)^2 I_{[|X_i - \mu| \geq 
+ s_n / \max_{1 \leq i \leq n} |a_{ni}|]}] \\
+ = & \frac{\sum\limits_{i = 1}^n a_{ni}^2}{s_n^2} E[(X_1 - \mu)^2 I_{[|X_1 - \mu| \geq 
+ s_n / \max_{1 \leq i \leq n} |a_{ni}|]}]  \quad 
+ \text{since $X_1, \ldots, X_n$ are i.i.d..} \\
+ = & \sigma^{-2} E[(X_1 - \mu)^2 I_{[|X_1 - \mu| \geq s_n / \max_{1 \leq i \leq n} |a_{ni}|]}]
+\end{align*}
+By condition, $s_n / \max_{1 \leq i \leq n} |a_{ni}| \to \infty$ as $n \to \infty$, it 
+thus follows by the integrability of $(X_1 - \mu)^2$ that the right hand side of the above
+expression tends to $0$ as $n \to \infty$. Thus the Lindeberg condition holds. 
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+By the definitions of $\{w_i^{(n)}\}$ and $\{v_i^{(n)}\}$, it is straightforward to verify that $\hat{\beta}_{1n} - \beta_1 = \sum\limits_{i = 1}^n w_i^{(n)} \eps_i$ and $\hat{\beta}_{0n} - \beta_0 = \sum\limits_{i = 1}^n v_i^{(n)} \eps_i$.
+For notational convenience, denote $\sum\limits_{j = 1}^n (z_j - \overbar{z}_n)^2$ by $SS_n$.
+
+We will show that one group of sufficient conditions that implies the asymptotic nomalities of $\sqrt{n}(\hat{\beta}_{1n} - \beta_1)$ and $\sqrt{n}(\hat{\beta}_{0n} - \beta_0)$ could be
+\begin{align}
+& \boxed{\overbar{z}_n \to \mu \in \real \text{ as } n \to \infty}, \label{hw8:eq1} \\
+& \boxed{\frac{SS_n}{n} \to A > 0 \text{ as } n \to \infty}, \label{hw8:eq2} \\
+& \boxed{\frac{\max\limits_{1 \leq i \leq n} (z_i - \overbar{z}_n)^2}{SS_n} \to 0 \text{ as } n \to \infty}. \label{hw8:eq3}
+\end{align}
+
+We first show that under conditions \eqref{hw8:eq2} and \eqref{hw8:eq3}, $\sqrt{n}(\hat{\beta}_{1n} - \beta_1)$ is asymptotically normally distributed. Let $\sum\limits_{i = 1}^n w_i^{(n)} \eps_i$ be $T_n$ in part (a), then 
+we can write
+\begin{equation}\label{slopeAN}
+\sqrt{n}(\hat{\beta}_{1n} - \beta_1) = \frac{T_n - E[T_n]}{\sqrt{\Var(T_n)}} \times \sqrt{n \Var(T_n)}.
+\end{equation}
+Since
+$$\frac{\max\limits_{1 \leq i \leq n} (w_i^{(n)})^2}{\sum\limits_{j = 1}^n (w_j^{(n)})^2} = \frac{\max\limits_{1 \leq i \leq n} (z_i - \overbar{z}_n)^2}{SS_n} \to 0$$
+as $n \to \infty$ by \eqref{hw8:eq3}, the condition in part (a) is satisfied, hence the first factor of the right hand side of \eqref{slopeAN} converges in distribution to $\gaussian(0, 1)$. Additionally, by \eqref{hw8:eq2}, 
+\begin{align*}
+\sqrt{n\Var(T_n)} = \sqrt{n \sigma^2 \frac{1}{SS_n}} \to \sigma \sqrt{A^{-1}}
+\end{align*}
+as $n \to \infty$. It follows by \eqref{slopeAN} and Slutsky's theorem that $\sqrt{n}(\hat{\beta}_{1n} - \beta_1) \Rightarrow \gaussian(0, \sigma^2 A^{-1})$.
+
+Next, we show that under conditions \eqref{hw8:eq1} -- \eqref{hw8:eq3}, $\sqrt{n}(\hat{\beta}_{0n} - \beta_0)$ is asymptotically normally distributed. As before, here we let $\sum\limits_{i = 1}^n v_i^{(n)} \eps_i$ be $T_n$ in part (a)
+so that we can write
+\begin{equation}\label{interceptAN}
+\sqrt{n}(\hat{\beta}_{0n} - \beta_0) = \frac{T_n - E[T_n]}{\sqrt{\Var(T_n)}} \times \sqrt{n \Var(T_n)}.
+\end{equation}
+We have
+\begin{align*}
+& \frac{\max\limits_{1 \leq i \leq n} (v_i^{(n)})^2}{\sum\limits_{j = 1}^n (v_j^{(n)})^2} \\
+= & \frac{\max\limits_{1 \leq i \leq n} \left(\dfrac{1}{n^2} - \dfrac{2\overbar{z}_n(z_i - \overbar{z}_n)}{nSS_n} + \dfrac{\overbar{z}_n^2(z_i - \overbar{z}_n)^2}{SS_n^2}\right)}{\dfrac{1}{n} + \dfrac{\overbar{z}_n^2}{SS_n}} \\
+\leq & \frac{\dfrac{1}{n^2}}{\dfrac{1}{n} + \dfrac{\overbar{z}_n^2}{SS_n}} + \frac{\dfrac{2|\overbar{z}_n|}{n\sqrt{SS_n}}}{\dfrac{1}{n} + \dfrac{\overbar{z}_n^2}{SS_n}}\frac{\max\limits_{1 \leq i \leq n}|z_i - \overbar{z}_n|}{\sqrt{SS_n}}
++ \frac{\dfrac{\overbar{z}_n^2}{SS_n}}{\dfrac{1}{n} + \dfrac{\overbar{z}_n^2}{SS_n}}\frac{\max\limits_{1 \leq i \leq n}(z_i - \overbar{z}_n)^2}{SS_n}.
+\end{align*}
+Under conditions \eqref{hw8:eq1} -- \eqref{hw8:eq3}, it is easy to verify that each term in the right hand side of the above inequality is $o(1)$. Therefore condition in part (a) again is satisfied, thus the first factor of the right hand side of \eqref{interceptAN} converges in distribution to $\gaussian(0, 1)$. Similarly, in this case, by \eqref{hw8:eq1}, \eqref{hw8:eq2}:
+\begin{align*}
+\sqrt{n\Var(T_n)} = \sqrt{n \sigma^2 \left(\frac{1}{n} + \frac{\overbar{z}_n^2}{SS_n}\right)} \to \sigma \sqrt{1 + A^{-1}\mu^2}.
+\end{align*}
+It then follows by \eqref{interceptAN} and Slutsky's theorem that
+$$\sqrt{n}(\hat{\beta}_{0n} - \beta_0) \Rightarrow \gaussian(0, \sigma^2(1 + A^{-1}\mu^2)).$$
+Other sufficient conditions may also work, however, \eqref{hw8:eq1} -- \eqref{hw8:eq3} are standard conditions for dealing with asymptotics under regression settings.
+\end{proof}
+\end{description}
+
+\item[4.13]
+\begin{proof}
+For each $i$, define $Z_i$ by $P[Z_i = 0] = 1 - 1/i^2, P[Z_i = i] = P[Z_i = -i] = 1/(2i^2)$. Clearly, $E[Z_i] = 0, \Var(Z_i) = 1, i = 1, 2, \ldots$. But $\sqrt{n}\overbar{Z}_n \to_P 0$ 
+(instead of converging weakly to $\gaussian(0, 1)$). To see this, since $E[|Z_i|] = 1/i, i = 1, \ldots, n$, for any given $\eps > 0$, by triangle inequality and Markov's inequality:
+\begin{align*}
+& P[|\sqrt{n}\overbar{Z}_n| \geq \eps] \\
+= & P[|Z_1 + \cdots + Z_n| \geq \sqrt{n}\eps] \\
+\leq & \frac{E[|Z_1 + \cdots + Z_n|]}{\sqrt{n}\eps} \\
+\leq & \frac{\sum\limits_{i = 1}^n E[|Z_i|]}{\sqrt{n}\eps} \\
+= & \frac{\sum\limits_{i = 1}^n \dfrac{1}{i}}{\sqrt{n}\eps} \\
+= & \frac{\log n + O(1)}{\sqrt{n} \eps} \to 0 
+\end{align*}
+as $n \to \infty$. Therefore $\sqrt{n}\overbar{Z}_n \Rightarrow 0$. Since the weak limit is unique, this implies that $\sqrt{n}\overbar{Z}_n \not\Rightarrow \gaussian(0, 1)$.
+\end{proof}
+
+\item[4.16]
+\begin{description}
+\item[(a)]
+\begin{proof}
+For each positive integer $n$ and each positive integer $j$, we have
+\begin{align*}
+   & E[(X_n^j)^+] = 1 \times \frac{1}{2}(1 - 2^{-n}) + \sum_{k = n + 1}^\infty 
+    2^{kj} \times 2^{-k} = \frac{1}{2} - \frac{1}{2^{n + 1}} + 
+    \sum_{k = n + 1}^\infty 2^{(j - 1)k} = \infty, \\
+   & E[(X_n^j)^-] = 1 \times \frac{1}{2}(1 - 2^{-n}) = \frac{1}{2} - 
+   \frac{1}{2^{n + 1}} < \infty. 
+\end{align*}
+Therefore, $E[X_n^j] = E[(X_n^j)^+] - E[(X_n^j)^-] = \infty$. 
+\end{proof}
+
+\item[(b)] 
+\begin{proof}
+Define $Y_n = X_n I_{[|X_n| = 1]}, n = 1, 2, \ldots$.\footnote{$\{Y_n\}$
+is known as the \emph{truncation} of $\{X_n\}$.} Obviously, the probability mass
+function of $Y_n$ is given by 
+\begin{align*}
+    P[Y_n = 1] = P[Y_n = -1] = \frac{1}{2}(1 - 2^{-n}), \quad
+    P[Y_n = 0] = 2^{-n}, \quad n = 1, 2, \ldots.
+\end{align*}
+Therefore, $E[Y_n] = 0, \Var(Y_n) = E[Y_n^2] = E[Y_n^4] = 1 - 2^{-n}$. Hence
+$s_n^2 = \sum\limits_{k = 1}^n \Var(Y_k) = \sum\limits_{k = 1}^n (1 - 2^{-k}) 
+= n - 1 + (1/2)^n$ and $\sum\limits_{k = 1}^n E[Y_k^4] / s_n^4 = s_n^2 / s_n^4 =
+1 / s_n^2 \to 0$ as $n \to \infty$. Thus the Lyapunov's condition holds for 
+$\{Y_n\}$, and we can claim the asymptotic normality for $\{Y_n\}$:
+\begin{equation*}
+    \frac{1}{s_n}\sum_{k = 1}^n Y_k = \frac{1}{\sqrt{n - 1 + (1/2)^n}}
+    \sum_{k = 1}^n Y_k \Rightarrow \gaussian(0, 1).
+\end{equation*}
+Since $\sqrt{n} \sim \sqrt{n - 1 + (1/2)^n}$, it follows by the Slutsky's theorem
+that $\sqrt{n}\overbar{Y}_n \Rightarrow \gaussian(0, 1)$. 
+
+To show $\sqrt{n}\overbar{X}_n \Rightarrow \gaussian(0, 1)$, in view of the 
+Slutsky's theorem and $\sqrt{n}\overbar{Y}_n \Rightarrow \gaussian(0, 1)$, it 
+suffices to show that $\sqrt{n}(\overbar{X}_n - \overbar{Y}_n) = o_P(1)$. In fact,
+we can prove something even stronger, i.e., $\sqrt{n}(\overbar{X}_n -
+\overbar{Y}_n) \to_{a.s.} 0$. To see this, let $A_n$ denote the event $[X_n \neq 
+Y_n], n = 1, 2, \ldots$. By definition, $\sum\limits_{n = 1}^\infty P(A_n) = 
+\sum\limits_{n = 1}^\infty P[X_n = 2^k, \text{ for some } k > n] = 
+\sum\limits_{n = 1}^\infty 2^{-n} = 1 < \infty$, which implies that $P[A_n 
+\text{ i.o.}] = 0$ by the first Borel-Cantelli lemma. This means, there exists an
+event $B$ with $P(B) = 1$ such that for every $\omega \in B$, there exists a 
+positive integer $N = N(\omega)$, such that $X_n(\omega) = Y_n(\omega)$ for 
+all $n > N$. Therefore, for every $n > N$, 
+\begin{equation*}
+    \sqrt{n}(\overbar{X}_n(\omega) - \overbar{Y}_n(\omega)) = 
+    \frac{1}{\sqrt{n}}\sum_{k = 1}^N (X_k(\omega) - Y_k(\omega)).
+\end{equation*}
+The above expression tends to $0$ as $n \to \infty$ because we have only finitely 
+many summands. In summary, we showed that for each $\omega \in B$, 
+$\sqrt{n}(\overbar{X}_n(\omega) - \overbar{Y}_n(\omega)) \to 0$ as $n \to \infty$,
+i.e., $\sqrt{n}(\overbar{X}_n - \overbar{Y}_n) \to_{a.s.} 0$. This completes the 
+proof. 
+\end{proof}
+\end{description}
+
+\item[4.17]
+\begin{description}
+\item[(a)]
+\begin{proof}
+It is easy to see that $X_{nk}$ follows geometric distribution with parameter $p_{nk} \coloneqq (n - k + 1)/n$. Thus $E[X_{nk}] = 1/p_{nk}$, $\Var(X_{nk}) = (1 - p_{nk})/p_{nk}^2$. Also note that 
+$X_{n1}, \ldots, X_{nr_n}$ are mutually independent. 
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+Following the hint, we check Lyapunov's condition with $\delta = 2$ for $S_n = 
+\sum\limits_{k = 1}^{r_n} X_{nk}$. It thus needs to be shown that
+\begin{equation}\label{Lyacond}
+\frac{1}{\tau_n^4} \sum_{k = 1}^{r_n} E\{|X_{nk} - E[X_{nk}]|^4\} \to 0
+\end{equation}
+as $n \to \infty$. For notational convenience, denote $\sum\limits_{k = 1}^{r_n} \dfrac{1}{p_{nk}^m}$ by $F_n(m)$, $m = 1, 2, 3, 4$. It can be shown that (use the moment generating function of geometric distribution
+or use Mathematica)
+\begin{align*}
+& \sum_{k = 1}^{r_n} E\{|X_{nk} - E[X_{nk}]|^4\} \\
+= & \sum_{k = 1}^{r_n} \frac{(p_{nk} - 1)(-p_{nk}^2 + 9p_{nk} - 9)}{p_{nk}^4} \\
+= & -F_n(1) + 10F_n(2) - 18F_n(3) + 9F_n(4) \\
+\leq & 10F_n(2) + 9F_n(4),
+\end{align*}
+and
+\begin{align*}
+\tau_n^4 = \left(\sum_{k = 1}^{r_n}\frac{1 - p_{nk}}{p_{nk}^2}\right)^2 = (F_n(2) - F_n(1))^2 = F_n(2)^2 \left(1 - \frac{F_n(1)}{F_n(2)}\right)^2.
+\end{align*}
+Therefore to show \eqref{Lyacond}, it would be helpful to study the asymptotic behavior of $F_n(m)$. Notice that for $m \geq 1$, the function $t \mapsto (1 - t)^{-m}, t \in [0, 1)$ is convex and nondecreasing, hence
+\begin{equation*}
+n\int_0^{r_n/n} (1 - t)^{-m} \dd t  
+- \left(1 - \frac{r_n}{n}\right)^{-m} + 1 \leq F_n(m) \leq n \int_0^{r_n / n} (1 - t)^{-m} \dd t.
+\end{equation*}
+This inequality and the squeeze principle then imply that (also use $r_n/n \to \rho \in (0, 1)$ as $n \to \infty$):
+\begin{equation}\label{bound}
+\frac{F_n(m)}{n} \to 
+\begin{cases}
+-\log(1 - \rho) & m = 1, \\[1em]
+\dfrac{1}{m - 1}\left[\dfrac{1}{(1 - \rho)^{m - 1}} - 1\right] & m = 2, 4.
+\end{cases}
+\end{equation}
+Note that all above limits are positive and finite. Collecting above results gives that
+\begin{align*}
+& \frac{1}{\tau_n^4} \sum_{k = 1}^{r_n} E\{|X_{nk} - E[X_{nk}]|^4\} \\
+\leq & \frac{1}{F_n(2)^2 \left(1 - \dfrac{F_n(1)}{F_n(2)}\right)^2} [10F_n(2) + 9F_n(4)] \\
+= & \frac{10}{n \dfrac{F_n(2)}{n} \left(1 - \dfrac{F_n(1)}{F_n(2)}\right)^2}  + \frac{9\dfrac{F_n(4)}{F_n(2)}}{n\dfrac{F_n(2)}{n} \left(1 - \dfrac{F_n(1)}{F_n(2)}\right)^2} \\
+\to & 0
+\end{align*}
+as $n \to \infty$. The above final limit is zero since by \eqref{bound},
+\begin{equation*}
+\frac{F_n(2)}{n} \to \frac{\rho}{1 - \rho}, \frac{F_n(1)}{F_n(2)} \to -\frac{(1 - \rho)\log(1 - \rho)}{\rho}, \frac{F_n(4)}{F_n(2)} \to \frac{1 - (1 - \rho)^3}{3\rho(1 - \rho)^2}.
+\end{equation*}
+And all these limits are bounded away from $0, 1$ and $\infty$ (the condition $0 < \rho < 1$ is crucial). It may still need some work to show that the second limit above is not $1$, but I will omit the details.
+In summary, Lyapunov's condition is verified thereby the asymptotic normality holds.
+\end{proof}
+\end{description}
+\item[4.18]
+\begin{description}
+\item[(a)]
+\begin{proof}
+It is straightforward to verify that $E[X_1] = 2p, E[Y_1] = (1 - p)^2, \Var(X_1) = 2p(1 - p), \Var(Y_1) = p(2 - p)(1 - p)^2$ and $\Cov(X_1, Y_1) = -2p(1 - p)^2$. Thus by multivariate CLT, 
+\begin{equation*}
+\sqrt{n}\left[(\overbar{X}_n, \overbar{Y}_n)^T - (2p, (1 - p)^2)^T\right] \Rightarrow \gaussian((0, 0)^T, \Sigma),
+\end{equation*}
+where 
+\begin{equation*}
+\Sigma = \begin{pmatrix}
+2p(1 - p) & -2p(1 - p)^2 \\
+-2p(1 - p)^2 & p(2 - p)(1 - p)^2
+\end{pmatrix}.
+\end{equation*}
+This completes the proof.
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+Take $c = (1, 1)^T$, then Cram\'{e}r-Wold device and result of part (a) imply that
+\begin{equation*}
+\sqrt{n}[c^T(\overbar{X}_n, \overbar{Y}_n)^T - c^T (2p, (1 - p)^2)^T] \Rightarrow \gaussian(0, c^T\Sigma c).
+\end{equation*}
+Simplification gives that
+\begin{equation*}
+\sqrt{n}(\overbar{X}_n + \overbar{Y}_n - 1 - p^2) \Rightarrow \gaussian(0, p^2(1 - p^2)).
+\end{equation*}
+The proof is complete.
+\end{proof}
+\end{description}
+
+\begin{comment}
+\item[4.19]
+\begin{description}
+\item[(a)]
+\begin{proof}
+By construction, 
+\begin{align*}
+& \frac{n - t_n}{\sqrt{n}} = \frac{n - \ell_n(k_n + m)}{\sqrt{n}} \\
+= & \frac{1}{\sqrt{n}}\left(n - \left\lfloor \frac{n}{k_n + m} \right\rfloor(k_n + m)\right) \\
+= & \frac{1}{\sqrt{n}}\left(n - \left(\frac{n}{k_n + m} - \alpha_n\right)(k_n + m)\right) \\
+= & \frac{\alpha_n(k_n + m)}{\sqrt{n}} \\
+\leq & \frac{k_n + m}{\sqrt{n}} \to 0
+\end{align*}
+as $n \to \infty$. In above, $\alpha_n = \ell_n - \lfloor \ell_n \rfloor \in [0, 1)$ denotes the fraction part of $\ell_n$. 
+
+Given $\eps > 0$, by Markov's inequality and stationarity of $\{X_i\}$, it follows that
+\begin{align*}
+& P\left[\left|\frac{1}{\sqrt{n}}\sum_{i = t_n + 1}^n X_i \right| \geq \eps\right] \\
+\leq & \frac{1}{\sqrt{n}\eps} E\left[\left|\sum_{i = t_n + 1}^n X_i\right|\right] \\
+\leq & \frac{n - t_n}{\sqrt{n}\eps} E[|X_1|] \to 0
+\end{align*}
+as $n \to \infty$. Hence $\dfrac{1}{\sqrt{n}}\sum\limits_{i = t_n + 1}^n X_i \to_P 0$.
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+By construction, for sufficiently large $n$ such that $k_n > m$, $W_1, \ldots, W_{\ell_n}$ are i.i.d.\  with finite second moment.\footnote{In literature, $W_i$ are sometimes referred to as \emph{small blocks}.} Hence by classical CLT,
+$\sum\limits_{i = 1}^{\ell_n}W_i/\sqrt{\ell_n}$ is asymptotically normal, hence it is $O_P(1)$. Furthermore, 
+\begin{equation*}
+\frac{\ell_n}{n} \leq \frac{n/(\lfloor n^{1/4}\rfloor + m)}{n} < \frac{1}{\lfloor n^{1/4} \rfloor} \to 0.
+\end{equation*}
+Therefore $\dfrac{1}{\sqrt{n}}\sum\limits_{i = 1}^{\ell_n} W_i \to_P 0$ follows from Slutsky's theorem. 
+\end{proof}
+
+\item[(c)]
+\begin{proof}
+By definition of $m$-dependent sequence, $V_1, \ldots, V_{\ell_n}$ are i.i.d..\footnote{$V_i$ are referred to as \emph{big blocks}.} By contrast to part (b), here we cannot use classical CLT since $\Var(V_1)$ depends on $n$ and tends to 
+$\infty$. In fact, it can be shown that (see Section 2.2.3 of Hunter's notes):
+\begin{equation*}
+s_{\ell_n}^2 = \sum_{i = 1}^{\ell_n} \Var(V_i) = \ell_nk_n\sigma^2 + 2\ell_n \sum_{k = 1}^m (k_n - k) \Cov(X_1, X_{1 + k}).
+\end{equation*}
+Under the assumption that $\{X_i\}$ is bounded, $|V_i| \leq k_nM, i = 1, \ldots, \ell_n$ for some positive $M$. Since (use $\ell_n/k_n \to \infty$)
+\begin{equation*}
+\frac{s_{\ell_n}^2}{k_n^2} = \frac{\ell_n}{k_n}\sigma^2 + 2\frac{\ell_n}{k_n} \sum_{k = 1}^m \left(1 - \frac{k}{k_n}\right)\Cov(X_1, X_{1 + k}) \to \infty
+\end{equation*}
+as $n \to \infty$, whence given $\eps > 0$, there exists $N \in \nn$ such that for all $n > N$, $M < \eps s_{\ell_n}/k_n$. Therefore, when $n > N$,
+\begin{align*}
+& \frac{1}{s_{\ell_n}^2}\sum_{i = 1}^{\ell_n} E[V_i^2 I_{[|V_i| \geq \eps s_{\ell_n}]}] \\
+\leq &  \frac{1}{s_{\ell_n}^2}\sum_{i = 1}^{\ell_n} E[V_i^2 I_{[M \geq \eps s_{\ell_n}/k_n]}] \\
+= & 0.
+\end{align*}
+Hence Lindeberg condition holds. It then follows by Lindeberg's CLT that
+\begin{equation*}
+\frac{1}{s_{\ell_n}} \sum_{i = 1}^{\ell_n} V_i \Rightarrow \gaussian(0, 1).
+\end{equation*}
+
+On the other hand, we have
+\begin{align*}
+\frac{s_{\ell_n}^2}{n} & = \frac{\ell_nk_n}{n}\sigma^2 + 2\frac{\ell_nk_n}{n} \sum_{k = 1}^m \Cov(X_1, X_{1 + k}) -  2\frac{\ell_n}{n} \sum_{k = 1}^m k\Cov(X_1, X_{1 + k}) \\
+& \to \sigma^2 + 2 \sum_{k = 1}^m \Cov(X_1, X_{1 + k}) = \tau^2,
+\end{align*}
+in view of $\ell_nk_n/n \to 1$ and $\ell_n/n \to 0$ as $n \to \infty$. The desired result then follows from Slutsky's theorem. 
+\end{proof}
+\end{description}
+\end{comment}
+
+\item[4.20(a)]
+\begin{proof}
+It is clear that $\{X_{i - 1}X_i\}$ is a stationary $1$-dependent sequence with 
+finite variance, hence Theorem 4.20 applies. Since $\mu = E[X_0X_1] = E[X_0]E[X_1] 
+= p^2$, $\sigma^2 = \Var(X_0X_1) = E[X_0^2X_1^2] - p^4 = p^2 - p^4$, $\Cov(X_0X_1,
+X_1X_2) = E[X_0X_1^2X_2] - E[X_0X_1]E[X_1X_2] = p^3 - p^4$, it follows by Theorem
+4.20 that $\sqrt{n}(\overbar{X}_n - p^2) \Rightarrow \gaussian(0, p^2 + 2p^3 -
+p^4)$,
+or equivalently, in terms of $S_n$:
+\begin{equation*}
+    \frac{S_n - np^2}{\sqrt{n}} \Rightarrow \gaussian(0, p^2 + 2p^3 - p^4).
+\end{equation*}
+This completes the proof.
+\end{proof}
+
+\item[4.21(a)]
+\begin{proof}
+For notational simplicity, denote $I_{[X_i < X_{i - 1}, X_i < X_{i + 1}]}$ by $Y_i$,
+$i = 1, 2, \ldots, n$. Clearly, $\{Y_i\}$ is a stationary $2$-dependent sequence, 
+with
+\begin{align*}
+    & \mu = E[Y_1] = P[X_1 < X_0, X_1 < X_2] = 
+    \int_{-\infty}^\infty\int_{-\infty}^{x_2}\int_{x_1}^\infty \dd F(x_0) 
+    \dd F(x_1) \dd F(x_2) = \frac{1}{3}, \\
+    & \sigma^2 = \Var(Y_1) = E[Y_1^2] - (E[Y_1])^2 = E[Y_1](1 - E[Y_1]) 
+    = \frac{2}{9}, \\
+    & \Cov(Y_1, Y_2) = E[Y_1Y_2] - E[Y_1]E[Y_2] = 0 - \frac{1}{9} = -\frac{1}{9}.
+\end{align*}
+The evaluation of $E[Y_1Y_3]$ is more complicated, as shown below (note the 
+joint the distribution of $(X_0, X_1, X_2, X_3, X_4)$ is $F(x_0)F(x_1)F(x_2)F(x_3)
+F(x_4)$, $(x_0, x_1, x_2, x_3, x_4) \in \real^5$, then carefully determine the integration
+region): 
+\begin{align*}
+    & E[Y_1Y_3] = P[X_1 < X_0, X_1 < X_2, X_3 < X_2, X_3 < X_4] \\
+  = & \int_{-\infty}^\infty\int_{-\infty}^{x_4}\int_{x_3}^\infty\int_{-\infty}^{x_2}
+  \int_{x_1}^\infty \dd F(x_0) \dd F(x_1) \dd F(x_2) \dd F(x_3) \dd F(x_4) \\
+  = & \int_{-\infty}^\infty\int_{-\infty}^{x_4}\int_{x_3}^\infty\left[\int_{-\infty}^{x_2}
+  (1 - F(x_1)) \dd F(x_1)\right]\dd F(x_2) \dd F(x_3) \dd F(x_4) \\
+  = & \int_{-\infty}^\infty \int_{-\infty}^{x_4} \int_{x_3}^\infty 
+  \left[F(x_2) - \frac{1}{2}F(x_2)^2\right] \dd F(x_2) \dd F(x_3) \dd F(x_4) \\
+  = & \int_{-\infty}^\infty \int_{-\infty}^{x_4} 
+  \left[\frac{1}{3} - \frac{1}{2} F(x_3)^2 + \frac{1}{6} F(x_3)^3\right] \dd F(x_3) \dd 
+  F(x_4) \\
+  = & \int_{-\infty}^\infty\left[\frac{1}{3}F(x_4) - \frac{1}{6}F(x_4)^3 + 
+  \frac{1}{24}F(x_4)^4\right] \dd F(x_4) \\
+  = & \frac{2}{15}.
+\end{align*}
+Hence $\Cov(Y_1, Y_3) = E[Y_1Y_3] - E[Y_1]E[Y_3] = 1/45$. By Theorem 4.20, we have
+\begin{equation*}
+    \sqrt{n}\left(\overbar{Y}_n - \frac{1}{3}\right) \Rightarrow 
+    \gaussian(0, 2/9 + 2 \times (- 1/9 + 1/45)) = \gaussian(0, 2/45).
+\end{equation*}
+Or equivalently, in terms of $S_n$, 
+\begin{equation*}
+    \frac{S_n - n/3}{\sqrt{n}} \Rightarrow \gaussian\left(0, \frac{2}{45}\right).
+\end{equation*}
+This completes the proof. 
+\end{proof}
+\end{description}
+
+\newpage
+
+\section*{Homework 9}
+\begin{description}
+\item[Problem 1]
+\begin{proof}
+Carefully evaluating all required population moments, then applying the multivariate CLT
+gives that
+\begin{equation}\label{eq2}
+\sqrt{n}\left[
+\begin{pmatrix}
+\overbar{Y} \\
+\overbar{Y^2} - 1 \\
+\overbar{Y^3} - \lambda
+\end{pmatrix}\right]
+\Rightarrow
+\mathcal{N}\left(
+\begin{pmatrix}
+0 \\
+0 \\
+0
+\end{pmatrix}, 
+\begin{pmatrix}
+1 & \lambda & \kappa + 3 \\
+\lambda & \kappa + 2  & \mu_5/\sigma^5 - \lambda \\
+\kappa + 3 & \mu_5/\sigma^5 - \lambda & \mu_6/\sigma^6 - \lambda^2
+\end{pmatrix}\right)
+\end{equation}
+Note that the result is better to be expressed in terms of $\kappa$, as the instruction indicates. 
+
+Expanding $\sum\limits_{i = 1}^n (Y_i - \overbar{Y})^3$ and using the definitions of $\overbar{Y^k}, k = 1, 2, 3$, it can be shown 
+that 
+\begin{equation}\label{eq3}
+\ell_n = \boxed{\frac{\overbar{Y^3} - 3\overbar{Y}\overbar{Y^2} + 2\overbar{Y}^3}{(\overbar{Y^2} - 
+\overbar{Y}^2)^{3/2}}}.
+\end{equation}
+Note do not confuse $\overbar{Y^3}$ with $\overbar{Y}^3$, etc. 
+
+Form \eqref{eq3} of $\ell_n$ suggests us considering the function
+$$\phi(a, b, c) = \frac{c - 3ab + 2a^3}{(b - a^2)^{3/2}},$$
+whose derivative at the point $(0, 1, \lambda)$ is $(-3, -3\lambda/2, 1)$, then applying the Delta method. 
+One simple way to express the limiting distribution of $\sqrt{n}(\ell_n - \lambda)$ is to denote by $(T_1, T_2, T_3)^T$ the random 
+vector whose distribution is the trivariate normal given on the right hand side of \eqref{eq2} first, then write
+\begin{equation*}
+\sqrt{n}(\ell_n - \lambda) \Rightarrow \mathcal{N}(0, \Var(-3T_1 - 3\lambda T_2/2 + T_3)).
+\end{equation*}
+Or more tediously, we can explicitly spell $\Var(-3T_1 - 3\lambda T_2/2 + T_3)$ out as follows:
+\begin{align*}
+& \Var(-3T_1 - 3\lambda T_2/2 + T_3) \\
+= & 9\Var(T_1) + \frac{9}{4}\lambda^2\Var(T_2) + \Var(T_3) + 9\lambda\Cov(T_1, T_2) - 6\Cov(T_1, T_3) - 3\lambda\Cov(T_2, T_3) \\
+= &  9+ \frac{9}{4}\lambda^2(\kappa + 2) + (\mu_6/\sigma^6 - \lambda^2) + 9\lambda^2 - 6(\kappa + 3) - 3\lambda(
+\mu_5/\sigma^5 - \lambda) \\
+= & \boxed{-9 - 6\kappa+ \frac{9}{4}\lambda^2\kappa + \frac{31}{2}\lambda^2 + \frac{\mu_6}{\sigma^6} - 3\frac{\lambda\mu_5}{\sigma^5}}.
+\end{align*}
+This completes the proof.
+\end{proof}
+
+\item[Problem 2]
+\begin{proof}
+Under the assumption that $\{X_1, \ldots, X_n\}$ and $\{Y_1, \ldots, Y_n\}$ are independent, we have 
+$E[X_1] = \mu_X, E[Y_1] = \mu_Y, E[X_1 Y_1] = \mu_X\mu_Y$, $\Var(X_1) = \sigma_X^2, \Var(Y_1) = \sigma_Y^2, 
+\Var(X_1Y_1) = E[(X_1Y_1)^2] - (E[X_1Y_1])^2 = (\sigma_X^2 + \mu_X^2)(\sigma_Y^2 + \mu_Y^2) - \mu_X^2\mu_Y^2 
+= \sigma_X^2\sigma_Y^2 + \sigma_X^2\mu_Y^2 + \sigma_Y^2\mu_X^2$, and
+$\Cov(X_1, Y_1) = 0, \Cov(X_1, X_1Y_1) = E[X_1^2Y_1] - E[X_1]E[X_1Y_1] = (\sigma_X^2 + \mu_X^2)\mu_Y - \mu_X^2\mu_Y  
+= \sigma_X^2\mu_Y, \Cov(Y_1, X_1Y_1) = E[X_1Y_1^2] - E[Y_1]E[X_1Y_1] = \mu_X(\sigma_Y^2 + \mu_Y^2) - \mu_X\mu_Y^2 = \mu_X\sigma_Y^2$. It then follows by the multivariate CLT that
+\begin{equation}\label{hw9:eq1}
+\sqrt{n}\left[
+\begin{pmatrix}
+\overbar{X} \\
+\overbar{Y} \\
+\overbar{XY}
+\end{pmatrix} -
+\begin{pmatrix}
+\mu_X \\
+\mu_Y \\
+\mu_{X}\mu_{Y}
+\end{pmatrix} 
+\right] \Rightarrow
+\mathcal{N}\left(
+\begin{pmatrix}
+0 \\
+0 \\
+0
+\end{pmatrix}, 
+\begin{pmatrix}
+\sigma_X^2 & 0 & \sigma_X^2\mu_Y \\
+0 & \sigma_Y^2 & \sigma_Y^2\mu_X \\
+\sigma_X^2\mu_Y & \sigma_Y^2\mu_X & \sigma_X^2\sigma_Y^2 + \sigma_X^2\mu_Y^2 + \sigma_Y^2\mu_X^2
+\end{pmatrix}\right)
+\end{equation}
+Define $g(x, y, z) = \dfrac{z}{xy}, x \neq 0, y \neq 0$, then $T_n = g(\overbar{X}, \overbar{Y}, \overbar{XY})$ and $g(\mu_X, \mu_Y, \mu_X\mu_Y) = 1$. Additionally, $\nabla g(\mu_X, \mu_Y, \mu_X\mu_Y) = (-1/\mu_X, -1/\mu_Y, 
+1/(\mu_X\mu_Y))^T$. By the Delta method and \eqref{hw9:eq1}, it follows that
+\begin{equation*}
+\sqrt{n}(T_n - 1) \Rightarrow \boxed{\mathcal{N}\left(0, \frac{\sigma_X^2\sigma_Y^2}{\mu_X^2\mu_Y^2}\right)}.
+\end{equation*}
+This completes the proof. 
+\end{proof}
+
+\item[5.1]
+\begin{proof}
+By the classical CLT, we have $\sqrt{n}(X_n/n - 1/2) \Rightarrow \xi \sim \gaussian(0, 1/4)$. Write
+$$\delta_n = \frac{X_n}{n}\left(1 - \frac{X_n}{n}\right) = \frac{1}{4} - \left(\frac{X_n}{n} - \frac{1}{2}\right)^2 = \frac{1}{4} - \frac{1}{n}\left[\sqrt{n}\left(\frac{X_n}{n} - \frac{1}{2}\right)\right]^2.$$
+Rearrangement and continuous mapping theorem then give that 
+$$n\left(\delta_n - \frac{1}{4}\right) = - \left[\sqrt{n}\left(\frac{X_n}{n} - \frac{1}{2}\right)\right]^2 \Rightarrow X \coloneqq  -\xi^2.$$
+That is, $a_n = n, b_n = 1/4$ and $X$ is defined as above. 
+\end{proof}
+
+\item[5.3]
+\begin{description}
+\item[(a)] 
+\begin{proof}
+By the classical CLT, $\sqrt{n}(X_n/n - p) \Rightarrow \gaussian(0, p(1 - p))$. If $p \neq 1/2$, then $g$ is differentiable at $p$ and $|g'(p)| = 1 \neq 0$, it follows by the Delta method that
+$$\sqrt{n}(g(X_n/n) - g(p)) \Rightarrow \gaussian(0, p(1 - p)).$$
+If $p = 1/2$, then $|g(X_n/n) - g(1/2)| = |X_n/n - 1/2|$. Since the function $x \mapsto |x|$ is continuous on $\real^1$, and $\sqrt{n}(X_n/n - 1/2) \Rightarrow \gaussian(0, 1/4)$. Let $Z \sim \gaussian(0, 1)$, it follows
+by the continuous mapping theorem that 
+$$\sqrt{n}|g(X_n/n) - g(1/2)| \Rightarrow \dfrac{1}{2}|Z|.$$
+Or equivalently, $4n(g(X_n/n) - g(1/2))^2 \Rightarrow \chi_1^2$.
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+Note that 
+$$\frac{\dd}{\dd x} h(x) = \frac{\dd}{\dd x} \arcsin(\sqrt{x}) = \frac{1}{2\sqrt{x(1 - x)}} \neq 0, 0 < x < 1.$$
+By the Delta method and $\sqrt{n}(X_n/n - p) \Rightarrow \gaussian(0, p(1 - p))$, we have
+$$\sqrt{n}(h(X_n/n) - h(p)) \Rightarrow \gaussian(0, 1/4).$$
+Thus $h(x) = \arcsin(\sqrt{x})$ is a variance-stablizing transformation for $X_n/n$. 
+\end{proof}
+\end{description}
+
+\item[5.4]
+\begin{proof}
+For notational convenience, denote $\sum_{i = 1}^n X_i^k/n$ by $\overbar{X_n^k}, k = 1, 2$. By condition, $E[X_1] = \mu, E[X_1^2] = \mu^2 + \sigma^2, \Var(X_1) = \sigma^2, \Var(X_1^2) = 2\sigma^4 + 4\mu^2\sigma^2,
+\Cov(X_1, X_1^2) = 2\mu\sigma^2$. It then follows by the multivariate CLT that
+\begin{equation*}
+\sqrt{n}\left[\begin{pmatrix} \overbar{X}_n \\ \overbar{X_n^2} \end{pmatrix} - \begin{pmatrix} \mu \\ \mu^2 + \sigma^2 \end{pmatrix}\right] \Rightarrow 
+\gaussian\left(\begin{pmatrix} 0 \\ 0 \end{pmatrix}, \begin{pmatrix} \sigma^2 & 2\mu\sigma^2 \\
+2\mu\sigma^2 & 2\sigma^4 + 4\mu^2\sigma^2 \end{pmatrix}\right).
+\end{equation*}
+To facilitate the Delta method, define $g(x, y) \coloneqq \sqrt{y - x^2}/x, (x, y) \in D = \{(x, y) \in \real^2: x \neq 0, y \neq x^2\}$. It is easy to verify that $g$ is everywhere differentiable on its domain, and 
+\begin{equation*}
+\nabla g(x, y) = \begin{pmatrix} -\dfrac{y}{x^2\sqrt{y - x^2}} \\ \dfrac{1}{2x\sqrt{y - x^2}} \end{pmatrix}.
+\end{equation*}
+Under the condition $\mu \neq 0$ (also $\sigma^2 > 0$), $\nabla g(\mu, \mu^2 + \sigma^2)$ is well-defined. Furthermore, $g(\overbar{X}_n, \overbar{X^2}_n) = \dfrac{S_n}{\overbar{X}_n}, g(\mu, \mu^2 + \sigma^2) = \dfrac{\sigma}{\mu}$, and 
+\begin{align*}
+& \nabla^T g(\mu, \mu^2 + \sigma^2)  \begin{pmatrix} \sigma^2 & 2\mu\sigma^2 \\
+2\mu\sigma^2 & 2\sigma^4 + 4\mu^2\sigma^2 \end{pmatrix} \nabla g(\mu, \mu^2 + \sigma^2) \\
+= & \frac{1}{\sigma^2\mu^4} \begin{pmatrix}-(\mu^2 + \sigma^2) & \dfrac{1}{2}\mu \end{pmatrix} \begin{pmatrix} \sigma^2 & 2\mu\sigma^2 \\
+2\mu\sigma^2 & 2\sigma^4 + 4\mu^2\sigma^2 \end{pmatrix} \begin{pmatrix}-(\mu^2 + \sigma^2) \\ \dfrac{1}{2}\mu \end{pmatrix} \\
+= & \frac{\sigma^4}{\mu^4} + \frac{\sigma^2}{2\mu^2}.
+\end{align*}
+Therefore,
+\begin{equation*}
+\sqrt{n}\left(\frac{S_n}{\overbar{X}_n} - \frac{\sigma}{\mu}\right) \Rightarrow \boxed{\gaussian\left(0, \frac{\sigma^4}{\mu^4} + \frac{\sigma^2}{2\mu^2}\right)}.
+\end{equation*}
+This completes the proof.
+\end{proof}
+
+\item[5.9]
+\begin{description}
+\item[(a)]
+\begin{proof}
+Since $E[X_1] = E[Y_1] = 1/2, \Var(X_1) = \Var(Y_1) = 1/4, \Cov(X_1, Y_1) = \theta - 1/4$, it follows by multivariate CLT that
+\begin{equation*}
+\sqrt{n}\left[\begin{pmatrix} \overbar{X}_n \\ \overbar{Y}_n \end{pmatrix} - \begin{pmatrix} \dfrac{1}{2} \\ \dfrac{1}{2} \end{pmatrix}\right] \Rightarrow 
+\gaussian\left(\begin{pmatrix} 0 \\ 0 \end{pmatrix}, \dfrac{1}{4}\begin{pmatrix} 1 & 4\theta - 1 \\
+4\theta - 1 & 1 \end{pmatrix}\right).
+\end{equation*}
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+It suffices to find $\Sigma^*$ and $A$ in Hunter's notes, but we must  pay close attention that results such as $(5.8)$ and $(5.9)$ there hold only when $E[X] = E[Y] = 0$, but in this problem, 
+$E[X] = E[Y] = 1/2$.  In order to use $(5.8)$ and $(5.9)$, $X$ and $Y$ need to be centered by $X' = X - 1/2, Y' = Y - 1/2$. Also note that both $r_n$ and $\rho$ are invariant under this transformation. For the transformed sample, direct calculation gives that 
+\begin{equation*}
+\Sigma^* = 
+\begin{pmatrix}
+0 & 0 & 0 \\
+0 & 0 & 0 \\
+0 & 0 & \dfrac{1}{2}\theta - \theta^2
+\end{pmatrix}, \;
+A = \begin{pmatrix} -2\rho & -2\rho & 4\end{pmatrix}.
+\end{equation*}
+hence
+\begin{equation*}
+A\Sigma^*A^T = \begin{pmatrix} -2\rho & -2\rho & 4 \end{pmatrix}
+\begin{pmatrix}
+0 & 0 & 0 \\
+0 & 0 & 0 \\
+0 & 0 & \dfrac{1}{2}\theta - \theta^2
+\end{pmatrix}
+\begin{pmatrix} -2\rho \\ -2\rho \\ 4 \end{pmatrix}
+= 8\theta - 16\theta^2 = 1 - \rho^2.
+\end{equation*}
+Thus the asymptotic distribution of $\sqrt{n}(r_n - \rho)$ is $\boxed{\gaussian(0, 1 - \rho^2)}$.
+\end{proof}
+
+\item[(c)]
+\begin{proof}
+Based on the asymptotic distribution in part (b), a variance-stablizing transformation for $r_n$ should be a function $f$ such that 
+$$f'(x) = \frac{1}{\sqrt{1 - x^2}}, 0 < x < 1.$$ 
+Clearly, then $f(x) = \arcsin(x), 0 < x < 1$ (or $\sin^{-1}(x)$), which would give us
+$$\sqrt{n}(\arcsin(r_n) - \arcsin(\rho)) \Rightarrow \gaussian(0, 1).$$
+This completes the proof.
+\end{proof}
+\end{description}
+\end{description}
+
+\newpage
+
+\section*{Homework 10}
+\begin{description}
+\item[6.4]
+\begin{proof}
+Given $x > 0, y > 0$, for sufficiently large $n$, $(x + y)/n < 1$. By hint, it can be shown that
+\begin{align*}
+& P[nX_{(2)} > x, n(1 - X_{(n - 1)}) > y] \\
+= & P[x/n < X_{(2)} < X_{(n - 1)} < 1 - y/n] \\
+= & \frac{n!}{0!n!0!}\left(1 - \frac{x}{n} - \frac{y}{n}\right)^{n} + \frac{n!}{1!(n - 1)!0!}\frac{x}{n}\left(1 - \frac{x}{n} - \frac{y}{n}\right)^{n - 1} + \\
+& \frac{n!}{0!(n - 1)!1!}\left(1 - \frac{x}{n} - \frac{y}{n}\right)^{n - 1}\frac{y}{n} + \frac{n!}{1!(n - 2)!1!}\frac{x}{n}\left(1 - \frac{x}{n} - \frac{y}{n}\right)^{n - 2}\frac{y}{n} \\
+= & \left(1 - \frac{x + y}{n}\right)^{n} + (x + y)\left(1 - \frac{x + y}{n}\right)^{n - 1} + \frac{n(n - 1)}{n^2}xy\left(1 - \frac{x + y}{n}\right)^{n - 1} \\
+\to & e^{-(x + y)} + (x + y)e^{-(x + y)} + xye^{-(x + y)} = (x + 1)e^{-x} \times (y + 1)e^{-y}
+\end{align*}
+as $n \to \infty$. Note that $(x + 1)e^{-x}$ is the tail probability $P[X > x]$ of $X \sim \Gamma(2, 1)$. Hence let $X, Y$ be i.i.d.\  $\Gamma(2, 1)$ random variables, then above derivation shows that
+\begin{equation*}
+\begin{pmatrix}
+nX_{(2)} \\
+n(1 - X_{(n - 1)})
+\end{pmatrix}
+\Rightarrow 
+\begin{pmatrix}
+X \\
+Y
+\end{pmatrix}.
+\end{equation*}
+This completes the proof.
+\end{proof}
+
+\item[6.5]
+The most convenient way to prove the result is to use the proposition below:
+\begin{prop}
+Suppose that
+$X_1, \ldots, X_n \text{ i.i.d.} \sim F$, where $F$ is continuous, then
+$$(X_{(1)}, \ldots, X_{(n)}) 
+\overset{d} = (F^{-}(U_{(1)}), \ldots, F^{-}(U_{(n)})),$$
+where $F^{-}$ is the quantile function \footnote{See Homework 6 for its
+definition and basic properties.} of $F$ and $(U_{(1)}, \ldots, U_{(n)})$ is the
+order statistic of $U_1, \ldots, U_n \text{ i.i.d.} \sim \mathcal{U}(0, 1)$. 
+\end{prop}
+
+The notes applied this result without giving a proof, so I supplement the proof
+here.
+\begin{proof}[Proof of the Proposition]
+Define $U_i = F(X_i), i = 1, \ldots, n$, then $U_1, \ldots, U_n \text{ i.i.d.} 
+\sim \mathcal{U}(0, 1)$. Therefore, for the $(U_1, \ldots, U_n)$ such defined,
+and for any $(x_1, \ldots, x_n) \in \real^n$,
+\begin{align*}
+   & P[F^{-}(U_{(1)}) \leq x_1, \ldots, F^{-}(U_{(n)}) \leq x_n] \\
+ = & P[U_{(1)} \leq F(x_1), \ldots, U_{(n)} \leq F(x_n)] 
+ \text{ (by \eqref{quantile} in Homework 6)} \\
+ = & P[F(X_{(1)}) \leq F(x_1), \ldots, F(X_{(n)}) \leq F(x_n)] 
+ \text{ (by construction)} \\
+ = & P[F(X_{(1)}) < F(x_1), \ldots, F(X_{(n)}) < F(x_n)] 
+ \text{ (by the continuity of $F$)} \\
+ = & P[X_{(1)} < x_1, \ldots, X_{(n)} < x_n] 
+ \text{ (by the monotonicity of $F$)} \\
+ = & P[X_{(1)} \leq x_1, \ldots, X_{(n)} \leq x_n] 
+ \text{ (again by the continuity of $F$)}
+\end{align*}
+This completes the proof of the proposition. 
+\end{proof}
+
+\begin{description}
+\item[(a)]
+\begin{proof}
+In this problem, $F$ is continuous, with 
+\begin{equation*}
+    F^{-}(u) = \frac{1}{1 - u}, \quad 0 < u < 1.
+\end{equation*}
+Therefore, by the proposition, $(X_{(n - 1)}/n, X_{(n)}/n) \overset{d}= 
+(1/(n(1 - U_{(n - 1)})), 1/(n(1 - U_{(n)})))$. By the result of Example 6.4,
+we conclude that
+\begin{equation*}
+    \begin{bmatrix}
+    \dfrac{X_{(n - 1)}}{n} \\
+    \dfrac{X_{(n)}}{n}
+    \end{bmatrix} 
+    \Rightarrow 
+    \begin{bmatrix}
+    \dfrac{1}{Y_1 + Y_2} \\
+    \dfrac{1}{Y_1} 
+    \end{bmatrix},
+\end{equation*}
+where $Y_1, Y_2$ are independent standard exponential rando variables. 
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+By the continuous mapping theorem, it follows that
+\begin{equation*}
+    \frac{X_{(n - 1)}}{X_{(n)}} = \frac{X_{(n - 1)}/n}{X_{(n)}/n}
+    \Rightarrow \frac{1/(Y_1 + Y_2)}{1/Y_1} = \frac{Y_1}{Y_1 + Y_2}
+    \sim \mathcal{U}(0, 1).
+\end{equation*}
+That $\dfrac{Y_1}{Y_1 + Y_2} \sim \mathcal{U}(0, 1)$ can be verified by 
+computing the distribution function of $\dfrac{Y_1}{Y_1 + Y_2}$ directly.
+\end{proof}
+\end{description}
+
+\item[6.6]
+\begin{proof}
+Under the assumption of the problem, we can show (one expedient way is to use the representation given in Problem 1) that in fact $X_{(1)}/X_{(2)} {\color{red}\overset{d}=} \mathcal{U}(0, 1)$, for any $n$, which is stronger than $X_{(1)}/X_{(2)} \Rightarrow \mathcal{U}(0, 1)$. The details will be omitted.
+\end{proof}
+
+\item[6.7]
+\begin{description}
+\item[(a)]
+\begin{proof}
+We shall proceed in a similar way to the Problem 6.5. First it is 
+straightforward to find the quantile function of $F$ is given by
+\begin{equation*}
+    F^{-}(u) = \theta\log\left(\frac{u}{1 - u}\right) 
+    = \theta \log u - \theta \log(1 - u), \quad 0 < u < 1.
+\end{equation*}
+Therefore, 
+\begin{equation*}
+    \theta^{-1}\begin{bmatrix}
+    X_{(n - 1)} \\
+    X_{(n)} 
+    \end{bmatrix} \overset{d}= 
+    \begin{bmatrix} 
+    \log(U_{(n - 1)}) \\
+    \log(U_{(n)})
+    \end{bmatrix} - 
+    \begin{bmatrix} 
+    \log(1 - U_{(n - 1)}) \\
+    \log(1 - U_{(n)})
+    \end{bmatrix}.
+\end{equation*}
+
+In Example 6.5 we have shown that 
+\begin{equation*}
+    \begin{bmatrix} 
+    -\log(n(1 - U_{(n - 1)})) \\
+    -\log(n(1 - U_{(n)})) 
+    \end{bmatrix} \Rightarrow 
+    \begin{bmatrix} 
+    -\log(Y_1 + Y_2) \\
+    -\log(Y_1)
+    \end{bmatrix},
+\end{equation*}
+where $Y_1, Y_2$ are independent standard exponential random variables. 
+
+On the other hand, it can be shown that $U_{(n - 1)} \to_P 1$ and $U_{(n)} 
+\to_P 1$ as $n \to \infty$. To see this, given $\eps \in (0, 1)$, 
+\begin{align*}
+   & P[|U_{(n - 1)} - 1| \geq \eps] = P[1 - U_{(n - 1)} \geq \eps] = 
+   P[U_{(n - 1)} \leq 1 - \eps] \\
+   = & P[\text{At least $n - 1$ of } U_1, \ldots, U_n \leq 1 - \eps] \\
+   = & (1 - \eps)^n + \binom{n}{n - 1}(1 - \eps)^{n - 1}\eps \to 0
+\end{align*}
+as $n \to \infty$. The proof of $U_{(n)} \to_P 1$ is similar (and simpler).
+It then follows that $(\log(U_{(n - 1)}), \log(U_{(n)}))' \to_P 0$, in view of
+the continuous mapping theorem. Together, by the Slutsky's theorem, we conclude
+that
+\begin{equation*}
+    \theta^{-1}\begin{bmatrix}
+    X_{(n - 1)} - \theta\log n \\
+    X_{(n)} - \theta\log n
+    \end{bmatrix} \overset{d}= 
+    \begin{bmatrix} 
+    -\log(n(1 - U_{(n - 1)})) \\
+    -\log(n(1 - U_{(n)})) 
+    \end{bmatrix} + o_P(1) \Rightarrow 
+    \begin{bmatrix} 
+    -\log(Y_1 + Y_2) \\
+    -\log(Y_1)
+    \end{bmatrix},
+\end{equation*}
+where $Y_1, Y_2$ are independent standard exponential random variables. Thus
+the continuous mapping theorem implies that
+\begin{equation*}
+    \theta^{-1}(X_{(n)} - X_{(n - 1)}) \Rightarrow 
+    \log(Y_1 + Y_2) - \log(Y_1) = -\log\left(\frac{Y_1}{Y_1 + Y_2}\right).
+\end{equation*}
+In the Problem 6.5, we mentioned that if $Y_1, Y_2 \text{ i.i.d.} \sim 
+\text{Exp}(1)$, then $Y_1/(Y_1 + Y_2) \sim \mathcal{U}(0, 1)$, which further
+implies that $-\log(Y_1/(Y_1 + Y_2)) \sim \text{Exp}(1)$. 
+Therefore, we conclude that
+\begin{equation}\label{hw10:eq1}
+    X_{(n)} - X_{(n - 1)} \Rightarrow \theta\text{Exp}(1). 
+\end{equation}
+This completes the proof.
+\end{proof}
+
+\item[(b)]
+The expression \eqref{hw10:eq1} and the information given in part (b) imply
+that the asymptotic $95\%$ confidence interval for $\theta$ is 
+\begin{equation*}
+    \left[\frac{X_{(n)} - X_{(n - 1)}}{3.6889}, \frac{X_{(n)} - X_{(n - 1)}}{0.0253}\right] = 
+    [0.271(X_{(n)} - X_{(n - 1)}), 39.50(X_{(n)} - X_{(n - 1)})],
+\end{equation*}
+where $X_{(n - 1)}$ and $X_{(n)}$ are computed from the observed sample. 
+\end{description}
+
+\item[6.8]
+\begin{description}
+\item[(a)]
+\begin{proof}
+If $X_1, \ldots, X_n \text{ i.i.d.} \sim \mathcal{U}(0, 2\theta)$, then $X_1/(2\theta), \ldots, X_n/(2\theta) \text{ i.i.d.} \sim \mathcal{U}(0, 1)$. In Example $6.3$ it has been shown that $n(X_{(1)}/(2\theta), 1 - X_{(n)}/(2\theta))^T 
+\Rightarrow (Y_1, Y_2)$, where $Y_1, Y_2 \text{ i.i.d.} \sim \text{Exp}(1)$, it then follows by Cram\'{e}r-Wold device that
+\begin{align*}
+n(M - \theta) = (\theta, -\theta) n \begin{pmatrix} \dfrac{1}{2\theta}X_{(1)} \\ 1 - \dfrac{1}{2\theta}X_{(n)}\end{pmatrix} \Rightarrow (\theta, -\theta)\begin{pmatrix} Y_1 \\ Y_2 \end{pmatrix} = \theta(Y_1 - Y_2).
+\end{align*}
+It can be verified that the pdf of $\theta(Y_1 - Y_2)$ is $f(x) = e^{-|x|/\theta}/(2\theta), x \in \real$, i.e., $\theta(Y_1 - Y_2)$ follows \emph{Laplace distribution} with scale parameter $\theta$.
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+To answer this problem, the term ``\emph{Asymptotic Relative Efficiency (ARE)}" needs a rigorous definition. The definition I adopted here is an adaptation of \cite{ferguson1996}, p.91, where this term is only defined for the case that limiting distributions are all normal and the convergence rate are all $n^{-1/2}$.  However, in this problem, as we have seen in part (a), the limiting distribution of $M$ is not
+normal, and its convergence rate is $n^{-1}$
+instead of $n^{-1/2}$. To address this issue, let me introduce the following definition:
+\begin{defn}
+A sequence of random variables $\{T_n\}$ is said to have the
+\emph{asymptotic variance} $v_n(T_n) \equiv v_n$, if there exist a
+constant sequence $\{\mu_n\}$ and a nondegenerate random variable $T$
+with $\Var(T) = 1$ such that 
+\begin{equation*}
+\frac{T_n - \mu_n}{\sqrt{v_n}} \Rightarrow T.
+\end{equation*}
+
+Given two estimators $T_{1n}$ and $T_{2n}$ of the parameter $\theta$, the \emph{asymptotic relative efficiency} of $T_{2n}$ relative to $T_{1n}$ is defined as
+\begin{equation}\label{myARE}
+\text{ARE}(T_{2n}, T_{1n}) = \lim_{n \to \infty} \frac{v_n(T_{1n})}{v_n(T_{2n})}.
+\end{equation}
+\end{defn}
+ 
+\textbf{Remark:} This definition may not have appeared in literature, it is tailored for this particular question by myself. My justification for this definition is that when $T_{1n}$ and $T_{2n}$ do converge to normal distributions with the rate $n^{-1/2}$, my definition agrees with the conventional one such as in \cite{ferguson1996}. Consequently, your answer could be different from mine (in fact, for this problem, it's quite obvious that $M$ is the best estimator
+among three candidates in that its approximated variance is smallest). If someone found a mathematically rigorous definition of ARE under general settings, please let me know. 
+
+For a systematic introduction to ARE in estimation, see also \cite{serfling2011asymptotic}.
+
+Since the variance of a Laplace random variable with scale parameter $\theta$ is $2\theta^2$, by the result of part (a), we have
+\begin{equation*}
+\frac{M - \theta}{\sqrt{2\theta^2/n^2}} \Rightarrow Y_1 - Y_2.
+\end{equation*}
+Thus $v_n(M) = \boxed{2\theta^2/n^2}$.
+
+By classical CLT, it follows that
+$$\frac{\overbar{X}_n - \theta}{\sqrt{\theta^2/(3n)}} \Rightarrow Z,$$
+where $Z \sim \gaussian(0, 1)$. Hence $v_n(\overbar{X}_n) = \boxed{\theta^2/(3n)}$. 
+
+Finally, by Theorem $6.6$, we have
+$$\frac{\tilde{X}_n - \theta}{\sqrt{\theta^2/n}} \Rightarrow Z,$$
+where $Z \sim \gaussian(0, 1)$. Hence $v_n(\tilde{X}_n) = \boxed{\theta^2/n}$. 
+
+Therefore, by definition \eqref{myARE}, we have
+\begin{align*}
+& \text{ARE}(\overbar{X}_n, M) = \lim_{n \to \infty} \frac{2\theta^2/n^2}{\theta^2/(3n)} = 0, \\
+& \text{ARE}(\overbar{X}_n, \tilde{X}_n) = \lim_{n \to \infty} \frac{\theta^2/n}{\theta^2/(3n)} = 3, \\
+& \text{ARE}(\tilde{X}_n, M) = \lim_{n \to \infty} \frac{2\theta^2/n^2}{\theta^2/n} = 0.
+\end{align*}
+Thus in terms of smaller asymptotic variances, $M$ is the most efficient estimator of $\theta$, $\overbar{X}_n$ second, and $\tilde{X}_n$ is the least efficient.
+\end{proof}
+\end{description}
+
+\item[6.11]
+To be clear, here $Q_i$ stands for the $i/4$-th sample quantile, $i = 1, 2, 3$.
+\begin{description}
+\item[(a)]
+\begin{proof}
+For $\gaussian(0, 1)$ distribution, since $\varphi(\Phi^{-}(0.25)) = 0.318$,
+$\varphi(\Phi^{-}(0.5)) = 0.399$, 
+$\varphi(\Phi^{-}(0.75)) = 0.318$, it then follows by Theorem 6.7 (use
+R to do the computation) that
+\begin{equation*}
+    \sqrt{n}\left(
+    \begin{bmatrix}
+    Q_1 \\
+    Q_2 \\
+    Q_3
+    \end{bmatrix} -
+    \begin{bmatrix}
+    1/4 \\
+    1/2 \\
+    3/4
+    \end{bmatrix}\right) \Rightarrow 
+    \gaussian\left(
+    \begin{bmatrix}
+    0 \\
+    0 \\
+    0
+    \end{bmatrix},
+    \begin{bmatrix}
+    1.8568 & 0.9860 & 0.6189 \\
+    0.9860 & 1.5708 & 0.9860 \\
+    0.6189 & 0.9860 & 1.8568
+    \end{bmatrix}
+    \right).
+\end{equation*}
+By Cram\'{e}r-Wold device (or the Delta-method), we then have
+\begin{equation*}
+    \sqrt{n}((Q_3 - Q_2) - (Q_2 - Q_1)) \Rightarrow 
+    \gaussian(0, 3.3465).
+\end{equation*}
+This completes the proof.
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+For the standard logistic distribution, with $f$ and $F$ denoting its
+density function and distribution function, we have (again, use R!)
+\begin{equation*}
+    f(F^{-}(0.25)) = 0.1875,
+    f(F^{-}(0.5)) = 0.25,
+    f(F^{-}(0.75)) = 0.1875.
+\end{equation*}
+Therefore,
+\begin{equation*}
+    \sqrt{n}\left(
+    \begin{bmatrix}
+    Q_1 \\
+    Q_2 \\
+    Q_3
+    \end{bmatrix} -
+    \begin{bmatrix}
+    1/4 \\
+    1/2 \\
+    3/4
+    \end{bmatrix}\right) \Rightarrow 
+    \gaussian\left(
+    \begin{bmatrix}
+    0 \\
+    0 \\
+    0
+    \end{bmatrix},
+    \begin{bmatrix}
+    5.3333 & 2.6667 & 1.7778 \\
+    2.6667 & 4 & 2.6667 \\
+    1.7778 & 2.6667 & 5.3333
+    \end{bmatrix}
+    \right).
+\end{equation*}
+The Cram\'{e}r-Wold device then asserts that
+\begin{equation*}
+    \sqrt{n}((Q_3 - Q_2) - (Q_2 - Q_1)) \Rightarrow 
+    \gaussian(0, 8.8889).
+\end{equation*}
+This completes the proof.
+\end{proof}
+\end{description}
+
+\item[6.12]
+\begin{proof}
+Denote $\lfloor 0.25n + 0.5 \rfloor, \lfloor 0.5n + 0.5 \rfloor, 
+\lfloor 0.75n + 0.5 \rfloor$ by $a_n, b_n, c_n$, respectively. Thus 
+$\text{median} = X_{(b_n)} \overset{d}{=} 2\theta U_{(b_n)}, 
+\text{midquartile} = (X_{(a_n)} + X_{(c_n)})/2 \overset{d}{=} \theta(U_{(a_n)} 
++ U_{(c_n)}),
+\frac{2}{3}Q_3 = \frac{2}{3}X_{(c_n)} = \frac{4\theta}{3}U_{(c_n)}$, where
+$U_1, \ldots, U_n \text{ i.i.d.} \sim \mathcal{U}(0, 1)$. By Theorem 6.6:
+\begin{equation*}
+    \sqrt{n}\left(
+    \begin{bmatrix}
+    U_{(a_n)} \\
+    U_{(b_n)} \\
+    U_{(c_n)}
+    \end{bmatrix} -
+    \begin{bmatrix}
+    1/4 \\
+    1/2 \\
+    3/4
+    \end{bmatrix}\right) \Rightarrow 
+    \gaussian\left(
+    \begin{bmatrix}
+    0 \\
+    0 \\
+    0
+    \end{bmatrix},
+    \begin{bmatrix}
+    3/16 & 1/8 & 1/16 \\
+    1/8 & 1/4 & 1/8 \\
+    1/16 & 1/8 & 1/16
+    \end{bmatrix}
+    \right).
+\end{equation*}
+It thus follows that 
+\begin{align*}
+    & \sqrt{n}(\text{median} - \theta) \Rightarrow \gaussian(0, \theta^2), \\
+    & \sqrt{n}(\text{midquartile} - \theta) \Rightarrow \gaussian(0, \theta^2/2),
+    \\
+    & \sqrt{n}(2Q_3/3 - \theta) \Rightarrow \gaussian(0, \theta^2/3).
+\end{align*}
+Therefore $2Q_3/3$ has the smallest asymptotic variance, the midquartile second,
+the median largest. 
+\end{proof}
+\end{description}
+
+\newpage
+
+\section*{Homework 11}
+\begin{description}
+\begin{comment}
+\item[7.2]
+The proof can be found in pages 116-117 of \cite{ferguson1996}, with necessary 
+(obvious) adaptation. 
+\end{comment}
+
+\item[7.3]
+\begin{proof}
+\textbf{(a)}
+It is easy to verify that the log likelihood function (up to some constant 
+independent of $\theta$) is $\ell(\theta) = \theta^{-1}an - a\theta^{a - 1}
+\sum_{i = 1}^n x_i^a$. Thus the likelihood equation has a closed form solution
+$\hat{\theta} = n^{1/a}/(\sum_{i = 1}^n x_i^a)^{1/a}$. Thus it is unique. Since
+$\ell''(\theta) = -\theta^{-2}an - a(a - 1)\theta^{a - 2}\sum_{i = 1}^n x_i^a$,
+it follows that $\ell''(\hat{\theta}) = -a^2n/\hat{\theta}^2 < 0$, whence 
+$\hat{\theta}$ maximizes the likelihood function. 
+
+\textbf{(b)} Since $\ell(\theta) = n\log\theta - \sum_{i = 1}^n\log(x_i^2 + 
+\theta^2)$, it follows that $\ell'(\theta) = n\theta^{-1} - \sum_{i = 1}^n
+\frac{2\theta}{x_i^2 + \theta^2}$. Since $\theta > 0$, the likelihood equation
+can be equivalently written as $g(\theta) \coloneqq n - \sum_{i = 1}^n
+\frac{2\theta^2}{x_i^2 + \theta^2} = 0$. Clearly, $g(\theta)$ is a continuous
+function of $\theta$ in $(0, +\infty)$, with the property $\lim_{\theta \to 0}
+g(\theta) = n > 0$ and $\lim_{\theta \to +\infty}g(\theta) = -n < 0$. It thus
+follows by the intermediate value theorem of the continuous function 
+(Theorem 4.23, \cite{rudin1964}) that there exists some $\hat{\theta} \in (0, 
++\infty)$ such that $g(\hat{\theta}) = 0$. In addition, $g'(\theta) = 
+-\sum_{i = 1}^n \frac{4\theta x_i^2}{(x_i^2 + \theta^2)^2} < 0$ for all $\theta 
+> 0$, implying that $g(\theta)$ is strictly decreasing in $(0, +\infty)$, thus
+$\hat{\theta}$ is also the unique solution to the likelihood equation. The 
+negativity of $g'(\theta)$ also insures that $\hat{\theta}$ is the maximizer. 
+
+\textbf{(c)} After recognizing $\ell(\theta) = 2n\log\theta - \sum_{i = 1}^n
+\log(x_i^3 + \theta^3)$ and $g(\theta) = 2n - \sum_{i = 1}^n \frac{3\theta^3}
+{x_i^3 + \theta^3}$, the argument is parallel with part (b). The details are thus
+omitted here. 
+\end{proof}
+
+\item[7.4]
+\begin{proof}
+Since $\ell(\theta) = n\log(1 - \theta) + n\log\theta\overbar{X}_n$, 
+$\ell'(\theta) = -\frac{n}{1 - \theta} + \frac{n\overbar{X}_n}{\theta}$, thus
+the maximum likelihood estimate of $\theta$ is $\hat{\theta}_{\text{MLE}} = 
+\frac{\overbar{X}_n}{1 + \overbar{X}_n}$.
+
+By the classical central limit theorem, we have
+\begin{equation*}
+    \sqrt{n}\left(\overbar{X}_n - \frac{\theta}{1 - \theta}\right)
+    \Rightarrow \gaussian(0, \theta/(1 - \theta)^2).
+\end{equation*}
+In which, the mean and variance are easily calculated from $f_\theta$. It
+then follows by the Delta-method (take $g(x) = x/(1 + x)$, $x > 0$) that
+$$\sqrt{n}(\hat{\theta}_{\text{MLE}} - \theta) \Rightarrow \gaussian(0, 
+\theta(1 - \theta)^2).$$ 
+This completes the proof.
+\end{proof}
+
+\item[7.6]
+\begin{proof}
+It is straightforward by definition to calculate that 
+\begin{equation}\label{hw10eq1}
+    I(\theta) = -E_\theta\left[\frac{\partial^2}{\partial \theta^2} \log f_\theta(X) \right] = \frac{9\theta^4}{\sigma^2}.
+\end{equation}
+
+Personally, the second part of this question is at least unclear --- the Fisher 
+information \eqref{hw10eq1} evidently doesn't depend on any particular observation of
+$X$, since it is obtained by averaging over the whole probability space (i.e., 
+expectation operator has been exerted already). The author might want to express that
+\emph{``the {\color{red}{observed}} Fisher information can be zero..."}. By definition,
+given an observed sample $\{x_1, \ldots, x_n\}$, the \emph{observed (Fisher)
+information} is defined as 
+$$J(\theta) = -\sum_{i = 1}^n \frac{\partial^2}{\partial \theta^2} \log f_\theta(x_i).$$
+By contrast to $I(\theta)$, $J(\theta)$ indeed depends on particular observed values. 
+For this problem, if we happened to have only one observation $x = 5\theta^3/2$, then
+$J(\theta) = \left.-3(2\theta x - 5\theta^4)/\sigma^2\right|_{x = 5\theta^3/2} = 0$. 
+\end{proof} 
+
+\item[7.7]
+\begin{proof}
+\textbf{(a)}
+To show $P_{\theta_0}[\hat{\theta}_n \text{ is a local maximum}] \to 1$, since $\ell$ is 
+twice differentiable, it suffices to show that $P_{\theta_0}[\ell''(\hat{\theta}_n) < 0] 
+\to 1$. By assumption, we may assume $\sup_{\theta \in \Theta}|\ell'''(\theta)| \leq nM$ for 
+some $M > 0$. It follows by the mean value theorem that
+$$|\ell''(\hat{\theta}_n) - \ell''(\theta_0)| \leq nM|\hat{\theta}_n - \theta_0|.$$
+Combining this with $\hat{\theta}_n \to_P \theta_0$, it follows that 
+$(\ell''(\hat{\theta}_n) - \ell''(\theta_0))/n = o_P(1)$. Additionally, we have
+$$\frac{1}{n}\ell''(\theta_0) \to_P -I(\theta_0) < 0.$$
+Thus by the Slutsky's theorem, $\ell''(\hat{\theta}_n)/n \to_P -I(\theta_0)$, hence
+\begin{align*}
+     P_{\theta_0}[\ell''(\hat{\theta}_n) < 0] 
+\geq & P_{\theta_0} \left[\left|\frac{1}{n}\ell''(\hat{\theta}_n) + I(\theta_0) 
+\right| < \frac{1}{2}I(\theta_0)\right] 
+\to  1
+\end{align*}
+as $n \to \infty$ (note that the condition $0 < I(\theta_0) < \infty$ is crucial). 
+
+\textbf{(b)}
+If $P_{\theta_0}[\hat{\theta}_{1n} = \hat{\theta}_{2n}] \not\to 1$, then there would 
+exist an $\eps_0 > 0$ and an infinite subsequence $\mathscr{K} \subset \nn$ such that
+$P_{\theta_0}[\hat{\theta}_{1m} \neq \hat{\theta}_{2m}] \geq \eps_0$ for each $m \in 
+\mathscr{K}$. By the result of part (a), $P_{\theta_0}[\hat{\theta}_{km} \text{ is
+a local maximum}] \to 1$ as $m \to \infty$, $k = 1, 2$. Denote by $E_m$ the event
+$[\hat{\theta}_{1m} \text{ is a local maximum}] \cap [\hat{\theta}_{2m} \text{ is 
+a local maximum}] \cap [\hat{\theta}_{1m} \neq \hat{\theta}_{2m}]$, $m \in 
+\mathscr{K}$. Then $\omega \in E_m$ and the continuity of $\ell$ imply that there 
+exists a point between $\hat{\theta}_{1m}(\omega)$ and $\hat{\theta}_{2m}(\omega)$, say
+$\hat{\theta}_{3m}(\omega)$, such that $\hat{\theta}_{3m}(\omega)$ is a local minimum
+of $\ell$, which further implies that $\ell'(\hat{\theta}_{3m}) = 0$. Additionally, 
+$\hat{\theta}_{km} \to_P \theta_0$, $k = 1, 2$ imply that $\hat{\theta}_{3m} \to_P 
+\theta_0$. Therefore $\{\hat{\theta}_{3m}\}$ is also a sequence of consistent roots of 
+the likelihood equation. Hence by the result of part (a), 
+$$\limsup_{m \to \infty} P_{\theta_0}[\hat{\theta}_{3m} \text{ is a local minimum}] = 0.$$
+On the other hand, 
+$E_m \subset [\hat{\theta}_{3m} \text{ is a local minimum}]$
+and
+$\liminf\limits_{m \to \infty} P_{\theta_0}(E_m) \geq \eps_0$
+imply that $$\liminf\limits_{m \to \infty} P_{\theta_0}[\hat{\theta}_{3m} \text{ is a
+local minimum}] \geq \eps_0.$$ This contradiction shows that we must have 
+$P_{\theta_0}[\hat{\theta}_{1n} = \hat{\theta}_{2n}] \to 1$, and the proof is complete.
+\end{proof}
+
+
+\begin{comment}
+\item[7.10]
+\begin{proof}
+If $\theta_0 \neq 0$, without loss of generality, assume $\theta_0 > 0$. Given $\eps 
+> 0$, there exists $N \in \nn$ such that for all $n > N$, $\eps n^{-1/2} < n^{-1/4} < N^{-1/4} < \theta_0$. Denote $\theta_0 - N^{-1/4} > 0$ by $d$, then by $\delta_n \to_P
+\theta_0$ (which is implied by $\sqrt{n}(\delta_n - \theta_0) \Rightarrow \gaussian(
+0, I^{-1}(\theta_0))$), we have for all $n > N$,
+\begin{align*}
+    & P\left[|\sqrt{n}(\delta_n^* - \delta_n)| \geq \eps\right] \\
+  = & P[|\sqrt{n}(\delta_n^* - \delta_n)| \geq \eps, |\delta_n| < n^{-1/4}] + 
+      P[|\sqrt{n}(\delta_n^* - \delta_n)| \geq \eps, |\delta_n| \geq n^{-1/4}] \\
+  = & P[|\sqrt{n}\delta_n| \geq \eps, |\delta_n| < n^{-1/4}] \\
+  \leq & P[|\delta_n - \theta_0| \geq d] \to 0
+\end{align*}
+as $n \to \infty$, i.e., $\sqrt{n}(\delta_n^* - \delta_n) = o_P(1)$, hence 
+$\sqrt{n}(\delta_n^* - \theta_0) \Rightarrow \gaussian(0, I^{-1}(\theta_0))$ follows
+from Slutsky's theorem. 
+
+If $\theta_0 = 0$, given $\eps > 0$, by definition of $\delta_n^*$ and similar
+arguments as above, it can be shown that 
+$$P\left[|\sqrt{n}\delta_n^*| \geq \eps\right] = P\left[\left|\sqrt{nI(0)}\delta_n\right| \geq n^{1/4}\sqrt{I(0)}\right].$$
+By condition, $\sqrt{nI(0)}\delta_n \Rightarrow \gaussian(0, 1)$. By P\'{o}lya's lemma
+(Homework 3, Problem 3),
+$$\sup_{x \in \real} \left|P\left[\sqrt{nI(0)}\delta_n \leq x\right] - \Phi(x)\right| \to 0$$
+as $n \to \infty$. It then follows that
+\begin{align*}
+    & P[|\sqrt{n}\delta_n^*| \geq \eps] \\
+  = & P\left[\left|\sqrt{nI(0)}\delta_n\right| \geq n^{1/4}\sqrt{I(0)}\right] \\
+  \leq & 2\sup_{x \in \real}\left|P\left[\sqrt{nI(0)}\delta_n \leq x\right] - \Phi(x)\right| + 1 - \Phi\left(n^{1/4}\sqrt{I(0)}\right) + 
+  \Phi\left(-n^{1/4}\sqrt{I(0)}\right) \\
+  \to & 0
+\end{align*}
+as $n \to \infty$. This shows that $\sqrt{n}\delta_n^* \to_P 0$ and the proof is 
+complete. 
+\end{proof}
+\end{comment}
+
+\item[7.11]
+\begin{proof}
+\textbf{(a)}
+It is straightforward to verify that the second derivative 
+of $\log f_\theta(x)$ is given by $2[(x - \theta)^2 - 1]/
+[1 + (x - \theta)^2]^2$. In addition, note that if $X \sim 
+f_\theta(x)$, then $X - \theta \sim \text{Cauchy}(0, 1)$, 
+i.e., the standard Cauchy distribution. Therefore,
+\begin{align*}
+   & E\left[\frac{(X - \theta)^2 - 1}{[1 + (X - \theta)^2]^2}\right] \\
+ = & \int_{-\infty}^\infty \frac{x^2 - 1}{(1 + x^2)^2} \cdot \frac{1}{\pi(1 + x^2)} \dd x \\
+ = & \frac{2}{\pi}\int_{0}^\infty \frac{1}{(1 + x^2)^2} \dd x - \frac{4}{\pi}\int_0^\infty \frac{1}{(1 + x^2)^3} \dd x \\
+ = & \frac{2}{\pi}\int_0^{\pi/2} \cos^2\theta \dd \theta - \frac{4}{\pi}\int_0^{\pi/2} \cos^4\theta \dd \theta \\
+ = & \frac{1}{2} - \frac{3}{4} = -\frac{1}{4}.
+\end{align*}
+From the second line to the third line of the above
+calculation, we did the variable substitution $x = \tan
+\theta$. From the third 
+line to the fourth line, the exponent order is decreased by
+using the double-angle identity $\cos^2\theta = (\cos(2\theta) - 1)/2$. In conclusion, $I(\theta) = 1/2$.
+
+\textbf{(b)} Since the population median of the $\text{Cauchy}(\theta, 1)$ distribution is $\theta$, it 
+follows by Theorem 6.6 that 
+$$\sqrt{n}(\tilde{\theta}_n - \theta) \Rightarrow \gaussian(0,
+1/4f(\theta)^2) = \gaussian(0, \pi^2/4).$$ 
+
+On the other hand, since we have shown in the text that the 
+one-step estimator $\delta_n^*
+= \tilde{\theta}_n + 2\ell'(\tilde{\theta}_n)/n$ is 
+asymptotically efficient, it follows that
+\begin{equation*}
+    \sqrt{n}(\delta_n^* - \theta) \Rightarrow 
+    \gaussian(0, I(\theta)^{-1}) = \gaussian(0, 2),
+\end{equation*}
+in view of the result obtained in part (a). 
+\end{proof}
+
+\item[7.14]
+\begin{proof}
+Since $P[X = x] = P[X_1 = x_1, \ldots, X_k = x_k] = \dfrac{1!}{x_1!\ldots x_k!}
+p_1^{x_1}\cdots p_k^{x_k}$, the log-likelihood function is
+\begin{equation*}
+    \ell(p^*) = x_1\log p_1 + \cdots + x_k \log p_k.
+\end{equation*}
+Although written in this way, keep in mind that $p_k$ should be understood 
+as an implicit function of $p^* = (p_1, \ldots, p_{k - 1})$. In particular,
+$\partial p_k / \partial p_j = -1$, $j = 1, \ldots, k - 1$. It is then 
+straightforward to verify that
+\begin{align*}
+    & \frac{\partial \ell}{\partial p_j} = \frac{x_j}{p_j} - \frac{x_k}{p_k}, \\
+    & \frac{\partial^2 \ell}{\partial p_j^2} = -\frac{x_j}{p_j^2}
+    - \frac{x_k}{p_k^2}, \; j = 1, \ldots, k - 1. \\
+    & \frac{\partial^2 \ell}{\partial p_j\partial p_{j'}} = -\frac{x_k}{p_k^2},
+    \; 1 \leq j \neq j' \leq k - 1.
+\end{align*}
+Therefore $E[X_j] = p_j, j = 1, \ldots, k$ implies that 
+\begin{equation*}
+    I(p^*) = \begin{bmatrix}
+    \dfrac{1}{p_1} + \dfrac{1}{p_k} & \cdots & \dfrac{1}{p_k} \\
+    \vdots & \ddots & \vdots \\
+    \dfrac{1}{p_k} & \cdots & \dfrac{1}{p_{k - 1}} + \dfrac{1}{p_k} 
+    \end{bmatrix} = 
+    \Lambda + \bm{1}\bm{1}^T/p_k,
+\end{equation*}
+where $\Lambda = diag(p_1^{-1}, \ldots, p_{k - 1}^{-1})$, $\bm{1} = (1, \ldots,
+1)^T$. This completes the proof.
+\end{proof}
+
+\begin{comment}
+\item[7.15]
+\begin{proof}
+Denote the derivative function of $f$ by $g$. Direct calculation shows that (use 
+symmetry of $f$ to simplify results):
+\begin{equation*}
+    I(\bm{\theta}) = 
+    \begin{pmatrix}
+    A/\theta_2^2 & 0 \\
+    0 & (B - 1)/\theta_2^2
+    \end{pmatrix},
+\end{equation*}
+where $A = \int_\real g^2(u)/f(u) \dd u$, $B = \int_\real u^2g^2(u)/f(u) \dd u$. 
+\end{proof}
+\end{comment}
+
+\item[7.19]
+\begin{proof}
+The necessity part is trivial in view of the Cram\'{e}r-Wold device.
+
+To prove the sufficiency part, assume asymptotic normality holds for
+$\hat{\bm{\theta}}_n$, that is 
+$$\sqrt{n}(\hat{\bm{\theta}}_n - \bm{\theta}) \Rightarrow \gaussian(0, \Sigma)$$
+for some covariance matrix $\Sigma$. Since $I^{-1}(\bm{\theta})$ is the C-R lower 
+bound, we have $\Sigma \geq I^{-1}(\bm{\theta})$ (here and in the sequel, ``$A \geq B$
+" means the matrix $A - B$ is symmetric \emph{and} non-negative definite). By 
+assumption, the diagonal elements of $\Sigma$ and $I^{-1}(\bm{\theta})$ all equal to 
+$\gamma_{ii}, i = 1, \ldots, k$. Thus $\Sigma - I^{-1}(\bm{\theta})$ takes the form 
+$$\Delta \coloneqq \Sigma - I^{-1}(\bm{\theta}) = 
+\begin{pmatrix}
+0 & \Delta_{12} & \cdots & \Delta_{1k} \\
+\Delta_{12} & 0 & \cdots & \Delta_{2k} \\
+\vdots & \vdots & \ddots & \vdots \\
+\Delta_{1k} & \Delta_{2k} & \cdots & 0
+\end{pmatrix}.
+$$
+Our goal is to show $\Delta \equiv 0$, which can be achieved by noting that $\Delta$
+is symmetric and non-negative definite. In detail, we shall use the following important
+characterization of symmetric non-negative definite matrices:
+\begin{thm}
+If $\Delta \geq 0$, then all its principal minors are non-negative.
+\end{thm}
+By this theorem, since $\Delta \geq 0$, by considering principal minors
+$$\Delta\begin{pmatrix} i & i + 1 \\ i & i + 1 \end{pmatrix} = 
+\det\left(\begin{pmatrix} 0 & \Delta_{i, i + 1} \\ \Delta_{i, i + 1} & 0\end{pmatrix}
+\right) = -\Delta_{i, i + 1}^2 \geq 0, \; i = 1, 2, \ldots, n - 1$$
+successively, we deduce that $\Delta_{i, i + 1} = 0, i = 1, 2, \ldots, n - 1$. We then
+consider principal minors 
+$$\Delta\begin{pmatrix} i & i + 2 \\ i & i + 2 \end{pmatrix} = 
+\det\left(\begin{pmatrix} 0 & \Delta_{i, i + 2} \\ \Delta_{i, i + 2} & 0\end{pmatrix}
+\right) = -\Delta_{i, i + 2}^2 \geq 0, \; i = 1, 2, \ldots, n - 2$$
+successively, it follows that $\Delta_{i, i + 2} = 0, i = 1, 2, \ldots, n - 2$. 
+Proceed in this way, we found that all off-diagonal elements of $\Delta$ are zeros, 
+thus $\Delta = 0$, $\Sigma = I^{-1}(\bm{\theta})$, which completes the proof. 
+\end{proof}
+\end{description}
+
+\newpage
+\section*{Homework 12}
+\begin{description}
+\item[Problem 1]
+\begin{proof}
+See Lemma A--Lemma C in Section 4.4.2 of \cite{serfling1980approximation}, where 
+the general multivariate cases are treated. 
+\end{proof}
+\item[8.1]
+\begin{proof}
+Given the sample $\{X_1, \ldots, X_n\}$, it is straightforward to compute
+\begin{align*}
+    & \ell(\theta) = n\log\theta + n\theta\log c - \sum_{i = 1}^n(\theta + 1)\log X_i, \\
+    & \ell'(\theta) = \frac{n}{\theta} + n\log c - \sum_{i = 1}^n \log X_i, \\
+    & \ell''(\theta) = -\frac{n}{\theta^2}.
+\end{align*}
+Denote $\sum_{i = 1}^n \log X_i/n$ by $\overbar{Y}_n$, then the MLE 
+$\hat{\theta}_n = 1/(\overbar{Y}_n - \log c)$, the Fisher information $I(\theta) = 
+1/\theta^2$. It then follows that
+\begin{align*}
+    & W_n = \sqrt{nI(\theta_0)}(\hat{\theta}_n - \theta_0) = \frac{\sqrt{n}}{\theta_0}
+    \left(\frac{1}{\overbar{Y}_n - \log c} - \theta_0\right), \\
+    & R_n = \frac{1}{\sqrt{nI(\theta_0})}\ell'(\theta_0) = \sqrt{n}(1 + \theta_0\log c - \theta_0
+    \overbar{Y}_n), \\
+    & \Delta_n = \ell(\hat{\theta}_n) - \ell(\theta_0) = -n\left[\log\theta_0 + 
+    \log(\overbar{Y}_n - \log c) - 1 + \theta_0(\overbar{Y}_n - \log c)\right].
+\end{align*}
+We thus reject $H_0: \theta = \theta_0$ in favor of $H_1: \theta \neq \theta_0$ whenever
+$|W_n| \geq u_{\alpha/2}, |R_n| \geq u_{\alpha/2}$, or $2\Delta_n \geq \chi_1^2(\alpha)$.
+\end{proof}
+
+\item[8.2]
+\begin{description}
+\item[(a)]
+\begin{proof}
+Since $\ell(\bm{\theta}) = \sum_{j = 1}^k X_j\log p_j$ and $E[X_j] = np_j, j = 1, \ldots, k$
+, it follows that 
+\begin{equation*}
+    I(\bm{\theta}) = \begin{pmatrix}
+    \frac{1}{p_1} + \frac{1}{p_k} & \cdots & \frac{1}{p_k} \\
+    \vdots & \ddots & \vdots \\
+    \frac{1}{p_k} & \cdots & \frac{1}{p_{k - 1}} + \frac{1}{p_k} 
+    \end{pmatrix} = 
+    \Lambda + \bm{1}\bm{1}^T/p_k,
+\end{equation*}
+where $\Lambda = diag(p_1^{-1}, \ldots, p_{k - 1}^{-1}), \bm{1} = (1, \ldots, 1)^T \in 
+\real^{k - 1}$. Furthermore, if denoting $(X_1, \ldots, X_{k - 1})^T$ by $\bm{X}$, then
+\begin{equation*}
+    \nabla \ell(\bm{\theta}) = \begin{pmatrix}
+    \frac{X_1}{p_1} - \frac{X_k}{p_k} & \cdots & \frac{X_{k - 1}}{p_{k - 1}} - \frac{X_k}{p_k}
+    \end{pmatrix}^T = \Lambda\bm{X} - \frac{X_k}{p_k}\bm{1}.
+\end{equation*}
+We first show that $W_n = \chi^2 \equiv \sum_{j = 1}^k \frac{(X_j - np_j)^2}{np_j}$. It 
+follows by $\hat{\bm{\theta}}_n = \bm{X}/n$ that 
+\begin{align*}
+    & W_n = n(\hat{\bm{\theta}}_n - \bm{\theta}^0)^TI(\bm{\theta}^0)(\hat{\bm{\theta}}_n - \bm{\theta}^0) \\
+    = & \frac{1}{n}(\bm{X} - n\bm{\theta}^0)^T(\Lambda + \bm{1}\bm{1}^T/p_k)(\bm{X} - 
+    n\bm{\theta}^0)^T \\
+    = & \frac{1}{n}(\bm{X} - n\bm{\theta}^0)^T\Lambda(\bm{X} - n\bm{\theta}^0)^T + 
+    \frac{1}{np_k}(\bm{X} - n\bm{\theta}^0)^T\bm{1}\bm{1}^T(\bm{X} - n\bm{\theta}^0)^T \\
+    = & \sum_{j = 1}^{k - 1}\frac{(X_j - np_j)^2}{np_j} + \frac{(X_k - np_k)^2}{np_k} \\
+    = & \sum_{j = 1}^k\frac{(X_j - np_j)^2}{np_j} = \chi^2.
+\end{align*}
+
+We next show that $R_n = \chi^2$, for which we need to evaluate $I(\bm{\theta})^{-1}$ first.
+By Sherman-Morrison-Woodburry formula (\cite{golub2013matrix}, page 65): $(A + UV)^{-1} = 
+A^{-1} - A^{-1}U(I + VA^{-1}U)^{-1}VA^{-1}$,
+\begin{align*}
+    & I(\bm{\theta})^{-1} = p_k(p_k\Lambda + \bm{1}\bm{1}^T)^{-1} \\
+  = & p_k\left[p_k^{-1}\Lambda^{-1} - p_k^{-1}\Lambda^{-1}\bm{1}\left(1 + \bm{1}^Tp_k^{-1}\Lambda^{-1}\bm{1}\right)^{-1}\bm{1}^Tp_k^{-1}\Lambda^{-1}\right] \\
+  = & diag(p_1, \ldots, p_{k - 1}) - (p_1, \ldots, p_{k - 1})^T\left(1 + \sum_{j = 1}^{k - 1}\frac{p_j}{p_k}\right)^{-1}(p_1, \ldots, p_{k - 1})/p_k \\
+  = & \Lambda^{-1} - \bm{\theta}\bm{\theta}^T, 
+\end{align*}
+Noting that $\bm{1}^T\Lambda^{-1} = \bm{\theta}^{0T}$, $\Lambda\theta = \bm{1}$, $\bm{\theta}^{0T}\bm{1} = 1 - p_k$, $\bm{X}^T\bm{1} = n - X_k$, we have
+\begin{align*}
+    & R_n = \frac{1}{n}\nabla \ell(\bm{\theta}^0)^T I^{-1}(\bm{\theta}^0)\nabla 
+    \ell(\bm{\theta}^0) \\
+  = & \frac{1}{n}\left(\Lambda\bm{X} - \frac{X_k}{p_k}\bm{1}\right)^T(\Lambda^{-1} - \bm{\theta}^0\bm{\theta}^{0T})\left(\Lambda\bm{X} - \frac{X_k}{p_k}\bm{1}\right) \\
+  = & \frac{1}{n}(\bm{X} - n\bm{\theta}^0)\left(\Lambda\bm{X} - \Lambda n\bm{\theta}^0 + \Lambda n\bm{\theta}^0 - \frac{X_k}{p_k}\bm{1}\right) \\
+  = & \frac{1}{n}(\bm{X} - n\bm{\theta}^0)^{T}\Lambda(\bm{X} - n\bm{\theta}^0) + (\bm{X} - n\bm{\theta}^0)^T\frac{np_k - X_k}{np_k}\bm{1} \\
+  = & \sum_{j = 1}^k \frac{(X_j - np_j)^2}{np_j} = \chi^2.
+\end{align*}
+In summary, $W_n = R_n = \chi^2$. 
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+Since $\hat{\bm{\theta}}_n = \bm{X}/n$, it follows that 
+$$2\Delta_n = 2(\ell(\hat{\bm{\theta}}_n) - \ell(\bm{\theta}^0)) = 
+2\sum_{j = 1}^k X_j\log\left(\frac{X_j}{np_j}\right).$$
+This completes the proof.
+\end{proof}
+\end{description}
+
+\item[8.4]
+\begin{proof}
+By Theorem $6.7$ in Hunter's Notes, we have
+\begin{equation*}
+    \sqrt{n}\begin{pmatrix} Q_1 - \theta_0/2 \\ Q_3 - 3\theta_0/2 \end{pmatrix}
+    \Rightarrow
+    \gaussian\left(\begin{pmatrix} 0 \\ 0 \end{pmatrix}, \frac{\theta_0^2}{4}
+    \begin{pmatrix}
+    3 & 1 \\
+    1 & 3
+    \end{pmatrix}\right)
+\end{equation*}
+It then follows by Cram\'{e}r-Wold's device that 
+\begin{equation*}
+    \sqrt{n}(Q_3 - Q_1 - \theta_0) \Rightarrow \gaussian(0, \theta_0^2).
+\end{equation*}
+For $\overbar{X}_n$, by classical CLT,
+\begin{equation*}
+    \sqrt{n}(\overbar{X}_n - \theta_0) \Rightarrow \gaussian(0, \theta_0^2/3).
+\end{equation*}
+Based on above two limiting distributions, it is easy to see that 
+$$A_n = \frac{\theta_0 u_\alpha}{\sqrt{n}}, \quad B_n = \frac{\theta_0 u_\alpha}{\sqrt{3n}}.$$
+
+To find the asymptotic relative efficiency of test A with respect to test B, we need to
+consider the asymptotic distributions of $\sqrt{n}(Q_3 - Q_1 - \theta_0)/\theta_0$ and 
+$\sqrt{n}(\overbar{X}_n - \theta_0)/(\theta_0/\sqrt{3})$ under local alternative hypotheses $H_{an}: \theta_n = \theta_0 + n^{-1/2}\Delta$ for some $\Delta > 0$. 
+
+We first show that
+\begin{equation}\label{hw11:eq4}
+\frac{\sqrt{n}(\overbar{X}_n - \theta_0)}{\theta_0/\sqrt{3}} \Rightarrow_{\theta_n} \gaussian(\sqrt{3}\Delta/\theta_0, 1),
+\end{equation}
+where the notation ``$\Rightarrow_{\theta_n}$'' means weak convergence under
+probability measure $P_{\theta_n}$. It is easy to check that the triangular array
+$\{X_{ni}, 1 \leq i \leq n, n \geq 1\}$ satisfies Lyapunov's condition with $\delta 
+= 1$ (use the fact that $X_{ni}$ is bounded by $2\theta_n$), thereby 
+$$\frac{\sqrt{n}(\overbar{X}_n - \theta_n)}{\theta_n/\sqrt{3}} \Rightarrow_{\theta_n} \gaussian(0, 1).$$
+Now write
+$$\frac{\sqrt{n}(\overbar{X}_n - \theta_0)}{\theta_0/\sqrt{3}} = \frac{\sqrt{n}(\overbar{X}_n - \theta_n)}{\theta_n/\sqrt{3}} \times \frac{\theta_n}{\theta_0} +
+\frac{\sqrt{n}(\theta_n - \theta_0)}{\theta_0/\sqrt{3}}.$$
+Hence \eqref{hw11:eq4} holds in view of the above two expressions and Slutsky's 
+theorem.
+
+Next we show that
+\begin{equation}\label{hw11:eq5}
+\frac{\sqrt{n}(Q_3 - Q_1 - \theta_0)}{\theta_0} \Rightarrow_{\theta_n} \gaussian(\Delta/\theta_0, 1).
+\end{equation}
+Denote $Y_{ni} = X_{ni}/(2\theta_n), i = 1, \ldots, n$, by condition, $Y_{n1}, \ldots, Y_{nn}$ i.i.d.\ $\sim \mathcal{U}(0, 1)$. Clearly, $Q_3 - Q_1 = 2\theta_n(\tilde{Q}_3
+- \tilde{Q}_1)$, where $\tilde{Q}_1, \tilde{Q}_3$ are first and third quartiles for 
+$Y$'s. Examining the proof of Theorem $6.1$, we found that 
+\begin{equation*}
+    \sqrt{n}\begin{pmatrix} \tilde{Q}_1 - 1/4 \\ \tilde{Q}_3 - 3/4 \end{pmatrix}
+    \Rightarrow
+    \gaussian\left(\begin{pmatrix} 0 \\ 0 \end{pmatrix}, \frac{1}{16}
+    \begin{pmatrix}
+    3 & 1 \\
+    1 & 3
+    \end{pmatrix}\right)
+\end{equation*}
+Therefore $\sqrt{n}(\tilde{Q}_3 - \tilde{Q}_1 - 1/2) \Rightarrow \gaussian(0, 1/4)$, 
+implying that $\sqrt{n}(Q_3 - Q_1 - \theta_n)/\theta_n \Rightarrow_{\theta_n} 
+\gaussian(0, 1)$. The same decomposition of the left hand side of \eqref{hw11:eq5}
+and Slutsky's theorem then show that \eqref{hw11:eq5} holds. 
+
+By \eqref{hw11:eq4} and \eqref{hw11:eq5}, the efficacies of test A and test B are 
+$1/\theta_0$ and $\sqrt{3}/\theta_0$, respectively, hence the asymptotic relative
+efficiency of test A with respect to test B is
+$$\text{ARE}(\text{test A}, \text{ test B}) = \left(\frac{1/\theta_0}{\sqrt{3}/\theta_0}\right)^2 = \frac{1}{3}.$$ 
+Consequently, test B is more efficient than test A, given the underlying distribution
+is uniform. 
+\end{proof}
+
+\item[8.8]
+\begin{description}
+\item[(a)]
+\begin{proof}
+Under $H_0$, it is easy to verify that $E[I_i] = 1/2$, $\Var(I_i) = 1/4$. Since $I_1, I_2, \ldots$ are i.i.d., it follows by classical CLT that
+$$\frac{\sum_{i = 1}^n (I_i - 1/2)}{\sqrt{n/4}} = 2\sum_{i = 1}^n (I_i - 1/2)/\sqrt{n} 
+\Rightarrow \gaussian(0, 1).$$
+That is, the asymptotic distribution of $T_n$ under the null hypothesis is standard normal.
+\end{proof}
+
+\item[(b)]
+\begin{proof}
+Under the local alternative hypothesis, $I_{n1}, \ldots, I_{nn}, n \geq 1$ form a triangular 
+array in which $I_{n1}, \ldots, I_{nn}$ are i.i.d.\ with 
+\begin{align*}
+    E[I_{ni}] & = P_{\lambda_n, \mu_n}[X_1 > Y_1] = \int_0^\infty P[X_1 > y]f_{Y_1}(y) dy \\
+    & = \int_0^\infty e^{-(\lambda + n^{-1/2}\delta)^{-1}y} \lambda^{-1}e^{-\lambda^{-1}y}
+    = \frac{\lambda + n^{-1/2}\delta}{2\lambda + n^{-1/2}\delta} = \rho_n, \\
+    \Var(I_{ni}) & = \rho_n(1 - \rho_n), \\
+    s_n^2 & = n\rho_n(1 - \rho_n).
+\end{align*}
+Therefore,
+\begin{align*}
+    \frac{1}{s_n^3}\sum_{i = 1}^n E[|I_{ni} - \rho_n|^3] \leq \frac{8n}{n^{3/2}[\rho_n(1 - \rho_n)]^{3/2}} \to 0 
+\end{align*}
+as $n \to \infty$, i.e., Lyapunov's condition holds with $\delta = 1$ (with abuse of 
+notation). Hence
+$$\frac{\sum_{i = 1}^n (I_i - \rho_n)}{\sqrt{n\rho_n(1 - \rho_n)}} \Rightarrow \gaussian(0, 1).$$
+\end{proof}
+
+\item[(c)]
+\begin{proof}
+Write
+\begin{equation}\label{hw11:eq1}
+T_n = \frac{\sum_{i = 1}^n (I_i - 1/2)}{\sqrt{n}/2} = \frac{\sum_{i = 1}^n(I_i - \rho_n)}{\sqrt{n\rho_n(1 - \rho_n)}} \times \frac{\sqrt{n\rho_n(1 - \rho_n)}}{\sqrt{n}/2} + \frac{n(\rho_n - 1/2)}{\sqrt{n}/2}.
+\end{equation}
+Since $\rho_n \to 1/2$ as $n \to \infty$, it follows by Slutsky's theorem and the result of 
+part (b) that the first term of the right hand side of \eqref{hw11:eq1} converges weakly to
+$\gaussian(0, 1)$. On the other hand,
+\begin{equation}\label{hw11:eq2}
+\frac{n(\rho_n - 1/2)}{\sqrt{n}/2} = 2\sqrt{n}(\rho_n - 1/2) = \frac{\sqrt{n}\delta}{2\sqrt{n}\lambda + \delta} \to \frac{\delta}{2\lambda}
+\end{equation}
+as $n \to \infty$. \eqref{hw11:eq2} and another application of Slutsky's theorem gives
+that under local alternative hypothesis specified in $(b)$, $T_n \Rightarrow \gaussian(\delta/(2\lambda), 1)$. 
+\end{proof}
+\end{description}
+
+\item[9.1(a)]
+\begin{proof}
+Write 
+\begin{equation}\label{hw11:eq3}
+T_n = (\bm{V}^{(n)})^T\Sigma^{-1}\bm{V}^{(n)} + (\bm{V}^{(n)})^T(S_n^{-1} - \Sigma^{-1})
+\bm{V}^{(n)}.
+\end{equation}
+The first term of \eqref{hw11:eq3}'s right hand side converges in distribution to $\chi_k^2$ 
+by multivariate CLT and continuous mapping theorem, while its second term is $o_P(1)$, since
+it can be viewed as $O_P(1) \times o_P(1) \times O_P(1)$. The result then follows from 
+Slutsky's theorem. 
+\end{proof}
+
+\item[9.4]
+\begin{proof}
+First, $W^2$ can be simplified to
+\begin{align*}
+W^2 & = \sum_{j = 1}^k \frac{nm}{Z_j}\left(\frac{X_j}{m} - \frac{Y_j}{n}\right)^2 \\
+& = \sum_{j = 1}^k \left[\frac{nm/N}{p_j}\left(\frac{X_j}{m} - \frac{Y_j}{n}\right)^2
+\right]\times \frac{p_j}{Z_j/N}.
+\end{align*}
+Intuitively, since $Np_j/Z_j \to_P 1$ as $N \to \infty$ for every $j$, it is promising
+to show our goal by two steps:
+\begin{description}
+\item[Step 1:] Show that
+\begin{equation}\label{hw11:eq6}
+\tilde{W}^2 \coloneqq \sum_{j = 1}^k \frac{nm/N}{p_j}\left(\frac{X_j}{m} -
+\frac{Y_j}{n}\right)^2 \Rightarrow \chi_{k - 1}^2.
+\end{equation}
+\item[Step 2:] Provided \eqref{hw11:eq6} holds, show that 
+\begin{equation}\label{hw11:eq8}
+W^2 - \tilde{W}^2 \to_P 0.
+\end{equation}
+\end{description}
+
+To show \eqref{hw11:eq6}, we first show that
+\begin{equation}\label{hw11:eq7}
+    \sqrt{N\frac{m}{N}\frac{n}{N}}\left(\frac{Y_1}{n} - \frac{X_1}{m}, \ldots,
+    \frac{Y_{k - 1}}{n} - \frac{X_{k - 1}}{m}\right)^T \Rightarrow \gaussian(0, \Sigma),
+\end{equation}
+where 
+\begin{equation*}
+    \Sigma = \begin{pmatrix}
+    p_1(1 - p_1) & \cdots & -p_1p_{k - 1} \\
+    \vdots & \ddots & \vdots \\
+    -p_{k - 1}p_1 & \cdots & p_{k - 1}(1 - p_{k - 1})
+    \end{pmatrix}.
+\end{equation*}
+Adopting the same notation in Exercise 8.2, it can be shown that $\Sigma^{-1} = \Lambda + \bm{1}\bm{1}^T/p_k$ (the canonical
+forms of $\Sigma$ and $\Sigma^{-1}$ should be always kept in mind so that it can be
+called without calculation).
+ 
+Under given assumptions, it is routine to show by multivariate CLT that as $N \to \infty$:
+\begin{align*}
+    & \sqrt{n}\left(\frac{Y_1}{n} - p_1, \ldots, \frac{Y_{k - 1}}{n} - p_{k -
+    1}\right)^T \Rightarrow \gaussian(0, \Sigma), \\
+    & \sqrt{m}\left(\frac{X_1}{m} - p_1, \ldots, \frac{X_{k - 1}}{m} - p_{k -
+    1}\right)^T \Rightarrow \gaussian(0, \Sigma).
+\end{align*}
+Since $n/N \to \alpha \in (0, 1)$, the above expressions may be rewritten as
+\begin{align*}
+    & \sqrt{N\frac{m}{N}\frac{n}{N}}\left(\frac{Y_1}{n} - p_1, \ldots, \frac{Y_{k - 1}}{n} - p_{k -
+    1}\right)^T \Rightarrow \gaussian(0, (1 - \alpha)\Sigma), \\
+    & \sqrt{N\frac{m}{N}\frac{n}{N}}\left(\frac{X_1}{m} - p_1, \ldots, \frac{X_{k - 1}}{m} - p_{k -
+    1}\right)^T \Rightarrow \gaussian(0, \alpha\Sigma).
+\end{align*}
+Now the independence between $\bm{X}$ and $\bm{Y}$ allows us to conclude 
+\eqref{hw11:eq7}, which further implies that 
+\begin{equation*}
+    N\frac{m}{N}\frac{n}{N}
+    \begin{pmatrix} \frac{Y_1}{n} - \frac{X_1}{m} & \cdots & 
+    \frac{Y_{k - 1}}{n} - \frac{X_{k - 1}}{m}\end{pmatrix}
+    \Sigma^{-1}
+    \begin{pmatrix}\frac{Y_1}{n} - \frac{X_1}{m} \\ \vdots \\
+    \frac{Y_{k - 1}}{n} - \frac{X_{k - 1}}{m}\end{pmatrix}
+    \Rightarrow \chi_{k - 1}^2.
+\end{equation*}
+
+Performing similar calculation as in Exercise 8.2 (use the elegant form of $\Sigma^{-1}$) shows that the left hand side of the above expression is precisely
+$\tilde{W}^2$, hence \eqref{hw11:eq6} holds. 
+
+Now let's verify \eqref{hw11:eq8}. Noting that each summand of $\tilde{W}^2$ is non-negative, we thus have
+\begin{align*}
+    & |W^2 - \tilde{W}^2| \\
+  = & \left|\sum_{j = 1}^k \left[\frac{nm/N}{p_j}\left(\frac{X_j}{m} -
+  \frac{Y_j}{n}\right)^2\right]\left(\frac{p_j}{Z_j/N} - 1\right)\right| \\
+  \leq & \max\limits_{1 \leq j \leq k}\left|\frac{p_j}{Z_j/N} - 1\right|\tilde{W}^2 \\
+  = & o_P(1)\times O_P(1) = o_P(1).
+\end{align*}
+Hence \eqref{hw11:eq8} holds. The final conclusion then follows from Slutsky's theorem,
+in light of \eqref{hw11:eq6} and \eqref{hw11:eq8}.
+\end{proof}
+\end{description}
+
+\begin{thebibliography}{9}
+\bibitem{chung2001probability}
+  Kai Lai Chung.
+  \emph{A Course in Probability Theory}.
+  Academic Press, 
+  third edition, 2001.
+
+\bibitem{billingsley95}
+  Patrick Billingsley.
+  \emph{Probability and Measure}.
+  John Wiley \& Sons, Inc., New York,
+  third edition,
+  1995.
+  
+\bibitem{ferguson1996}
+  Thomas Ferguson.
+  \emph{A Course in Large Sample Theory}.
+  Springer Science+Business Media, B.V.,
+  1996.
+
+\bibitem{golub2013matrix}
+  Gene H.~Golub and Charles F.~Van Loan.
+  \emph{Matrix Computations}.
+  The Johns Hopkins University Press, Baltimore,
+  fourth edition,
+  2013.
+
+\bibitem{rudin1964}
+  Walter Rudin.
+  \emph{Principles of Mathematical Analysis}.
+  McGraw-Hill, Inc., New York,
+  third edition,
+  1964.
+
+\bibitem{serfling1980approximation}
+  Robert Serfling.
+  \emph{Approximation Theorems of Mathematical Statistics}. 
+  John Wiley \& Sons, Inc., New York,
+  1980.
+ 
+\bibitem{serfling2011asymptotic}
+  Robert Serfling.
+  Asymptotic relative efficiency in estimation.
+  \emph{International Encyclopedia of Statistical Science},
+  68--72,
+  2011.
+
+\end{thebibliography}
+\end{document}
